@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #
-# name:             test_envi_file.py
+# name:             test_password.py
 # author:           Harold Bradley III
 # email:            harold@bradleystudio.net
 # created on:       11/07/2014
