@@ -10,5 +10,5 @@ __copyright__ = 'Copyright 2015 Harold Bradley III'
 
 __all__ = ['password', 'prompt']
 
-from password import *
-from prompt import *
+from . import password
+from . import prompt
