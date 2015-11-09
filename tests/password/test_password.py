@@ -8,7 +8,8 @@
 # description:      A unit test for ext_pylib module's password functions.
 #
 
-from ext_pylib.password import *
+from ext_pylib.password import generate_pw
+from ext_pylib.password.password import is_like_previous_char
 import pytest
 
 @pytest.mark.parametrize(("length", "charset", "expected"), [
