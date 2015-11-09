@@ -10,6 +10,7 @@
 
 from ext_pylib.password import generate_pw
 from ext_pylib.password.password import is_like_previous_char
+from ext_pylib.password.password import DEFAULT_CHAR_SET
 import pytest
 
 @pytest.mark.parametrize(("length", "charset", "expected"), [
