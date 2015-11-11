@@ -8,7 +8,7 @@
 # description:      A unit test for ext_pylib module's prompt functions.
 #
 
-from ext_pylib.prompt import *
+from ext_pylib.prompt import prompt, prompt_str, warn
 import mock
 import pytest
 
