@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #
-# name:             py_node.py
+# name:             node.py
 # author:           Harold Bradley III
 # email:            harold@bradleystudio.net
 # created on:       11/03/2014
@@ -16,12 +16,12 @@ import pwd
 import shutil
 
 
-# Py_Node(atts)
+# Node(atts)
 #   An abstract class that is primarily a wrapper for directory and file
 #   managment. This class is intended to be extended by file and directory
 #   classes.
 #
-#   Py_Node is initialized with a dict of attributes. Attributes that aren't
+#   Node is initialized with a dict of attributes. Attributes that aren't
 #   given are just initialized as None. If a path isn't given, the node is set
 #   to path = None. This effectively makes the Node a "Stub". Methods do
 #   nothing but return True (except exists()) enabling a graceful fail.
@@ -36,10 +36,10 @@ import shutil
 #       create()
 #       remove(ask)
 #       fill(fill_with)
-class Py_Node(object):
+class Node(object):
 
     def __init__(self, atts = {} ):
-        """Initializes a new Py_Node instance."""
+        """Initializes a new Node instance."""
         self.path = None # !! Make sure path is at least initialized
         for attribute in atts:
             setattr(self, attribute, atts[attribute])
@@ -47,7 +47,7 @@ class Py_Node(object):
     def __str__(self):
         """Returns a string with the path."""
         if not self.path:
-            return '<Py_Node:stub>'
+            return '<file.Node:stub>'
         return self.path
 
     def __repr__(self):
@@ -63,10 +63,10 @@ class Py_Node(object):
         return other + str(self)
 
     def create(self):
-        raise NotImplementedError('[ERROR] Cannot call method on Py_Node. It is an abstract class.')
+        raise NotImplementedError('[ERROR] Cannot call method on file.Node. It is an abstract class.')
 
     def remove(self, ask = True):
-        raise NotImplementedError('[ERROR] Cannot call method on Py_Node. It is an abstract class.')
+        raise NotImplementedError('[ERROR] Cannot call method on file.Node. It is an abstract class.')
 
     ################
     # Properties
@@ -81,19 +81,19 @@ class Py_Node(object):
         """Validates, then sets the path."""
         # Check for None
         if path == None:
-            print '[Notice] Py_Node was initialized with an empty path. Continuing as a stub.'
+            print '[Notice] file.Node was initialized with an empty path. Continuing as a stub.'
             self._path = None
             return
         # Check for empty string
         if path == '':
-            raise ValueError('"path" cannot be set to an empty string in an Py_Node class.')
+            raise ValueError('"path" cannot be set to an empty string in an file.Node class.')
         # Check for valid characters
         for char in path:
             if char not in '-_.() abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/':
-                raise ValueError('"' + path + '" is not allowed as an Py_Node.')
+                raise ValueError('"' + path + '" is not allowed as an file.Node.')
         # Directory must start with '/'
         if not path.startswith('/'):
-            raise ValueError('Relative paths (' + path + ') are not allowed as an Py_Node.')
+            raise ValueError('Relative paths (' + path + ') are not allowed as an file.Node.')
         self._path = path
 
     @property
@@ -123,7 +123,7 @@ class Py_Node(object):
         """Sets the perms (string)."""
         # Check for empty string
         if perms == '':
-            raise ValueError('"perms" cannot be set to an empty string in an Py_Node class.')
+            raise ValueError('"perms" cannot be set to an empty string in an file.Node class.')
         if perms < 0 or 511 < perms:
             raise ValueError('"perms" cannot be set to ' + str(perms) + '.')
         self._perms = perms
