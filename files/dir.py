@@ -15,6 +15,27 @@ from ext_pylib import prompt
 import shutil
 
 
+# copytree(source, destination, symlinks, ignore)
+#   allow copying into directories that already exist
+#   adapted from: http://stackoverflow.com/questions/1868714
+def copytree(source, destination, symlinks=False, ignore=None):
+    for item in os.listdir(source):
+        item_src = os.path.join(source, item)
+        item_dst = os.path.join(destination, item)
+        if os.path.isdir(item_src): # It's a directory
+            if os.path.exists(item_dst): # It's a directory that already exists
+                copytree(item_src, item_dst)
+            else:
+                shutil.copytree(item_src, item_dst, symlinks, ignore)
+        else: # It's a file
+            if os.path.exists(item_dst):
+                if not prompt(item_dst + ' already exists. Replace with ' + item_src + '?'):
+                    print 'Skipping.'
+                    return
+                os.remove(item_dst) # It's a file that already exists; remove it, then copy
+            shutil.copy2(item_src, item_dst)
+
+
 # Dir(path, atts)
 #   A class that describes a directory and gives functions to create the
 #   directory. This is primarily a wrapper for directory managment.
