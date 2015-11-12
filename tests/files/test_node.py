@@ -12,7 +12,7 @@
 from ext_pylib.files import Node
 import pytest
 
-@pytest.mark.parametrize(("atts", "expected"), [
+init_args = [
     ({'path' : None}, 
         {'path' : '<file.Node:stub>', 'perms' : None, 'owner' : None, 'group' : None}),
     ({'path' : '/this/path/'}, 
@@ -31,7 +31,8 @@ import pytest
         {'path' : '/etc/path/file', 'perms' : 0655, 'owner' : None, 'group' : None}),
     ({'path' : '/etc/path/file', 'perms' : 0655, 'owner' : 'root', 'group' : 'root'},
         {'path' : '/etc/path/file', 'perms' : 0655, 'owner' : 'root', 'group' : 'root'}),
-])
+]
+@pytest.mark.parametrize(("atts", "expected"), init_args)
 def test_node_initialize(atts, expected):
     """Test initialize Node."""
     node = Node(atts)
@@ -40,11 +41,12 @@ def test_node_initialize(atts, expected):
     assert node.owner == expected['owner']
     assert node.group == expected['group']
 
-@pytest.mark.parametrize(("atts", "expected"), [
+concat_args = [
     ({'path' : None}, '<file.Node:stub>'),
     ({'path' : '/this/path/'}, '/this/path/'),
     ({'path' : '/etc/path/file'}, '/etc/path/file'),
-])
+]
+@pytest.mark.parametrize(("atts", "expected"), concat_args)
 def test_node_concatenate(atts, expected):
     """Test concatenate Node objects."""
     node = Node(atts)
@@ -91,13 +93,13 @@ def test_node_set_path_relative():
     with pytest.raises(ValueError):
         node = Node({'path' : './path/to'})
 
-# TODO: Handle multiple '/' in paths.
-
-@pytest.mark.parametrize(("atts", "expected"), [
+parent_dirs_args = [
     ({'path' : None}, None),
     ({'path' : '/this/path/'}, '/this/'),
     ({'path' : '/etc/path/file'}, '/etc/path/'),
-])
+    ({'path' : '//etc//path//file'}, '/etc/path/'),
+]
+@pytest.mark.parametrize(("atts", "expected"), parent_dirs_args)
 def test_node_parent_dirs(atts, expected):
     """Test generate_pw function."""
     node = Node(atts)
