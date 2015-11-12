@@ -9,7 +9,7 @@
 #                   methods.
 #
 
-from ext_pylib.files import Node
+from ext_pylib.files.node import Node
 import pytest
 
 init_args = [
