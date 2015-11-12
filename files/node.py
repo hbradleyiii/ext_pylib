@@ -11,9 +11,7 @@
 
 import grp
 import os
-from ext_pylib import prompt
 import pwd
-import shutil
 
 
 # Node(atts)
