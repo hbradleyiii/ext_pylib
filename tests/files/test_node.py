@@ -14,7 +14,7 @@ import pytest
 
 init_args = [
     ({'path' : None}, 
-        {'path' : '<file.Node:stub>', 'perms' : None, 'owner' : None, 'group' : None}),
+        {'path' : '<files.Node:stub>', 'perms' : None, 'owner' : None, 'group' : None}),
     ({'path' : '/this/path/'}, 
         {'path' : '/this/path/', 'perms' : None, 'owner' : None, 'group' : None}),
     ({'path' : '/this//path/'}, 
@@ -42,7 +42,7 @@ def test_node_initialize(atts, expected):
     assert node.group == expected['group']
 
 concat_args = [
-    ({'path' : None}, '<file.Node:stub>'),
+    ({'path' : None}, '<files.Node:stub>'),
     ({'path' : '/this/path/'}, '/this/path/'),
     ({'path' : '/etc/path/file'}, '/etc/path/file'),
 ]

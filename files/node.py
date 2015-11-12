@@ -45,7 +45,7 @@ class Node(object):
     def __str__(self):
         """Returns a string with the path."""
         if not self.path:
-            return '<file.Node:stub>'
+            return '<files.Node:stub>'
         return self.path
 
     def __repr__(self):
