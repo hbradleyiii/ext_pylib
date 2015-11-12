@@ -124,9 +124,15 @@ class Node(object):
     @perms.setter
     def perms(self, perms):
         """Sets the perms (string)."""
+        try:
+            perms = int(perms)
+        except ValueError as e: 
+            print e
+            print '[ERROR] ' + perms + ' must be set to an int.'
+            raise
         # Check for empty string
-        if perms == '':
-            raise ValueError('"perms" cannot be set to an empty string in an file.Node class.')
+        # if perms == '':
+        #     raise ValueError('"perms" cannot be set to an empty string in an file.Node class.')
         if perms < 0 or 511 < perms:
             raise ValueError('"perms" cannot be set to ' + str(perms) + '.')
         self._perms = perms
@@ -154,6 +160,7 @@ class Node(object):
                 uid = pwd.getpwnam(owner)
             except KeyError: 
                 print '[ERROR] ' + owner + ' is not a valid user.'
+                raise
         self._owner = owner
 
     @property
@@ -180,4 +187,5 @@ class Node(object):
                 gid = grp.getgrnam(group)
             except KeyError: 
                 print '[ERROR] ' + group + ' is not a valid group.'
+                raise
         self._group = group
