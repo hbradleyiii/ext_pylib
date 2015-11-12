@@ -64,6 +64,23 @@ def test_node_remove():
     with pytest.raises(NotImplementedError):
         node.remove()
 
+def test_node_verify():
+    """TODO:"""
+    pass
+
+def test_node_chmod():
+    """TODO:"""
+    pass
+
+def test_node_chown():
+    """TODO:"""
+    pass
+
+def test_node_exists():
+    """TODO:"""
+    pass
+# TODO: test actual_ methods
+
 def test_node_set_path_empty():
     """Test that Node throws an error when setting path to empty string."""
     node = Node()

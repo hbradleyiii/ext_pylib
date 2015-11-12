@@ -33,7 +33,11 @@ import pwd
 #   methods:
 #       create()
 #       remove(ask)
-#       fill(fill_with)
+#       chmod(perms)
+#       chown(owner, group)
+#       verify(repair)
+#       repair()
+#       exists()
 class Node(object):
 
     def __init__(self, atts = {} ):
@@ -65,6 +69,95 @@ class Node(object):
 
     def remove(self, ask = True):
         raise NotImplementedError('[ERROR] Cannot call method on file.Node. It is an abstract class.')
+
+    def verify(self, repair = False):
+        """Verifies the existence, permissions, ownership, and group of the file/directory."""
+        if not self.path:
+            return True
+        print ''
+        print 'Checking ' + self.path + '...'
+        if not self.exists():
+            print '[!] ' + self.path + ' doesn\'t exist'
+            if not repair:
+                return False
+            self.create()
+
+        # Assume the checks pass
+        perms_check = owner_check = group_check = True
+
+        if self.perms:
+            print '--> Checking permissions for ' + self.path,
+            perms_check = self.perms == self.actual_perms
+            print ' (should be: ' + oct(self.perms) + ', actual: ' + oct(self.actual_perms) + ')',
+            print '[OK]' if perms_check else '[ERROR]'
+            if not perms_check and repair:
+                perms_check = self.chmod()
+
+        if self.owner:
+            print '--> Checking owner for ' + self.path,
+            owner_check = self.owner == self.actual_owner
+            print ' (should be: ' + self.owner + ', actual: ' + self.actual_owner + ')',
+            print '[OK]' if owner_check else '[ERROR]'
+
+        if self.group:
+            print '--> Checking group for ' + self.path,
+            group_check = self.group == self.actual_group
+            print ' (should be: ' + self.group + ', actual: ' + self.actual_group + ')',
+            print '[OK]' if group_check else '[ERROR]'
+            if not (group_check or owner_check) and repair:
+                group_check = owner_check = self.chown()
+
+        return perms_check and owner_check and group_check
+
+    def repair(self):
+        """Runs verify() with the repair flag set."""
+        return self.verify(True)
+
+    def chmod(self, perms = None):
+        """Sets the permissions on the file/directory."""
+        if not self.path:
+            return True
+        if not self.exists():
+            raise IOError(self.path + ' does not exist. Cannot set owner and permissions. [!]')
+        if not perms:
+            perms = self.perms
+        print('Setting permissions on ' + self.path + ' to "' + format(perms, '04o')  + '"...'),
+        try:
+            os.chmod(self.path, perms) # Be sure to use leading '0' as chmod takes an octal
+            print('[OK]')
+            return True
+        except Exception as error: 
+            print '[ERROR]'
+            print error
+
+    def chown(self, owner = None, group = None):
+        """Sets the owner and group of the directory."""
+        if not self.path:
+            return True
+        if not self.exists():
+            raise IOError(self.path + ' does not exist. Cannot set owner and permissions. [!]')
+        if not owner:
+            owner = self.owner
+        if not group:
+            group = self.group
+        print('Setting owner on ' + self.path + ' to "' + owner  + ':' + group + '"...'),
+        try:
+            uid = pwd.getpwnam(owner).pw_uid
+            gid = grp.getgrnam(group).gr_gid
+            os.chown(self.path, uid, gid)
+            print('[OK]')
+            return True
+        except Exception as error: 
+            print '[ERROR]'
+            print error
+
+    def exists(self):
+        """Returns true if this directory exists on disk."""
+        if not self.path:
+            return False
+        if os.path.exists(self.path):
+            return True
+        return False
 
     ################
     # Properties
