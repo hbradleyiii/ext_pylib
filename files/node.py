@@ -94,6 +94,9 @@ class Node(object):
         # Directory must start with '/'
         if not path.startswith('/'):
             raise ValueError('Relative paths (' + path + ') are not allowed as an file.Node.')
+        # Clean path of extra slashes
+        while "//" in path:
+            path = path.replace('//', '/')
         self._path = path
 
     @property
