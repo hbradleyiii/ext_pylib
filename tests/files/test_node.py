@@ -105,22 +105,40 @@ def test_node_parent_dirs(atts, expected):
     node = Node(atts)
     assert node.parent_dirs == expected
 
+default_atts = { 'path' : '/etc/path/file' }
+
 def test_node_set_perms_invalid():
-    """TODO:"""
-    pass
+    """Tests setting node's perms as invalid values."""
+    node = Node(default_atts)
+    with pytest.raises(ValueError):
+        node.perms = 'a'
+    with pytest.raises(ValueError):
+        node.perms = 9999
+    with pytest.raises(ValueError):
+        node.perms = -9999
 
 def test_node_set_bad_owner():
-    """TODO:"""
-    pass
+    """Tests setting node's owner to an invalid user."""
+    node = Node(default_atts)
+    with pytest.raises(KeyError):
+        node.owner = 'HopefullyNot_a_RealUser'
 
 def test_node_set_owner_root():
-    """TODO:"""
-    pass
+    """Tests setting node's owner to root."""
+    node = Node(default_atts)
+    node.owner = 'root'
+    assert node.owner == 'root'
+    assert node._owner == 'root'
 
 def test_node_set_bad_group():
-    """TODO:"""
-    pass
+    """Tests setting node's group to an invalid user."""
+    node = Node(default_atts)
+    with pytest.raises(KeyError):
+        node.group = 'HopefullyNot_a_RealGroup'
 
 def test_node_set_group_root():
-    """TODO:"""
-    pass
+    """Tests setting node's group to root."""
+    node = Node(default_atts)
+    node.group = 'root'
+    assert node.group == 'root'
+    assert node._group == 'root'
