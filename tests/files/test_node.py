@@ -15,6 +15,8 @@ import pytest
 init_args = [
     ({'path' : None}, 
         {'path' : '<files.Node:stub>', 'perms' : None, 'owner' : None, 'group' : None}),
+    ({'path' : '/this/path/file'}, 
+        {'path' : '/this/path/file', 'perms' : None, 'owner' : None, 'group' : None}),
     ({'path' : '/this/path/'}, 
         {'path' : '/this/path/', 'perms' : None, 'owner' : None, 'group' : None}),
     ({'path' : '/this//path/'}, 
