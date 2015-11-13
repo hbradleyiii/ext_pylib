@@ -27,13 +27,15 @@ def copytree(source, destination, symlinks=False, ignore=None):
                 copytree(item_src, item_dst)
             else:
                 shutil.copytree(item_src, item_dst, symlinks, ignore)
+            return True
         else: # It's a file
             if os.path.exists(item_dst):
                 if not prompt(item_dst + ' already exists. Replace with ' + item_src + '?'):
                     print 'Skipping.'
-                    return
+                    return True
                 os.remove(item_dst) # It's a file that already exists; remove it, then copy
             shutil.copy2(item_src, item_dst)
+            return True
 
 
 # Dir(path, atts)
@@ -65,14 +67,13 @@ class Dir(Node):
         except Exception as error: 
             print '[ERROR]'
             print error
-        self.chmod()
-        self.chown()
+        return self.chmod() and self.chown()
 
     def remove(self, ask = True):
         """Removes the directory structure."""
         if not self.exists():
             print self.path + ' doesn\'t exist.'
-            return
+            return True
         if not ask or prompt('Completely remove ' + self.path + ' and all containing files and folders?'):
             print('Removing "' + self.path + '"...'),
             try:
@@ -86,8 +87,10 @@ class Dir(Node):
     def fill(self, fill_with):
         """Fills the directory with the contents of "fill_with" path."""
         if not self.exists():
+            # TODO:
             pass
         if not os.path.exists(fill_with):
+            # TODO:
             pass
         print('Filling "' + self.path + '" with contents of "' + fill_with + '"...')
         try:
