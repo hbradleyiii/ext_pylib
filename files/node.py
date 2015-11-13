@@ -81,6 +81,7 @@ class Node(object):
             if not repair:
                 return False
             self.create()
+            return self.verify(repair)
 
         # Assume the checks pass
         perms_check = owner_check = group_check = True
@@ -92,6 +93,7 @@ class Node(object):
             print '[OK]' if perms_check else '[ERROR]'
             if not perms_check and repair:
                 perms_check = self.chmod()
+                return self.verify(repair)
 
         if self.owner:
             print '--> Checking owner for ' + self.path,
@@ -106,6 +108,7 @@ class Node(object):
             print '[OK]' if group_check else '[ERROR]'
             if not (group_check or owner_check) and repair:
                 group_check = owner_check = self.chown()
+                return self.verify(repair)
 
         return perms_check and owner_check and group_check
 
