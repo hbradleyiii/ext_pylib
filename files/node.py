@@ -182,9 +182,6 @@ class Node(object):
         for char in path:
             if char not in '-_.() abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/':
                 raise ValueError('"' + path + '" is not allowed as an file.Node.')
-        # Directory must start with '/'
-        if not path.startswith('/'):
-            raise ValueError('Relative paths (' + path + ') are not allowed as an file.Node.')
         # Clean path of extra slashes
         while "//" in path:
             path = path.replace('//', '/')
