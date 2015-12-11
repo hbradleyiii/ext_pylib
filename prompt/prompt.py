@@ -3,17 +3,18 @@
 # name:             prompt.py
 # author:           Harold Bradley III
 # email:            harold@bradleystudio.net
+# created on:       11/03/2015
 #
 # description:      Functions for displaying and handling prompts on the
 #                   terminal.
 #
 
 def prompt(prompt_text, default = True):
-    """Displays a yes/no prompt and returns a bool as the response.""" 
+    """Displays a yes/no prompt and returns a bool as the response."""
     default_text = " [y] " if default else " [n] "
     while True:
         response = raw_input('[?] ' + prompt_text + default_text).lower()
-        responses = { 
+        responses = {
                 ''    : default,
                 'y'   : True,
                 'yes' : True,
@@ -26,7 +27,7 @@ def prompt(prompt_text, default = True):
             print 'Response not understood.'
 
 def prompt_str(prompt_text, default_str=''):
-    """Prompts for a string, returns the result""" 
+    """Prompts for a string, returns the result"""
     add_text = " "
     if not default_str == '':
         add_text = " [" + default_str + "] "
@@ -38,7 +39,7 @@ def prompt_str(prompt_text, default_str=''):
 
 def warn_prompt(prompt_text, required_response):
     """Warning prompt that prompts for a specific text.
-    This is useful for potentially dangerous actions.""" 
+    This is useful for potentially dangerous actions."""
     while True:
         response = raw_input("[!!] " + prompt_text + " [type n or '" + required_response + "'] ")
         if response == required_response:

@@ -3,7 +3,7 @@
 # name:             node.py
 # author:           Harold Bradley III
 # email:            harold@bradleystudio.net
-# created on:       11/03/2014
+# created on:       11/03/2015
 #
 # description:      An abstract class that describes a node to be extended by a
 #                   directory and file class respectively.
@@ -129,7 +129,7 @@ class Node(object):
             os.chmod(self.path, perms) # Be sure to use leading '0' as chmod takes an octal
             print('[OK]')
             return True
-        except Exception as error: 
+        except Exception as error:
             print '[ERROR]'
             print error
 
@@ -150,7 +150,7 @@ class Node(object):
             os.chown(self.path, uid, gid)
             print('[OK]')
             return True
-        except Exception as error: 
+        except Exception as error:
             print '[ERROR]'
             print error
 
@@ -208,7 +208,7 @@ class Node(object):
         """Returns the perms as it is on disk."""
         if not self.path:
             return None
-        return os.stat(self.path).st_mode & 511 
+        return os.stat(self.path).st_mode & 511
 
     @property
     def perms(self):
@@ -220,7 +220,7 @@ class Node(object):
         """Sets the perms (string)."""
         try:
             perms = int(perms)
-        except ValueError as e: 
+        except ValueError as e:
             print e
             print '[ERROR] ' + perms + ' must be set to an int.'
             raise
@@ -252,7 +252,7 @@ class Node(object):
             try:
                 # Is this a valid user?
                 uid = pwd.getpwnam(owner)
-            except KeyError: 
+            except KeyError:
                 print '[ERROR] ' + owner + ' is not a valid user.'
                 raise
         self._owner = owner
@@ -279,7 +279,7 @@ class Node(object):
             try:
                 # Is this a valid group?
                 gid = grp.getgrnam(group)
-            except KeyError: 
+            except KeyError:
                 print '[ERROR] ' + group + ' is not a valid group.'
                 raise
         self._group = group

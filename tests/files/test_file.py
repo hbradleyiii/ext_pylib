@@ -3,7 +3,7 @@
 # name:             test_file.py
 # author:           Harold Bradley III
 # email:            harold@bradleystudio.net
-# created on:       11/12/2014
+# created on:       11/12/2015
 #
 # description:      A unit test for ext_pylib file module's File class and
 #                   methods.
@@ -14,7 +14,7 @@ import pytest
 
 
 init_args = [
-    ({'path' : None}, 
+    ({'path' : None},
         {'path' : '<file.File:stub>', 'perms' : None, 'owner' : None, 'group' : None}),
 ]
 @pytest.mark.parametrize(("atts", "expected"), init_args)

@@ -3,7 +3,7 @@
 # name:             file.py
 # author:           Harold Bradley III
 # email:            harold@bradleystudio.net
-# created on:       11/04/2014
+# created on:       11/04/2015
 #
 # description:      A class to manage and create files.
 #
@@ -18,7 +18,7 @@ import sys
 
 
 # File(atts)
-#   An class to manage a file's permissions, ownership, and path. 
+#   An class to manage a file's permissions, ownership, and path.
 #
 #   methods:
 #       create()
@@ -46,7 +46,7 @@ class File(Node):
         if not os.path.exists(self.parent_dirs):
             try:
                 os.makedirs(self.parent_dirs)
-            except Exception as error: 
+            except Exception as error:
                 print '[ERROR]'
                 print error
                 return False
@@ -61,7 +61,7 @@ class File(Node):
             try:
                 open(self.path, 'w+').close()
                 print('[OK]')
-            except Exception as error: 
+            except Exception as error:
                 print '[ERROR]'
                 print error
                 return False

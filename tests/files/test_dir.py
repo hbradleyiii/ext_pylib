@@ -3,7 +3,7 @@
 # name:             test_dir.py
 # author:           Harold Bradley III
 # email:            harold@bradleystudio.net
-# created on:       11/12/2014
+# created on:       11/12/2015
 #
 # description:      A unit test for ext_pylib file module's Dir class and
 #                   methods.
