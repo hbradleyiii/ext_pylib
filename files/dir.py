@@ -3,7 +3,7 @@
 # name:             mm_dir.py
 # author:           Harold Bradley III
 # email:            harold@bradleystudio.net
-# created on:       11/03/2014
+# created on:       11/03/2015
 #
 # description:      A class that describes a directory and gives functions to
 #                   create the directory. It extends Node.
@@ -64,7 +64,7 @@ class Dir(Node):
             os.makedirs(self.path)
             print '[OK]'
             return True
-        except Exception as error: 
+        except Exception as error:
             print '[ERROR]'
             print error
         return self.chmod() and self.chown()
@@ -80,7 +80,7 @@ class Dir(Node):
                 shutil.rmtree(self.path)
                 print '[OK]'
                 return True
-            except Exception as error: 
+            except Exception as error:
                 print '[ERROR]'
                 print error
 
@@ -97,7 +97,7 @@ class Dir(Node):
             copytree(fill_with, self.path) # copytree(source, destination)
             print 'Copy complete. [OK]'
             return True
-        except Exception as error: 
+        except Exception as error:
             print 'Copy failed. [ERROR]'
             print error
 

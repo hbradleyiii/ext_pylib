@@ -3,7 +3,7 @@
 # name:             test_node.py
 # author:           Harold Bradley III
 # email:            harold@bradleystudio.net
-# created on:       11/08/2014
+# created on:       11/08/2015
 #
 # description:      A unit test for ext_pylib file module's Node class and
 #                   methods.
@@ -13,17 +13,17 @@ from ext_pylib.files.node import Node
 import pytest
 
 init_args = [
-    ({'path' : None}, 
+    ({'path' : None},
         {'path' : '<files.Node:stub>', 'perms' : None, 'owner' : None, 'group' : None}),
-    ({'path' : '/this/path/file'}, 
+    ({'path' : '/this/path/file'},
         {'path' : '/this/path/file', 'perms' : None, 'owner' : None, 'group' : None}),
-    ({'path' : '/this/path/'}, 
+    ({'path' : '/this/path/'},
         {'path' : '/this/path/', 'perms' : None, 'owner' : None, 'group' : None}),
-    ({'path' : '/this//path/'}, 
+    ({'path' : '/this//path/'},
         {'path' : '/this/path/', 'perms' : None, 'owner' : None, 'group' : None}),
-    ({'path' : '/this//path//'}, 
+    ({'path' : '/this//path//'},
         {'path' : '/this/path/', 'perms' : None, 'owner' : None, 'group' : None}),
-    ({'path' : '/this///path////'}, 
+    ({'path' : '/this///path////'},
         {'path' : '/this/path/', 'perms' : None, 'owner' : None, 'group' : None}),
     ({'path' : '/etc/path/file'},
         {'path' : '/etc/path/file', 'perms' : None, 'owner' : None, 'group' : None}),
