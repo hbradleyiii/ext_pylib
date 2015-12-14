@@ -43,6 +43,22 @@ def test_node_initialize(atts, expected):
     assert node.owner == expected['owner']
     assert node.group == expected['group']
 
+repr_args = [
+    ({'path' : None},
+        "Node({'path' : None, 'perms' : None, 'owner' : None, 'group' : None})"),
+    ({'path' : '/this/path/file'},
+        "Node({'path' : '/this/path/file', 'perms' : None, 'owner' : None, 'group' : None})"),
+    ({'path' : '/etc/path/file', 'perms' : 0655},
+        "Node({'path' : '/etc/path/file', 'perms' : 0655, 'owner' : None, 'group' : None})"),
+    ({'path' : '/etc/path/file', 'perms' : 0655, 'owner' : 'root', 'group' : 'root'},
+        "Node({'path' : '/etc/path/file', 'perms' : 0655, 'owner' : 'root', 'group' : 'root'})"),
+]
+@pytest.mark.parametrize(("atts", "expected"), repr_args)
+def test_node_repr(atts, expected):
+    """Test initialize Node."""
+    node = Node(atts)
+    assert node.__repr__() == expected
+
 concat_args = [
     ({'path' : None}, '<files.Node:stub>'),
     ({'path' : '/this/path/'}, '/this/path/'),

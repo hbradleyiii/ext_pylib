@@ -53,8 +53,33 @@ class Node(object):
         return self.path
 
     def __repr__(self):
-        """Returns a string with the path."""
-        return self.__str__()
+        """Returns a python string that evaluates to the object instance."""
+        # Note that any atts added later must be added here for this to work.
+        atts = "{'path' : "
+        if self.path:
+            atts += "'" + self.path + "', "
+        else:
+            atts += 'None, '
+
+        atts += "'perms' : "
+        if self.perms:
+            atts += self.perms + ", "
+        else:
+            atts += 'None, '
+
+        atts += "'owner' : "
+        if self.owner:
+            atts += "'" + self.owner + "', "
+        else:
+            atts += 'None, '
+
+        atts += "'group' : "
+        if self.group:
+            atts += "'" + self.group + "'}"
+        else:
+            atts += 'None}'
+
+        return "%s(%s)" % (self.__class__.__name__, atts)
 
     def __add__(self, other):
         """Allows string concatenation with the path."""
