@@ -30,9 +30,9 @@ init_args = [
     ({'path' : '/etc/path/file'},
         {'path' : '/etc/path/file', 'perms' : None, 'owner' : None, 'group' : None}),
     ({'path' : '/etc/path/file', 'perms' : 0655},
-        {'path' : '/etc/path/file', 'perms' : 0655, 'owner' : None, 'group' : None}),
+        {'path' : '/etc/path/file', 'perms' : '0655', 'owner' : None, 'group' : None}),
     ({'path' : '/etc/path/file', 'perms' : 0655, 'owner' : 'root', 'group' : 'root'},
-        {'path' : '/etc/path/file', 'perms' : 0655, 'owner' : 'root', 'group' : 'root'}),
+        {'path' : '/etc/path/file', 'perms' : '0655', 'owner' : 'root', 'group' : 'root'}),
 ]
 @pytest.mark.parametrize(("atts", "expected"), init_args)
 def test_node_initialize(atts, expected):

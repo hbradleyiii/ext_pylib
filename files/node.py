@@ -213,7 +213,7 @@ class Node(object):
     @property
     def perms(self):
         """Returns the perms (string)."""
-        return getattr(self, '_perms', None)
+        return None if not getattr(self, '_perms', None) else oct(getattr(self, '_perms', None))
 
     @perms.setter
     def perms(self, perms):
