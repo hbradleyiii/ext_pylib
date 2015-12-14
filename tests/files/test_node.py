@@ -55,7 +55,7 @@ repr_args = [
 ]
 @pytest.mark.parametrize(("atts", "expected"), repr_args)
 def test_node_repr(atts, expected):
-    """Test initialize Node."""
+    """Test Node repr."""
     node = Node(atts)
     assert node.__repr__() == expected
 
