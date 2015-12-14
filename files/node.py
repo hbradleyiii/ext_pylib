@@ -42,7 +42,6 @@ class Node(object):
 
     def __init__(self, atts = {} ):
         """Initializes a new Node instance."""
-        self.path = None # !! Make sure path is at least initialized
         for attribute in atts:
             setattr(self, attribute, atts[attribute])
 
