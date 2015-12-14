@@ -21,8 +21,8 @@ import pwd
 #
 #   Node is initialized with a dict of attributes. Attributes that aren't
 #   given are just initialized as None. If a path isn't given, the node is set
-#   to path = None. This effectively makes the Node a "Stub". Methods do
-#   nothing but return True (except exists()) enabling a graceful fail.
+#   to path = None. This effectively makes the Node a "Stub", in which methods
+#   do nothing but return True (except exists()) enabling a graceful fail.
 #
 #   atts dict can have the following values:
 #       path: the full (NOT relative) path of the node
