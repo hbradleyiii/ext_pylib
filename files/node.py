@@ -54,6 +54,18 @@ class Node(object):
 
     def __repr__(self):
         """Returns a python string that evaluates to the object instance."""
+        return "%s(%s)" % (self.__class__.__name__, self._atts_())
+
+    def __add__(self, other):
+        """Allows string concatenation with the path."""
+        return str(self) + other
+
+    def __radd__(self, other):
+        """Allows string concatenation with the path."""
+        return other + str(self)
+
+    def _atts_(self):
+        """Returns a python string of attributes (as a dict) used to create this object."""
         # Note that any atts added later must be added here for this to work.
         atts = "{'path' : "
         if self.path:
@@ -79,15 +91,7 @@ class Node(object):
         else:
             atts += 'None}'
 
-        return "%s(%s)" % (self.__class__.__name__, atts)
-
-    def __add__(self, other):
-        """Allows string concatenation with the path."""
-        return str(self) + other
-
-    def __radd__(self, other):
-        """Allows string concatenation with the path."""
-        return other + str(self)
+        return atts
 
     def create(self):
         raise NotImplementedError('[ERROR] Cannot call method on file.Node. It is an abstract class.')
