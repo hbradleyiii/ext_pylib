@@ -104,9 +104,31 @@ def test_node_repair(mock_verify):
     node.repair()
     mock_verify.assert_called_once_with(True)
 
-def test_node_chmod():
-    """TODO:"""
-    pass
+chmod_args = [
+    ({'path' : None, 'perms' : 0600 },
+        True),
+    ({'path' : '/this/path/file', 'perms' : 0700 },
+        True),
+]
+@pytest.mark.parametrize(("atts", "expected"), chmod_args)
+@patch('os.path.exists')
+@patch('os.chmod')
+def test_node_chmod(mock_chmod, mock_path_exists, atts, expected):
+    """Tests Node's chmod method."""
+    mock_path_exists.return_value = True # Assume this is working for this test
+    node = Node(atts)
+    assert expected == node.chmod()
+    if not atts['path'] == None:
+        mock_chmod.assert_called_once_with(atts['path'], oct(atts['perms']))
+
+@patch('os.path.exists')
+@patch('os.chmod')
+def test_node_chmod_nonexisting(mock_chmod, mock_path_exists):
+    """Tests Node's chown method with a nonexisting node."""
+    mock_path_exists.return_value = False
+    node = Node(default_atts)
+    with pytest.raises(IOError):
+        node.chmod()
 
 chown_args = [
     ({'path' : None, 'owner' : 'www-data', 'group' : 'root'},
@@ -130,7 +152,6 @@ def test_node_chown(mock_chown, mock_getgrnam, mock_getpwnam, mock_path_exists, 
     mock_path_exists.return_value = True # Assume this is working for this test
     mock_getpwnam(atts['owner']).pw_uid = 123 # Just a number to use for mocking
     mock_getgrnam(atts['group']).gr_gid = 123
-    mock_path_exists.return_value = expected
     node = Node(atts)
     assert expected == node.chown()
     if not atts['path'] == None:

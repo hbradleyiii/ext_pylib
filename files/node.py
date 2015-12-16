@@ -154,7 +154,7 @@ class Node(object):
             raise IOError(self.path + ' does not exist. Cannot set owner and permissions. [!]')
         if not perms:
             perms = self.perms
-        print('Setting permissions on ' + self.path + ' to "' + format(perms, '04o')  + '"...'),
+        print('Setting permissions on ' + self.path + ' to "' + perms  + '"...'),
         try:
             os.chmod(self.path, perms) # Be sure to use leading '0' as chmod takes an octal
             print('[OK]')
