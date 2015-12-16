@@ -10,8 +10,11 @@
 #
 
 from ext_pylib.files.node import Node
-from mock import patch
+from mock import Mock, patch
 import pytest
+
+
+default_atts = { 'path' : '/etc/path/file' }
 
 init_args = [
     ({'path' : None},
@@ -105,9 +108,46 @@ def test_node_chmod():
     """TODO:"""
     pass
 
-def test_node_chown():
-    """TODO:"""
-    pass
+chown_args = [
+    ({'path' : None, 'owner' : 'www-data', 'group' : 'root'},
+        True),
+    ({'path' : '/this/path/file', 'owner' : 'www-data', 'group' : 'root'},
+        True),
+    ({'path' : '/this/path/file', 'owner' : None, 'group' : 'root'},
+        True),
+    ({'path' : '/this/path/file', 'owner' : 'www-data', 'group' : None},
+        True),
+    ({'path' : '/this/path/file', 'owner' : None, 'group' : None},
+        True),
+]
+@pytest.mark.parametrize(("atts", "expected"), chown_args)
+@patch('os.path.exists')
+@patch('pwd.getpwnam')
+@patch('grp.getgrnam')
+@patch('os.chown')
+def test_node_chown(mock_chown, mock_getgrnam, mock_getpwnam, mock_path_exists, atts, expected):
+    """Tests Node's chown method."""
+    mock_path_exists.return_value = True # Assume this is working for this test
+    mock_getpwnam(atts['owner']).pw_uid = 123 # Just a number to use for mocking
+    mock_getgrnam(atts['group']).gr_gid = 123
+    mock_path_exists.return_value = expected
+    node = Node(atts)
+    assert expected == node.chown()
+    if not atts['path'] == None:
+        mock_getpwnam.assert_called_with('nobody' if not atts['owner'] else atts['owner'])
+        mock_getgrnam.assert_called_with('nobody' if not atts['group'] else atts['group'])
+        mock_chown.assert_called_once_with(atts['path'], 123, 123)
+
+@patch('os.path.exists')
+@patch('pwd.getpwnam')
+@patch('grp.getgrnam')
+@patch('os.chown')
+def test_node_chown_nonexisting(mock_chown, mock_getgrnam, mock_getpwnam, mock_path_exists):
+    """Tests Node's chown method with a nonexisting node."""
+    mock_path_exists.return_value = False
+    node = Node(default_atts)
+    with pytest.raises(IOError):
+        node.chown()
 
 exists_args = [
     ({'path' : None},
@@ -167,8 +207,6 @@ def test_node_parent_dirs(atts, expected):
     """Test generate_pw function."""
     node = Node(atts)
     assert node.parent_dirs == expected
-
-default_atts = { 'path' : '/etc/path/file' }
 
 def test_node_set_perms_invalid():
     """Tests setting node's perms as invalid values."""
