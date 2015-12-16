@@ -69,6 +69,7 @@ def test_node_concatenate(atts, expected):
     """Test concatenate Node objects."""
     node = Node(atts)
     assert node + 'string' == expected + 'string'
+    assert 'string' + node == 'string' + expected
 
 def test_node_create():
     """Test that Node throws an error when calling create()."""
