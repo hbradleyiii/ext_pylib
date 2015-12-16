@@ -10,6 +10,7 @@
 #
 
 from ext_pylib.files.node import Node
+from mock import patch
 import pytest
 
 init_args = [
