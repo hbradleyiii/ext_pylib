@@ -93,6 +93,13 @@ def test_node_verify():
     """TODO:"""
     pass
 
+@patch('ext_pylib.files.node.Node.verify')
+def test_node_repair(mock_verify):
+    """Test that repair() method calls verify(True)."""
+    node = Node()
+    node.repair()
+    mock_verify.assert_called_once_with(True)
+
 def test_node_chmod():
     """TODO:"""
     pass
