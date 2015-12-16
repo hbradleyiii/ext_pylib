@@ -45,19 +45,25 @@ def test_node_initialize(atts, expected):
 
 repr_args = [
     ({'path' : None},
-        "Node({'path' : None, 'perms' : None, 'owner' : None, 'group' : None})"),
+        "{'path' : None, 'perms' : None, 'owner' : None, 'group' : None}"),
     ({'path' : '/this/path/file'},
-        "Node({'path' : '/this/path/file', 'perms' : None, 'owner' : None, 'group' : None})"),
+        "{'path' : '/this/path/file', 'perms' : None, 'owner' : None, 'group' : None}"),
     ({'path' : '/etc/path/file', 'perms' : 0655},
-        "Node({'path' : '/etc/path/file', 'perms' : 0655, 'owner' : None, 'group' : None})"),
+        "{'path' : '/etc/path/file', 'perms' : 0655, 'owner' : None, 'group' : None}"),
     ({'path' : '/etc/path/file', 'perms' : 0655, 'owner' : 'root', 'group' : 'root'},
-        "Node({'path' : '/etc/path/file', 'perms' : 0655, 'owner' : 'root', 'group' : 'root'})"),
+        "{'path' : '/etc/path/file', 'perms' : 0655, 'owner' : 'root', 'group' : 'root'}"),
 ]
 @pytest.mark.parametrize(("atts", "expected"), repr_args)
 def test_node_repr(atts, expected):
     """Test Node repr."""
     node = Node(atts)
-    assert node.__repr__() == expected
+    assert node.__repr__() == "Node(" + expected + ")"
+
+@pytest.mark.parametrize(("atts", "expected"), repr_args)
+def test_node__atts_(atts, expected):
+    """Test Node repr."""
+    node = Node(atts)
+    assert node._atts_() == expected
 
 concat_args = [
     ({'path' : None}, '<files.Node:stub>'),
