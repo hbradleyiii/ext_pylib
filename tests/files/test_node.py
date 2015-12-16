@@ -109,10 +109,23 @@ def test_node_chown():
     """TODO:"""
     pass
 
-def test_node_exists():
-    """TODO:"""
-    pass
-# TODO: test actual_ methods
+exists_args = [
+    ({'path' : None},
+        False),
+    ({'path' : '/this/path/file'},
+        False),
+    ({'path' : '/this/path/file'},
+        True),
+]
+@pytest.mark.parametrize(("atts", "expected"), exists_args)
+@patch('os.path.exists')
+def test_node_exists(mock_path_exists, atts, expected):
+    """Tests node's exist method."""
+    mock_path_exists.return_value = expected
+    node = Node(atts)
+    assert expected == node.exists()
+    if not atts['path'] == None:
+        mock_path_exists.assert_called_once_with(atts['path'])
 
 def test_node_set_path_empty():
     """Test that Node throws an error when setting path to empty string."""
