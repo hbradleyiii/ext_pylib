@@ -80,7 +80,7 @@ def test_dir_fill(mock_copytree, mock_exists):
     assert mock_copytree.called_once_with('/another/test/dir', '/test/dir/')
 
 def test_dir_actual_create_and_remove(tmpdir):
-    """TODO: [Integration Test] Test actual creation and removal of directory."""
+    """[Integration Test] Test actual creation and removal of directory."""
     # Setup a root dir to use to test
     root_dir = Dir({'path' : '/tmp/ext_pylib/'})
     assert root_dir.remove(False) # If it already exists, remove it.

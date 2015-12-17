@@ -18,7 +18,8 @@ import sys
 
 
 # File(atts)
-#   An class to manage a file's permissions, ownership, and path.
+#   An class to manage a file's permissions, ownership, and path. Extends Node
+#   class.
 #
 #   methods:
 #       create()
