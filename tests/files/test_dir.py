@@ -9,10 +9,16 @@
 #                   methods.
 #
 
+from datetime import datetime
 from ext_pylib.files import Dir
 from mock import patch
+import os
 import pytest
 
+
+def test_copytree():
+    """TODO:"""
+    pass
 
 init_args = [
     (None, '<files.Dir:stub>'),
@@ -67,6 +73,24 @@ def test_dir_fill():
     """TODO:"""
     pass
 
-def test_dir_actual_create_remove_and_fill():
-    """TODO:"""
-    pass
+def test_dir_actual_create_and_remove(tmpdir):
+    """TODO: [Integration Test] Test actual creation and removal of directory."""
+    # Setup a root dir to use to test
+    root_dir = Dir({'path' : '/tmp/ext_pylib/'})
+    assert root_dir.remove(False) # If it already exists, remove it.
+    assert root_dir.create()
+    assert root_dir.exists()
+
+    # Perform a (redundant) creation test
+    dir = Dir({'path' : '/tmp/ext_pylib/' + datetime.now().strftime('%Y-%m-%d--%H-%M-%S') + '/path/dir'})
+    assert not dir.exists()
+    assert dir.create()
+    assert dir.exists()
+
+    # Perform a removal test
+    assert dir.remove(False)
+    assert not dir.exists()
+
+    # Cleanup
+    assert root_dir.remove(False)
+    assert not root_dir.exists()
