@@ -61,7 +61,7 @@ def test_dir_remove(mock_rmtree, mock_exists):
     assert mock_rmtree.called_once_with('/test/dir/')
 
 @patch('os.path.exists')
-@patch('os.makedirs')
+@patch('shutil.rmtree')
 def test_dir_remove_nonexisting(mock_rmtree, mock_exists):
     """Test non-existing directory removal."""
     mock_exists.return_value = False
