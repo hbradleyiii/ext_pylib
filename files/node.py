@@ -224,14 +224,14 @@ class Node(object):
         self._path = path
 
     @property
-    def parent_dirs(self):
-        """Returns the parent directories."""
+    def parent_node(self):
+        """Returns the parent node as a Node object (usually the parent directory)."""
         if not self.path:
             return None
         path = self.path
         if not path.endswith('/'):
             path = path + '/'
-        return path.rsplit('/', 2)[0] + '/'
+        return Node({'path' : path.rsplit('/', 2)[0] + '/'})
 
     @property
     def actual_perms(self):
