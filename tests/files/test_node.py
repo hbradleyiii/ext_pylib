@@ -93,9 +93,41 @@ def test_node_remove():
     with pytest.raises(NotImplementedError):
         node.remove()
 
-def test_node_verify():
-    """TODO:"""
-    pass
+verify_args = [
+    ({'path' : None}),
+    ({'path' : '/this/path/file'}),
+    ({'path' : '/this/path/', 'perms' : 0655}),
+    ({'path' : '/this/path/', 'owner' : 'root'}),
+    ({'path' : '/this/path/', 'group' : 'root'}),
+    ({'path' : '/this/path/', 'perms' : 0655, 'owner' : 'root'}),
+    ({'path' : '/this/path/', 'perms' : 0655, 'group' : 'root'}),
+    ({'path' : '/this/path/', 'owner' : 'root', 'group' : 'root'}),
+    ({'path' : '/etc/path/file', 'perms' : 0655, 'owner' : 'root', 'group' : 'root'}),
+]
+@pytest.mark.parametrize(("atts"), verify_args)
+@patch('ext_pylib.files.node.Node.actual_group')
+@patch('ext_pylib.files.node.Node.actual_owner')
+@patch('ext_pylib.files.node.Node.actual_perms')
+@patch('ext_pylib.files.node.Node.exists')
+def test_node_verify(mock_exists, mock_actual_perms, mock_actual_owner, mock_actual_group, atts):
+    """Test Node's method verify."""
+    # Test passing verification
+    mock_exists.return_value = True
+    mock_actual_perms.return_value = None if 'perms' not in atts else oct(atts['perms'])
+    mock_actual_owner.return_value = None if 'owner' not in atts else atts['owner']
+    mock_actual_group.return_value = None if 'group' not in atts else atts['group']
+    node = Node(atts)
+    assert node.verify(False)
+
+    # Test failing verification
+    if atts['path']:
+        # If there is no path, it's a stub and should always verify true.
+        mock_exists.return_value = False
+        mock_actual_perms.return_value = None
+        mock_actual_owner.return_value = None
+        mock_actual_group.return_value = None
+        bad_node = Node(atts)
+        assert not bad_node.verify(False)
 
 @patch('ext_pylib.files.node.Node.verify')
 def test_node_repair(mock_verify):

@@ -118,8 +118,8 @@ class Node(object):
 
         if self.perms:
             print '--> Checking permissions for ' + self.path,
-            perms_check = self.perms == self.actual_perms
-            print ' (should be: ' + oct(self.perms) + ', actual: ' + oct(self.actual_perms) + ')',
+            perms_check = self.perms == self.actual_perms()
+            print ' (should be: ' + self.perms + ', actual: ' + self.actual_perms() + ')',
             print '[OK]' if perms_check else '[ERROR]'
             if not perms_check and repair:
                 perms_check = self.chmod()
@@ -127,13 +127,13 @@ class Node(object):
 
         if self.owner:
             print '--> Checking owner for ' + self.path,
-            owner_check = self.owner == self.actual_owner
+            owner_check = self.owner == self.actual_owner()
             print ' (should be: ' + self.owner + ', actual: ' + self.actual_owner + ')',
             print '[OK]' if owner_check else '[ERROR]'
 
         if self.group:
             print '--> Checking group for ' + self.path,
-            group_check = self.group == self.actual_group
+            group_check = self.group == self.actual_group()
             print ' (should be: ' + self.group + ', actual: ' + self.actual_group + ')',
             print '[OK]' if group_check else '[ERROR]'
             if not (group_check or owner_check) and repair:
@@ -238,7 +238,7 @@ class Node(object):
         """Returns the perms as it is on disk."""
         if not self.path:
             return None
-        return os.stat(self.path).st_mode & 511
+        return oct(os.stat(self.path).st_mode & 511)
 
     @property
     def perms(self):
