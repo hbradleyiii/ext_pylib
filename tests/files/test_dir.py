@@ -69,9 +69,15 @@ def test_dir_remove_nonexisting(mock_rmtree, mock_exists):
     assert dir.remove(False)
     assert not mock_rmtree.called
 
-def test_dir_fill():
-    """TODO:"""
-    pass
+@patch('os.path.exists')
+@patch('ext_pylib.files.dir.copytree')
+def test_dir_fill(mock_copytree, mock_exists):
+    """Tests filling one Dir with another."""
+    mock_exists.return_value = True
+    dir = Dir({'path' : '/test/dir/'})
+    fill_with = Dir({'path' : '/another/test/dir/'})
+    assert dir.fill(fill_with)
+    assert mock_copytree.called_once_with('/another/test/dir', '/test/dir/')
 
 def test_dir_actual_create_and_remove(tmpdir):
     """TODO: [Integration Test] Test actual creation and removal of directory."""

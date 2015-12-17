@@ -85,16 +85,16 @@ class Dir(Node):
                 print error
 
     def fill(self, fill_with):
-        """Fills the directory with the contents of "fill_with" path."""
+        """Fills the directory with the contents of "fill_with" (a Dir instance)."""
         if not self.exists():
-            # TODO:
-            pass
-        if not os.path.exists(fill_with):
-            # TODO:
-            pass
+            print 'Copy failed. [ERROR]'
+            raise IOError(self.path + 'does not exist')
+        if not fill_with.exists(): # Requires a Dir object, NOT a string
+            print 'Copy failed. [ERROR]'
+            raise IOError(fill_with + 'does not exist')
         print('Filling "' + self.path + '" with contents of "' + fill_with + '"...')
         try:
-            copytree(fill_with, self.path) # copytree(source, destination)
+            copytree(fill_with.path, self.path) # copytree(source, destination)
             print 'Copy complete. [OK]'
             return True
         except Exception as error:
