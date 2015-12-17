@@ -256,10 +256,13 @@ parent_dirs_args = [
     ({'path' : '//etc//path//file'}, '/etc/path/'),
 ]
 @pytest.mark.parametrize(("atts", "expected"), parent_dirs_args)
-def test_node_parent_dirs(atts, expected):
-    """Test generate_pw function."""
+def test_node_parent_node(atts, expected):
+    """Test parent_node method. Should return a Node object."""
     node = Node(atts)
-    assert node.parent_dirs == expected
+    if node.path:
+        assert node.parent_node.path == expected
+    else:
+        assert node.parent_node == expected
 
 def test_node_set_perms_invalid():
     """Tests setting node's perms as invalid values."""

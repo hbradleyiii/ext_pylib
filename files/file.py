@@ -43,13 +43,12 @@ class File(Node):
         print('Creating ' + self.path + '... '),
 
         # Create parent directorys
-        if not os.path.exists(self.parent_dirs):
+        if not self.parent_node.exists:
             try:
-                os.makedirs(self.parent_dirs)
+                self.parent_node.create()
             except Exception as error:
                 print '[ERROR]'
                 print error
-                return False
 
         # Use passed data
         if data:
