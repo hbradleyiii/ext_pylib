@@ -58,7 +58,7 @@ class Dir(Node):
         """Creates the directory structure."""
         if self.exists():
             print self.path + ' already exists.'
-            return
+            return True
         print('Creating directories "' + self.path + '"...'),
         try:
             os.makedirs(self.path)
