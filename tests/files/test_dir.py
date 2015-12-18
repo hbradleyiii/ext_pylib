@@ -6,7 +6,8 @@
 # created on:       11/12/2015
 #
 # description:      A unit test for ext_pylib file module's Dir class and
-#                   methods.
+#                   methods. Note that copytree() function is tested in
+#                   test_integration.
 #
 
 from datetime import datetime
@@ -15,10 +16,6 @@ from mock import patch
 import os
 import pytest
 
-
-def test_copytree():
-    """TODO:"""
-    pass
 
 init_args = [
     (None, '<files.Dir:stub>'),
@@ -58,7 +55,7 @@ def test_dir_remove(mock_rmtree, mock_exists):
     mock_exists.return_value = True
     dir = Dir({'path' : '/test/dir/'})
     assert dir.remove(False)
-    assert mock_rmtree.called_once_with('/test/dir/')
+    mock_rmtree.assert_called_once_with('/test/dir/')
 
 @patch('os.path.exists')
 @patch('shutil.rmtree')
@@ -79,7 +76,7 @@ def test_dir_fill(mock_copytree, mock_exists):
     dir = Dir({'path' : '/test/dir/'})
     fill_with = Dir({'path' : '/another/test/dir/'})
     assert dir.fill(fill_with)
-    assert mock_copytree.called_once_with('/another/test/dir', '/test/dir/')
+    mock_copytree.assert_called_once_with('/another/test/dir/', '/test/dir/')
 
 def test_dir_actual_create_and_remove(tmpdir):
     """[Integration Test] Test actual creation and removal of directory."""

@@ -106,11 +106,6 @@ class Dir(Node):
     ################
     # Properties
 
-    @property
-    def path(self):
-        """Returns the path."""
-        return self.__path
-
     @Node.path.setter
     def path(self, path):
         """Sets the path."""
