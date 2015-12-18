@@ -28,7 +28,7 @@ def test_generate_pw(length, charset, expected):
     (20, {'set' : 'abc', 'set2' : 'ABC'}, 20),
 ])
 def test_generate_pw_length(length, charset, expected):
-    """Test initializing envi_file"""
+    """Test generate_pw_length function."""
     assert len(generate_pw(length, charset)) == expected
 
 
@@ -39,5 +39,5 @@ def test_generate_pw_length(length, charset, expected):
     ('W1$z', DEFAULT_CHAR_SET['big'], False),
 ])
 def test_is_like_previous_char(pw, charset, expected):
-    """Test initializing envi_file"""
+    """Test is_like_previous_char function."""
     assert is_like_previous_char(pw, charset) == expected

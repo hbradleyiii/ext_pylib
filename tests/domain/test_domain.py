@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #
-# name:             test_prompt.py
+# name:             test_domain.py
 # author:           Harold Bradley III
 # email:            harold@bradleystudio.net
 # created on:       11/11/2015
