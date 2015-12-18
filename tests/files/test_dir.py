@@ -66,7 +66,9 @@ def test_dir_remove_nonexisting(mock_rmtree, mock_exists):
     """Test non-existing directory removal."""
     mock_exists.return_value = False
     dir = Dir({'path' : '/test/dir/'})
+    dir2 = Dir({'path' : None})
     assert dir.remove(False)
+    assert dir2.remove(False)
     assert not mock_rmtree.called
 
 @patch('os.path.exists')
