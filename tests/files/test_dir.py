@@ -77,25 +77,3 @@ def test_dir_fill(mock_copytree, mock_exists):
     fill_with = Dir({'path' : '/another/test/dir/'})
     assert dir.fill(fill_with)
     mock_copytree.assert_called_once_with('/another/test/dir/', '/test/dir/')
-
-def test_dir_actual_create_and_remove(tmpdir):
-    """[Integration Test] Test actual creation and removal of directory."""
-    # Setup a root dir to use to test
-    root_dir = Dir({'path' : '/tmp/ext_pylib/'})
-    assert root_dir.remove(False) # If it already exists, remove it.
-    assert root_dir.create()
-    assert root_dir.exists()
-
-    # Perform a (redundant) creation test
-    dir = Dir({'path' : '/tmp/ext_pylib/' + datetime.now().strftime('%Y-%m-%d--%H-%M-%S') + '/path/dir'})
-    assert not dir.exists()
-    assert dir.create()
-    assert dir.exists()
-
-    # Perform a removal test
-    assert dir.remove(False)
-    assert not dir.exists()
-
-    # Cleanup
-    assert root_dir.remove(False)
-    assert not root_dir.exists()
