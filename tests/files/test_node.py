@@ -143,7 +143,7 @@ chmod_args = [
         True),
 ]
 @pytest.mark.parametrize(("atts", "expected"), chmod_args)
-@patch('os.path.exists')
+@patch('ext_pylib.files.node.Node.exists')
 @patch('os.chmod')
 def test_node_chmod(mock_chmod, mock_path_exists, atts, expected):
     """Tests Node's chmod method."""
@@ -153,7 +153,7 @@ def test_node_chmod(mock_chmod, mock_path_exists, atts, expected):
     if not atts['path'] == None:
         mock_chmod.assert_called_once_with(atts['path'], oct(atts['perms']))
 
-@patch('os.path.exists')
+@patch('ext_pylib.files.node.Node.exists')
 @patch('os.chmod')
 def test_node_chmod_nonexisting(mock_chmod, mock_path_exists):
     """Tests Node's chown method with a nonexisting node."""
@@ -175,7 +175,7 @@ chown_args = [
         True),
 ]
 @pytest.mark.parametrize(("atts", "expected"), chown_args)
-@patch('os.path.exists')
+@patch('ext_pylib.files.node.Node.exists')
 @patch('pwd.getpwnam')
 @patch('grp.getgrnam')
 @patch('os.chown')
@@ -191,7 +191,7 @@ def test_node_chown(mock_chown, mock_getgrnam, mock_getpwnam, mock_path_exists, 
         mock_getgrnam.assert_called_with('nobody' if not atts['group'] else atts['group'])
         mock_chown.assert_called_once_with(atts['path'], 123, 123)
 
-@patch('os.path.exists')
+@patch('ext_pylib.files.node.Node.exists')
 @patch('pwd.getpwnam')
 @patch('grp.getgrnam')
 @patch('os.chown')
