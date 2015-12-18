@@ -26,6 +26,10 @@ class Domain(object):
         """Initializes a new Domain instance."""
         self.domain = domain
 
+    def __repr__(self):
+        """Returns a python string that evaluates to the object instance."""
+        return 'Domain(' + self.domain + ')'
+
     def __str__(self):
         """Returns a string with the domain name."""
         return self.domain
