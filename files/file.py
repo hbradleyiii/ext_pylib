@@ -71,6 +71,23 @@ class File(Node):
         """Removes the file/directory."""
         if not self.path:
             return True
+        if not self.exists():
+            print self.path + ' doesn\'t exist.'
+            return True
         if not ask or prompt('Remove ' + self.path + '?'):
             os.remove(self.path)
             return True
+
+    ################
+    # Properties
+
+    @Node.path.setter
+    def path(self, path):
+        """Sets the path."""
+        # Check for None
+        if path == None:
+            return
+        # File cannot end in '/'
+        if path.endswith('/'):
+            raise ValueError('"path" cannot end in "/" in a file.File class.')
+        Node.path.fset(self, path)
