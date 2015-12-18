@@ -229,7 +229,7 @@ class Node(object):
         if not self.path:
             return None
         path = self.path
-        if not path.endswith('/'):
+        if not path.endswith('/'): # makes the spliting easier to have '/' at the end
             path = path + '/'
         return Node({'path' : path.rsplit('/', 2)[0] + '/'})
 
