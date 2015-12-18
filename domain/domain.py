@@ -48,12 +48,12 @@ class Domain(object):
 
     @property
     def ip(self):
-        """Returns the A Record ip of the domain."""
+        """Returns the A Record IP of the domain."""
         return socket.gethostbyname(self.domain)
 
     @property
     def server_ip(self):
-        """Return the ip of the server."""
+        """Return the IP of this server."""
         # TODO: Turn this into a list of values that can be passed in at init.
         server_ip = requests.get('http://mediamarketers.com/myip/').text
         if server_ip == '127.0.0.1':
@@ -62,7 +62,7 @@ class Domain(object):
 
     @property
     def domain(self):
-        """Return the domain."""
+        """Return the domain as a string."""
         return self.__domain
 
     @domain.setter

@@ -31,7 +31,7 @@ def test_file_initialize_with_trailing_slash():
         file = File({'path' : '/this/path/'})
 
 def test_file_create():
-    """TODO:"""
+    """TODO: Test file creation."""
     pass
 
 @patch('ext_pylib.files.node.Node.exists')
