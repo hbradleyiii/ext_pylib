@@ -71,6 +71,8 @@ class Dir(Node):
 
     def remove(self, ask = True):
         """Removes the directory structure."""
+        if not self.path:
+            return True
         if not self.exists():
             print self.path + ' doesn\'t exist.'
             return True
