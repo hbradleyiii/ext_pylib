@@ -8,13 +8,9 @@
 # description:      A class to manage and create files.
 #
 
-import grp
 from node import Node
 import os
 from ext_pylib import prompt
-import pwd
-import shutil
-import sys
 
 
 # File(atts)
