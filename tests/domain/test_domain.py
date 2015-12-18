@@ -9,7 +9,7 @@
 #                   methods.
 #
 
-from ext_pylib.prompt import *
+from ext_pylib.domain import Domain
 import mock
 import pytest
 
