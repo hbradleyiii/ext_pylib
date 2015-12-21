@@ -173,8 +173,12 @@ class Node(object):
             raise IOError(self.path + ' does not exist. Cannot set owner and permissions. [!]')
         if not owner:
             owner = self.owner
+            if not self.owner:
+                owner = 'nobody'
         if not group:
             group = self.group
+            if not self.group:
+                group = owner
         print('Setting owner on ' + self.path + ' to "' + owner  + ':' + group + '"...'),
         try:
             uid = pwd.getpwnam(owner).pw_uid

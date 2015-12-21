@@ -177,6 +177,14 @@ chown_args = [
         True),
     ({'path' : '/this/path/file', 'owner' : None, 'group' : None},
         True),
+    ({'path' : '/this/path/file' },
+        True),
+    ({'path' : '/this/path/file', 'owner' : 'www-data' },
+        True),
+    ({'path' : '/this/path/file', 'group' : 'www-data' },
+        True),
+    ({'path' : '/this/path/file', 'owner' : None, 'group' : 'www-data' },
+        True),
 ]
 @pytest.mark.parametrize(("atts", "expected"), chown_args)
 @patch('ext_pylib.files.node.Node.exists')
@@ -185,10 +193,14 @@ chown_args = [
 @patch('os.chown')
 def test_node_chown(mock_chown, mock_getgrnam, mock_getpwnam, mock_path_exists, atts, expected):
     """Tests Node's chown method."""
+    node = Node(atts)
+    if 'owner' not in atts:
+        atts['owner'] = 'nobody'
+    if 'group' not in atts:
+        atts['group'] = atts['owner']
     mock_path_exists.return_value = True # Assume this is working for this test
     mock_getpwnam(atts['owner']).pw_uid = 123 # Just a number to use for mocking
     mock_getgrnam(atts['group']).gr_gid = 123
-    node = Node(atts)
     assert expected == node.chown()
     if not atts['path'] == None:
         mock_getpwnam.assert_called_with('nobody' if not atts['owner'] else atts['owner'])
