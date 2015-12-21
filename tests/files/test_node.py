@@ -141,6 +141,8 @@ chmod_args = [
         True),
     ({'path' : '/this/path/file', 'perms' : 0700 },
         True),
+    ({'path' : '/this/path/file' },
+        True),
 ]
 @pytest.mark.parametrize(("atts", "expected"), chmod_args)
 @patch('ext_pylib.files.node.Node.exists')
@@ -150,8 +152,10 @@ def test_node_chmod(mock_chmod, mock_path_exists, atts, expected):
     mock_path_exists.return_value = True # Assume this is working for this test
     node = Node(atts)
     assert expected == node.chmod()
-    if not atts['path'] == None:
+    if atts['path'] and node.perms:
         mock_chmod.assert_called_once_with(atts['path'], oct(atts['perms']))
+    else:
+        assert not mock_chmod.called
 
 @patch('ext_pylib.files.node.Node.exists')
 @patch('os.chmod')
