@@ -120,10 +120,10 @@ def test_node_verify(mock_exists, mock_actual_perms, mock_actual_owner, mock_act
     """Test Node's method verify."""
     # Test passing verification
     mock_exists.return_value = True
-    mock_actual_perms.return_value = None if 'perms' not in atts else oct(atts['perms'])
-    mock_actual_owner.return_value = None if 'owner' not in atts else atts['owner']
-    mock_actual_group.return_value = None if 'group' not in atts else atts['group']
     node = Node(atts)
+    node.actual_perms = None if 'perms' not in atts else oct(atts['perms'])
+    node.actual_owner = None if 'owner' not in atts else atts['owner']
+    node.actual_group = None if 'group' not in atts else atts['group']
     assert node.verify(False)
 
     # Test failing verification
@@ -204,7 +204,7 @@ def test_node_chown(mock_chown, mock_getgrnam, mock_getpwnam, mock_path_exists, 
     if 'owner' not in atts:
         atts['owner'] = 'nobody'
     if 'group' not in atts:
-        atts['group'] = atts['owner']
+        atts['group'] = 'nogroup' if atts['owner'] == 'nobody' else atts['owner']
     mock_path_exists.return_value = True # Assume this is working for this test
     mock_getpwnam(atts['owner']).pw_uid = 123 # Just a number to use for mocking
     mock_getgrnam(atts['group']).gr_gid = 123
@@ -286,6 +286,10 @@ def test_node_parent_node(atts, expected):
         assert node.parent_node.path == expected
     else:
         assert node.parent_node == expected
+
+def test_node_set_perms_none():
+    node = Node({'path' : '/this/path/', 'perms' : None })
+    assert not node._perms
 
 def test_node_set_perms_invalid():
     """Tests setting node's perms as invalid values."""

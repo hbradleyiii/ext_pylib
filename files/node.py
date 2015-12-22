@@ -120,24 +120,24 @@ class Node(object):
 
         if self.perms:
             print '--> Checking permissions for ' + self.path,
-            perms_check = self.perms == self.actual_perms()
-            print ' (should be: ' + self.perms + ', actual: ' + self.actual_perms() + ')',
-            print '[OK]' if perms_check else '[ERROR]'
+            perms_check = self.perms == self.actual_perms
+            print ' (should be: ' + self.perms + ', actual: ' + self.actual_perms + ')',
+            print '[OK]' if perms_check else '[WARN]'
             if not perms_check and repair:
                 perms_check = self.chmod()
                 return self.verify(repair)
 
         if self.owner:
             print '--> Checking owner for ' + self.path,
-            owner_check = self.owner == self.actual_owner()
+            owner_check = self.owner == self.actual_owner
             print ' (should be: ' + self.owner + ', actual: ' + self.actual_owner + ')',
-            print '[OK]' if owner_check else '[ERROR]'
+            print '[OK]' if owner_check else '[WARN]'
 
         if self.group:
             print '--> Checking group for ' + self.path,
-            group_check = self.group == self.actual_group()
+            group_check = self.group == self.actual_group
             print ' (should be: ' + self.group + ', actual: ' + self.actual_group + ')',
-            print '[OK]' if group_check else '[ERROR]'
+            print '[OK]' if group_check else '[WARN]'
             if not (group_check or owner_check) and repair:
                 group_check = owner_check = self.chown()
                 return self.verify(repair)
@@ -164,7 +164,7 @@ class Node(object):
             print('[OK]')
             return True
         except Exception as error:
-            print '[ERROR]'
+            print '[FAILED]'
             print error
 
     def chown(self, owner = None, group = None):
@@ -180,7 +180,7 @@ class Node(object):
         if not group:
             group = self.group
             if not self.group:
-                group = owner
+                group = 'nogroup' if owner == 'nobody' else owner
         print('Setting owner on ' + self.path + ' to "' + owner  + ':' + group + '"...'),
         try:
             uid = pwd.getpwnam(owner).pw_uid
@@ -189,7 +189,7 @@ class Node(object):
             print('[OK]')
             return True
         except Exception as error:
-            print '[ERROR]'
+            print '[FAILED]'
             print error
 
     def exists(self):
@@ -256,6 +256,9 @@ class Node(object):
     @perms.setter
     def perms(self, perms):
         """Sets the perms (string)."""
+        if not perms:
+            self._perms = None
+            return
         try:
             perms = int(perms)
         except ValueError as e:
