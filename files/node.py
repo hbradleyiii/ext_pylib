@@ -55,7 +55,7 @@ class Node(object):
 
     def __repr__(self):
         """Returns a python string that evaluates to the object instance."""
-        return "%s(%s)" % (self.__class__.__name__, self._atts_())
+        return "%s(%s)" % (self.__class__.__name__, self._atts_(string = True))
 
     def __add__(self, other):
         """Allows string concatenation with the path."""
@@ -65,8 +65,10 @@ class Node(object):
         """Allows string concatenation with the path."""
         return other + str(self)
 
-    def _atts_(self):
+    def _atts_(self, string = False):
         """Returns a python string of attributes (as a dict) used to create this object."""
+        if not string:
+            return { 'path' : self.path, 'perms' : getattr(self, '_perms', None), 'owner' : self.owner, 'group' : self.group }
         # Note that any atts added later must be added here for this to work.
         atts = "{'path' : "
         if self.path:

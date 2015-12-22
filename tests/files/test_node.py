@@ -67,7 +67,14 @@ def test_node_repr(atts, expected):
 def test_node__atts_(atts, expected):
     """Test Node _atts_ method."""
     node = Node(atts)
-    assert node._atts_() == expected
+    if 'perms' not in atts:
+        atts['perms'] = None
+    if 'owner' not in atts:
+        atts['owner'] = None
+    if 'group' not in atts:
+        atts['group'] = None
+    assert node._atts_(string = True) == expected
+    assert node._atts_(string = False) == atts
 
 concat_args = [
     ({'path' : None}, '<files.Node:stub>'),
