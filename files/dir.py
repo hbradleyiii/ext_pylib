@@ -11,7 +11,7 @@
 
 from node import Node
 import os
-from ext_pylib import prompt
+from ext_pylib.prompt import prompt
 import shutil
 
 
