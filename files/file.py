@@ -8,6 +8,7 @@
 # description:      A class to manage and create files.
 #
 
+from dir import Dir
 from node import Node
 import os
 from ext_pylib.prompt import prompt
@@ -30,8 +31,7 @@ class File(Node):
 
     def create(self, data = None):
         """Creates the file/directory."""
-        # TODO: What if the directory doesn't yet exist?
-        if not self.path:
+        if not self.path: # For stubs, just return True
             return True
         if self.exists():
             print self.path + ' already exists.'
@@ -40,9 +40,10 @@ class File(Node):
         print('Creating ' + self.path + '... '),
 
         # Create parent directorys
-        if not self.parent_node.exists:
+        if not self.parent_dir.exists():
             try:
-                self.parent_node.create()
+                print ''
+                self.parent_dir.create()
             except Exception as error:
                 print '[ERROR]'
                 print error
@@ -87,3 +88,7 @@ class File(Node):
         if path.endswith('/'):
             raise ValueError('"path" cannot end in "/" in a file.File class.')
         Node.path.fset(self, path)
+
+    @property
+    def parent_dir(self):
+        return Dir(self.parent_node._atts_())
