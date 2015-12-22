@@ -116,3 +116,7 @@ class Dir(Node):
         if not path.endswith('/'):
             path = path + '/'
         Node.path.fset(self, path)
+
+    @property
+    def parent_dir(self):
+        return Dir(self.parent_node._atts_())
