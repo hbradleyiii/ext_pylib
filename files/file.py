@@ -36,7 +36,7 @@ class File(Node):
         if self.exists():
             print self.path + ' already exists.'
             if not prompt('Replace it?', False):
-                return True
+                return False
         print('Creating ' + self.path + '... '),
 
         # Create parent directorys
@@ -48,21 +48,43 @@ class File(Node):
                 print '[ERROR]'
                 print error
 
-        # Use passed data
-        if data:
-            # TODO: Write data to file
-            pass
+        # Create the file
+        try:
+            file_handle = open(self.path, 'w+')
+            if data:
+                self.write(data, False, file_handle)
+            file_handle.close()
+            print('[OK]')
+        except Exception as error:
+            print '[ERROR]'
+            print error
+            return False
+        return self.chmod() and self.chown()
 
-        # Or just create the file
+    def write(self, data, append=True, handle=None):
+        """Writes data to the file."""
+        if handle: # When passed a handle, rely on the caller to close the file and
+              # handle exceptions.
+            file_handle = handle
+            file_handle.write(data)
         else:
             try:
-                open(self.path, 'w+').close()
-                print('[OK]')
+                file_handle = open(self.path, 'w+')
+                file_handle.write(data)
+                file_handle.close
+                return True
             except Exception as error:
                 print '[ERROR]'
                 print error
                 return False
-        return self.chmod() and self.chown()
+
+    def append(self, data, handle=None):
+        """Appends the file with data. Just a wrapper."""
+        self.write(data, True, handle)
+
+    def overwrite(self, data, handle=None):
+        """Overwrites the file with data. Just a wrapper."""
+        self.write(data, False, handle)
 
     def remove(self, ask = True):
         """Removes the file/directory."""
