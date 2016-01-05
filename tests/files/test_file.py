@@ -34,6 +34,22 @@ def test_file_create():
     """TODO: Test file creation."""
     pass
 
+def test_file_write():
+    """TODO: Test file creation."""
+    pass
+
+@patch('ext_pylib.files.file.File.write')
+def test_file_append(mock_write):
+    """Test appending to file."""
+    File().append(None)
+    mock_write.assert_called_once_with(None, True, None)
+
+@patch('ext_pylib.files.file.File.write')
+def test_file_overwrite(mock_write):
+    """Test overwriting a file."""
+    File().overwrite(None)
+    mock_write.assert_called_once_with(None, False, None)
+
 @patch('ext_pylib.files.node.Node.exists')
 @patch('os.remove')
 def test_file_remove(mock_remove, mock_exists):
