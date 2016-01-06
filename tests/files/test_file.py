@@ -59,4 +59,4 @@ def test_file_remove(mock_remove, mock_exists):
     mock_exists.return_value = True
     file = File(DEFAULT_ARGS)
     assert file.remove(False)
-    mock_remove.assert_called_once_with('/test/dir/file')
+    mock_remove.assert_called_once_with(DEFAULT_ARGS['path'])
