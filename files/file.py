@@ -39,7 +39,7 @@ class File(Node):
                 return False
         print('Creating ' + self.path + '... '),
 
-        # Create parent directorys
+        # Create parent directories
         if not self.parent_dir.exists():
             try:
                 print ''
@@ -50,7 +50,7 @@ class File(Node):
 
         # Create the file
         try:
-            file_handle = open(self.path, 'w+')
+            file_handle = open(self.path, 'w')
             if data:
                 self.write(data, False, file_handle)
             file_handle.close()
@@ -61,17 +61,20 @@ class File(Node):
             return False
         return self.chmod() and self.chown()
 
-    def write(self, data, append=True, handle=None):
+    def write(self, data=None, append=True, handle=None):
         """Writes data to the file."""
+        if not data:
+            raise UnboundLocalError('Must pass data to write method of File class.')
         if handle: # When passed a handle, rely on the caller to close the file and
               # handle exceptions.
             file_handle = handle
             file_handle.write(data)
         else:
             try:
-                file_handle = open(self.path, 'w+')
+                flags = 'a' if append else 'w'
+                file_handle = open(self.path, flags)
                 file_handle.write(data)
-                file_handle.close
+                file_handle.close()
                 return True
             except Exception as error:
                 print '[ERROR]'
