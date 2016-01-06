@@ -14,6 +14,8 @@ from mock import patch
 import pytest
 
 
+DEFAULT_ARGS = { 'path' : '/tmp/nonexistant/path/file' }
+
 init_args = [
     (None, '<file.File:stub>'),
     ('/this/file', '/this/file'),
@@ -55,6 +57,6 @@ def test_file_overwrite(mock_write):
 def test_file_remove(mock_remove, mock_exists):
     """Test File remove method."""
     mock_exists.return_value = True
-    file = File({'path' : '/test/dir/file'})
+    file = File(DEFAULT_ARGS)
     assert file.remove(False)
     mock_remove.assert_called_once_with('/test/dir/file')
