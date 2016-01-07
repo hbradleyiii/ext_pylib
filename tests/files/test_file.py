@@ -6,8 +6,10 @@
 # created on:       11/12/2015
 #
 # description:      A unit test for ext_pylib file module's File class and
-#                   methods.
+#                   methods. This is fairly ugly, but it's pretty
+#                   comprehensive.
 #
+
 
 from ext_pylib.files import File
 from mock import mock_open, patch
@@ -61,11 +63,79 @@ def test_file_initialize_with_trailing_slash():
     with pytest.raises(ValueError):
         file = File({'path' : '/this/path/'})
 
-def test_file_create():
-    """TODO: Tests file creation."""
-    pass
+def test_file_create_stub():
+    """Tests file creation of a stub."""
+    assert File().create()
 
-def test_write_no_data():
+@patch('ext_pylib.files.file.prompt')
+@patch('ext_pylib.files.node.Node.exists')
+@patch('ext_pylib.files.file.File.write')
+def test_file_create_already_existing_file_not_replacing(mock_write, mock_exists, mock_prompt):
+    """Tests file creation of an already existing file (NOT replacing the file)."""
+    mock_exists.return_value = True
+    mock_prompt.return_value = False # Answer no, don't replace
+    file = File(DEFAULT_ARGS)
+    assert not file.create()
+
+@patch('ext_pylib.files.node.Node.chown')
+@patch('ext_pylib.files.node.Node.chmod')
+@patch('ext_pylib.files.file.prompt')
+@patch('ext_pylib.files.node.Node.exists')
+@patch('ext_pylib.files.file.File.write')
+def test_file_create_already_existing_file_replacing(mock_write, mock_exists, mock_prompt, mock_chmod, mock_chown):
+    """Tests file creation of an already existing file (replacing the file)."""
+    mock_parent_dir = Mock_Parent_Dir(True)
+    mock_exists.return_value = True
+    mock_chown.return_value = mock_chmod.return_value = True
+    mock_prompt.return_value = True # Answer yes, replace
+    file = File(DEFAULT_ARGS)
+    m_open = mock_open()
+    with patch(builtins + '.open', m_open, create=True):
+        assert file.create()
+        m_open.assert_called_once_with(DEFAULT_ARGS['path'], 'w')
+        m_open().close.assert_called_once()
+
+@patch('ext_pylib.files.node.Node.chown')
+@patch('ext_pylib.files.node.Node.chmod')
+@patch('ext_pylib.files.node.Node.exists')
+def test_file_create_and_create_parent_dirs(mock_exists, mock_chmod, mock_chown):
+    """Tests file creation while creating parent dirs."""
+    mock_parent_dir = Mock_Parent_Dir(False)
+    mock_exists.return_value = False
+    mock_chown.return_value = mock_chmod.return_value = True
+    File.parent_dir = mock_parent_dir
+    file = File(DEFAULT_ARGS)
+    m_open = mock_open()
+    with patch(builtins + '.open', m_open, create=True):
+        assert file.create()
+        m_open.assert_called_once_with(DEFAULT_ARGS['path'], 'w')
+        m_open().close.assert_called_once()
+        assert mock_parent_dir.exists_called == 1
+        assert mock_parent_dir.create_called == 1
+
+@patch('ext_pylib.files.node.Node.chown')
+@patch('ext_pylib.files.node.Node.chmod')
+@patch('ext_pylib.files.node.Node.exists')
+@patch('ext_pylib.files.file.File.write')
+def test_file_create_with_data(mock_write, mock_exists, mock_chmod, mock_chown):
+    """Tests file creation with data."""
+    mock_parent_dir = Mock_Parent_Dir(True)
+    mock_exists.return_value = False
+    mock_chown.return_value = mock_chmod.return_value = True
+    File.parent_dir = mock_parent_dir
+    file = File(DEFAULT_ARGS)
+    m_open = mock_open()
+    with patch(builtins + '.open', m_open, create=True):
+        data = 'The data...'
+        assert file.create(data)
+        m_open.assert_called_once_with(DEFAULT_ARGS['path'], 'w')
+        mock_write.assert_called_once_with(data, False, m_open())
+        m_open().close.assert_called_once()
+        assert mock_parent_dir.exists_called == 1
+        assert mock_parent_dir.create_called == 0
+
+@patch('ext_pylib.files.node.Node.exists')
+def test_write_no_data(mock_exists):
     """Tests writing to a File with no data passed in."""
     file = File(DEFAULT_ARGS)
     with pytest.raises(UnboundLocalError):
