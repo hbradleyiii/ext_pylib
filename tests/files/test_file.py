@@ -19,6 +19,30 @@ else:
     builtins = 'builtins'
 
 
+class Mock_Parent_Dir():
+    """A Mock class for parent_dir property."""
+    def __init__(self, _exists):
+        self._exists = _exists
+        self.exists_called, self.create_called = 0, 0
+    def exists(self):
+        self.exists_called += 1
+        return self._exists
+    def create(self):
+        self.create_called += 1
+
+
+class Mock_Handle():
+    """A Mock class for a handle."""
+    data = None
+    def write(self, data):
+        self.data = data
+    def called_once_with(self, var):
+        if var != self.data:
+            print 'Mock handle was not called with: ' + var
+            return False
+        return True
+
+
 DEFAULT_ARGS = { 'path' : '/tmp/nonexistant/path/file' }
 
 init_args = [
@@ -49,18 +73,8 @@ def test_write_no_data():
 
 def test_write_data_with_handle():
     """Tests writing to a File with a handle passed in."""
-    class Mock_handle:
-        """A Mock class for a handle."""
-        data = None
-        def write(self, data):
-            self.data = data
-        def called_once_with(self, var):
-            if var != self.data:
-                print 'Mock handle was not called with: ' + var
-                return False
-            return True
     file = File(DEFAULT_ARGS)
-    mock_handle = Mock_handle()
+    mock_handle = Mock_Handle()
     data = 'Some mock data...'
     file.write(data=data, handle=mock_handle)
     assert mock_handle.called_once_with(data)
