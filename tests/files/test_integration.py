@@ -58,3 +58,7 @@ def test_dir_actual_create_and_remove(tmpdir):
     # Cleanup
     assert root_dir.remove(False)
     assert not root_dir.exists()
+
+def test_file_actual_creation_write_and_removal(tmpdir):
+    """[Integration Test] Test actual creation, writing, and removal of file."""
+    pass
