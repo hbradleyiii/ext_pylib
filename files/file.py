@@ -29,6 +29,25 @@ class File(Node):
             return '<file.File:stub>'
         return self.path
 
+    def read(self):
+        """Returns the contents of the file."""
+        try:
+            return self.data
+        except AttributeError:
+            try:
+                file_handle = open(self.path, 'r')
+                self.data = file_handle.read()
+                file_handle.close()
+                return self.data
+            except Exception as error:
+                print '[ERROR]'
+                print error
+                return False
+
+    def readlines(self):
+        """Returns the contents of the file as a list for iteration."""
+        return self.read().split('\n')
+
     def create(self, data = None):
         """Creates the file/directory."""
         if not self.path: # For stubs, just return True
