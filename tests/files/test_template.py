@@ -14,6 +14,10 @@ from mock import patch
 import pytest
 
 
-def test_apply_using():
+def test_templatefile_str():
+    """TODO: Test apply_using() method."""
+    pass
+
+def test_templatefile_apply_using():
     """TODO: Test apply_using() method."""
     pass
