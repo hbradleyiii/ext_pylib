@@ -29,17 +29,17 @@ from ext_pylib.prompt import prompt
 #       apply_to(data)
 class SectionFile(File):
 
-    def __init__(self, atts):
+    def __init__(self, atts = {}):
         # Section must have a name (set to self.name in super(File))
         if 'name' not in atts:
             raise KeyError('A SectionFile must have a "name" set in atts.')
+        super(File, self).__init__(atts)
         # Set defaults, these can be overridden by:
         # atts = {'start_section' : '# Begin Section Name',
         #         'end_section' : '# End section' }
         # (along with all expected file atts)
         self.start_section = '# BEGIN ' + self.name
         self.end_section = '# END ' + self.name
-        super(File, self).__init__(atts)
 
     def __str__(self):
         """Returns a string with the path."""
