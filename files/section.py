@@ -29,25 +29,43 @@ from ext_pylib.prompt import prompt
 #       apply_to(data)
 class SectionFile(File):
 
-    def __init__(self, atts = {}):
-        # Section must have a name (set to self.name in super(File))
-        if 'name' not in atts:
-            raise KeyError('A SectionFile must have a "name" set in atts.')
-        super(File, self).__init__(atts)
-        # Set defaults, these can be overridden by:
-        # atts = {'start_section' : '# Begin Section Name',
-        #         'end_section' : '# End section' }
-        # (along with all expected file atts)
-        self.start_section = '# BEGIN ' + self.name
-        self.end_section = '# END ' + self.name
-
     def __str__(self):
         """Returns a string with the path."""
         if not self.path:
             return '<file.SectionFile:stub>'
         return self.path
 
-    def apply_to(self, data):
-        # TODO:
-        # search for start and end line, if not there:
-        return data + '\n' + self.start_section + self.read() + self.end_section + '\n'
+    def is_applied(self, data):
+        return self.read() in data
+
+    def has_section(self, data):
+        self._start_pos = data.find(self.start_section)
+        self._end_pos = data.find(self.start_section)
+        if start_pos < 0 and end_pos < 0:
+            return false
+        elif start_pos < end_pos:
+            return true
+        else:
+            print '[WARN] Data not formatted properly.'
+            return false
+
+    def apply_to(self, data, overwrite=False):
+        if is_applied(data):
+            return data
+        if has_section(data):
+            if overwrite:
+                return data[:self._start_pos] + self.read() + \
+                        self[self._end_pos + len(self.end_section) + 1:]
+            else:
+                # error ?
+                return None
+        else:
+            return data + '\n' + self.read() + '\n'
+
+    @property
+    def start_section(self):
+        return self.readlines()[0]
+
+    @property
+    def end_section(self):
+        return self.readlines()[len(self.readlines())-1]
