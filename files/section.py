@@ -55,7 +55,7 @@ class SectionFile(File):
         if has_section(data):
             if overwrite:
                 return data[:self._start_pos] + self.read() + \
-                        self[self._end_pos + len(self.end_section) + 1:]
+                        data[self._end_pos + len(self.end_section) + 1:]
             else:
                 # error ?
                 return None
