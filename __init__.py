@@ -10,8 +10,8 @@ __copyright__ = 'Copyright 2016 Harold Bradley III'
 
 __all__ = ['domain', 'files', 'password', 'prompt']
 
-from . import domain
-from . import files
-from . import password
-from . import prompt
-from . import user
+import domain
+import files
+import password
+import prompt
+import user
