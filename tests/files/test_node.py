@@ -17,7 +17,7 @@ from ext_pylib.user import get_current_username
 
 CURRENT_USER = CURRENT_GROUP = get_current_username()
 
-default_atts = { 'path' : '/etc/path/file' }
+DEFUALT_ATTS = { 'path' : '/etc/path/file' }
 
 init_args = [
     ({'path' : None},
@@ -172,7 +172,7 @@ def test_node_chmod(mock_chmod, mock_path_exists, atts, expected):
 def test_node_chmod_nonexisting(mock_chmod, mock_path_exists):
     """Tests Node's chown method with a nonexisting node."""
     mock_path_exists.return_value = False
-    node = Node(default_atts)
+    node = Node(DEFUALT_ATTS)
     with pytest.raises(IOError):
         node.chmod()
 
@@ -224,7 +224,7 @@ def test_node_chown(mock_chown, mock_getgrnam, mock_getpwnam, mock_path_exists, 
 def test_node_chown_nonexisting(mock_chown, mock_getgrnam, mock_getpwnam, mock_path_exists):
     """Tests Node's chown method with a nonexisting node."""
     mock_path_exists.return_value = False
-    node = Node(default_atts)
+    node = Node(DEFUALT_ATTS)
     with pytest.raises(IOError):
         node.chown()
 
@@ -296,7 +296,7 @@ def test_node_set_perms_none():
 
 def test_node_set_perms_invalid():
     """Tests setting node's perms as invalid values."""
-    node = Node(default_atts)
+    node = Node(DEFUALT_ATTS)
     with pytest.raises(ValueError):
         node.perms = 'a'
     with pytest.raises(ValueError):
@@ -306,26 +306,26 @@ def test_node_set_perms_invalid():
 
 def test_node_set_bad_owner():
     """Tests setting node's owner to an invalid user."""
-    node = Node(default_atts)
+    node = Node(DEFUALT_ATTS)
     with pytest.raises(KeyError):
         node.owner = 'HopefullyNot_a_RealUser'
 
 def test_node_set_owner_root():
     """Tests setting node's owner to root."""
-    node = Node(default_atts)
+    node = Node(DEFUALT_ATTS)
     node.owner = 'root'
     assert node.owner == 'root'
     assert node._owner == 'root'
 
 def test_node_set_bad_group():
     """Tests setting node's group to an invalid user."""
-    node = Node(default_atts)
+    node = Node(DEFUALT_ATTS)
     with pytest.raises(KeyError):
         node.group = 'HopefullyNot_a_RealGroup'
 
 def test_node_set_group_root():
     """Tests setting node's group to root."""
-    node = Node(default_atts)
+    node = Node(DEFUALT_ATTS)
     node.group = 'root'
     assert node.group == 'root'
     assert node._group == 'root'
