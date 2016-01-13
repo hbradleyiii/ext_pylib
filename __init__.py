@@ -14,3 +14,4 @@ from . import domain
 from . import files
 from . import password
 from . import prompt
+from . import user

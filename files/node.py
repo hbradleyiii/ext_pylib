@@ -12,6 +12,7 @@
 import grp
 import os
 import pwd
+from user import get_current_username
 
 
 # Node(atts)
@@ -176,7 +177,7 @@ class Node(object):
         if not owner:
             owner = self.owner
             if not self.owner:
-                owner = 'nobody'
+                owner = get_current_username()
         if not group:
             group = self.group
             if not self.group:
@@ -288,7 +289,7 @@ class Node(object):
     def owner(self, owner):
         """Sets the owner (string)."""
         if owner == None:
-            owner = 'nobody'
+            owner = get_current_username()
         else:
             try:
                 # Is this a valid user?
@@ -315,7 +316,7 @@ class Node(object):
         """Sets the group (string)."""
         # Check for empty string
         if group == None:
-            group = 'nobody'
+            group = get_current_username()
         else:
             try:
                 # Is this a valid group?
