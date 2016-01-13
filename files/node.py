@@ -12,7 +12,7 @@
 import grp
 import os
 import pwd
-from user import get_current_username
+from user import get_current_username, get_current_groupname
 
 
 # Node(atts)
@@ -181,7 +181,7 @@ class Node(object):
         if not group:
             group = self.group
             if not self.group:
-                group = 'nogroup' if owner == 'nobody' else owner
+                group = 'nogroup' if owner == 'nobody' else get_current_groupname()
         print('Setting owner on ' + self.path + ' to "' + owner  + ':' + group + '"...'),
         try:
             uid = pwd.getpwnam(owner).pw_uid
@@ -316,7 +316,7 @@ class Node(object):
         """Sets the group (string)."""
         # Check for empty string
         if group == None:
-            group = get_current_username()
+            group = get_current_groupname()
         else:
             try:
                 # Is this a valid group?
