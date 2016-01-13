@@ -12,10 +12,11 @@
 from ext_pylib.files.node import Node
 from mock import Mock, patch
 import pytest
-from ext_pylib.user import get_current_username
+from ext_pylib.user import get_current_username, get_current_groupname
 
 
-CURRENT_USER = CURRENT_GROUP = get_current_username()
+CURRENT_USER = get_current_username()
+CURRENT_GROUP = get_current_groupname()
 
 DEFUALT_ATTS = { 'path' : '/etc/path/file' }
 
@@ -207,7 +208,7 @@ def test_node_chown(mock_chown, mock_getgrnam, mock_getpwnam, mock_path_exists, 
     if 'owner' not in atts:
         atts['owner'] = CURRENT_USER
     if 'group' not in atts:
-        atts['group'] = 'nogroup' if atts['owner'] == 'nobody' else atts['owner']
+        atts['group'] = 'nogroup' if atts['owner'] == 'nobody' else CURRENT_GROUP
     mock_path_exists.return_value = True # Assume this is working for this test
     mock_getpwnam(atts['owner']).pw_uid = 123 # Just a number to use for mocking
     mock_getgrnam(atts['group']).gr_gid = 123
