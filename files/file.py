@@ -102,11 +102,11 @@ class File(Node):
 
     def append(self, data, handle=None):
         """Appends the file with data. Just a wrapper."""
-        self.write(data, True, handle)
+        return self.write(data, True, handle)
 
     def overwrite(self, data, handle=None):
         """Overwrites the file with data. Just a wrapper."""
-        self.write(data, False, handle)
+        return self.write(data, False, handle)
 
     def remove(self, ask = True):
         """Removes the file/directory."""
