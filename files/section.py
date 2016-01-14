@@ -39,13 +39,13 @@ class SectionFile(File):
     def has_section(self, data):
         self._start_pos = data.find(self.start_section)
         self._end_pos = data.find(self.start_section)
-        if start_pos < 0 and end_pos < 0:
-            return false
-        elif start_pos < end_pos:
-            return true
+        if self._start_pos < 0 and self._end_pos < 0:
+            return False
+        elif self._start_pos < self._end_pos:
+            return True
         else:
             print '[WARN] Data not formatted properly.'
-            return false
+            return False
 
     def apply_to(self, data, overwrite=False):
         if is_applied(data):
