@@ -66,4 +66,7 @@ class SectionFile(File):
 
     @property
     def end_section(self):
-        return self.readlines()[len(self.readlines())-1]
+        lines = self.readlines()
+        if lines[len(lines)-1] != '':  # If the last line is blank, use the line before it.
+            return lines[len(lines)-1]
+        return lines[len(lines)-2]
