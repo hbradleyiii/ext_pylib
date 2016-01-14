@@ -15,12 +15,12 @@ import pytest
 
 def test_sectionfile_str_without_path():
     """Test SectionFile __str__ without path."""
-    file = SectionFile({ 'name' : 'the_name' })
+    file = SectionFile()
     assert str(file) == '<file.SectionFile:stub>'
 
 def test_sectionfile_str_with_path():
     """Test SectionFile __str__ with path."""
-    file = SectionFile({ 'name' : 'the_name', 'path' : '/the/path'  })
+    file = SectionFile({ 'path' : '/the/path'  })
     assert str(file) == '/the/path'
 
 def test_sectionfile_is_applied():
