@@ -35,10 +35,29 @@ def test_sectionfile_apply_to():
     """TODO: Test initialize SectionFile."""
     pass
 
-def test_sectionfile_start_section_property():
-    """TODO: Test initialize SectionFile."""
-    pass
+MULTILINE_STR = """This is the first line.
+This is the second line.
+This is the last line."""
 
-def test_sectionfile_end_section_property():
-    """TODO: Test initialize SectionFile."""
-    pass
+MULTILINE_STR_WITH_RETURN = """This is the first line.
+This is the second line.
+This is the last line.
+"""
+
+@patch('ext_pylib.files.file.File.read')
+def test_sectionfile_start_section_property(mock_read):
+    """Test SectionFile start_section property."""
+    mock_read.return_value = MULTILINE_STR
+    file = SectionFile()
+    assert file.start_section == "This is the first line."
+    mock_read.return_value = MULTILINE_STR_WITH_RETURN
+    assert file.start_section == "This is the first line."
+
+@patch('ext_pylib.files.file.File.read')
+def test_sectionfile_end_section_property(mock_read):
+    """Test SectionFile end_section property."""
+    mock_read.return_value = MULTILINE_STR
+    file = SectionFile()
+    assert file.end_section == "This is the last line."
+    mock_read.return_value = MULTILINE_STR_WITH_RETURN
+    assert file.end_section == "This is the last line."
