@@ -8,14 +8,12 @@
 # description:      A file to process template section files. A template
 #                   section file is a template of a configuration file that
 #                   only represents a particular section of that file. It
-#                   begins and ends with a delineator (by default: ##
-#                   START:SECTION_NAME ## and ## END:SECTION_NAME ##). For
-#                   example: WordPress delineates a particular section of the
-#                   htaccess file in its root directory with a start line and
-#                   an end line. This is a section of the full htaccess file. A
-#                   file containing only this section with the first line as
-#                   the start delineator and the last line as the end
-#                   dilineatro is a template section file.
+#                   begins and ends with a delineator (for example:
+#                   ## START:SECTION_NAME ## and ## END:SECTION_NAME ##). A Use
+#                   case would be how WordPress delineates a particular section of
+#                   the htaccess file in its root directory with a start line
+#                   and an end line. This is a section of the full htaccess
+#                   file and could be managed by a SectionFile.
 #
 
 from file import File
