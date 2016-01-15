@@ -63,14 +63,6 @@ def test_file_initialize_with_trailing_slash():
     with pytest.raises(ValueError):
         file = File({'path' : '/this/path/'})
 
-def test_read_file():
-    """TODO: """
-    pass
-
-def test_readlines_of_a_file():
-    """TODO: """
-    pass
-
 def test_file_create_stub():
     """Tests file creation of a stub."""
     assert File().create()
