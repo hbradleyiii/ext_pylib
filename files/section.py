@@ -34,9 +34,12 @@ class SectionFile(File):
         return self.path
 
     def is_applied(self, data):
+        """Returns true if data has this section applied exactly."""
         return self.read() in data
 
     def has_section(self, data):
+        """Returns true if data has the section, whether or not it is applied
+        exactly."""
         self._start_pos = data.find(self.start_section)
         self._end_pos = data.find(self.start_section)
         if self._start_pos < 0 and self._end_pos < 0:
@@ -48,6 +51,7 @@ class SectionFile(File):
             return False
 
     def apply_to(self, data, overwrite=False):
+        """Returns a string in which the section is applied to the data."""
         if is_applied(data):
             return data
         if has_section(data):
@@ -62,10 +66,12 @@ class SectionFile(File):
 
     @property
     def start_section(self):
+        """Returns the string that denotes the start of the section."""
         return self.readlines()[0]
 
     @property
     def end_section(self):
+        """Returns the string that denotes the end of the section."""
         lines = self.readlines()
         if lines[len(lines)-1] != '':  # If the last line is blank, use the line before it.
             return lines[len(lines)-1]
