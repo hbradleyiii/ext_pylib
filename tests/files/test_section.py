@@ -23,9 +23,42 @@ def test_sectionfile_str_with_path():
     file = SectionFile({ 'path' : '/the/path'  })
     assert str(file) == '/the/path'
 
-def test_sectionfile_is_applied():
-    """TODO: Test initialize SectionFile."""
-    pass
+SECTION_STR = """## START Section Test
+This is the second line.
+This is the third line.
+## END Section Test"""
+
+FILE_WITH_SECTION_STR = """This string has the section.
+## START Section Test
+This is the second line.
+This is the third line.
+## END Section Test
+This string has the section.
+This string has the section.
+"""
+FILE_WITHOUT_SECTION_STR = """This string does not have the section.
+This string does not have the section.
+This string does not have the section.
+This string does not have the section.
+"""
+FILE_WITHOUT_SECTION_STR_APPLIED = """This string does not have the section.
+This string does not have the section.
+This string does not have the section.
+This string does not have the section.
+## START Section Test
+This is the second line.
+This is the third line.
+## END Section Test
+"""
+
+
+@patch('ext_pylib.files.file.File.read')
+def test_sectionfile_is_applied(mock_read):
+    """Test SectionFile is_applied method."""
+    file = SectionFile()
+    mock_read.return_value = SECTION_STR
+    assert file.is_applied(FILE_WITH_SECTION_STR)
+    assert not file.is_applied(FILE_WITHOUT_SECTION_STR)
 
 def test_sectionfile_has_section():
     """TODO: Test initialize SectionFile."""
