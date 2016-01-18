@@ -6,13 +6,12 @@
 # created on:       01/16/2016
 #
 # description:      A unit test for ext_pylib file module's Parsable class and
-#                   methods. Note that copytree() function is tested in
-#                   test_integration.
+#                   methods.
 #
 
-from ext_pylib.files import parsable
+from ext_pylib.files.parsable import ParsableFile
 
 def test_sectionfile_str_without_path():
     """Test ParsableFile __str__ without path."""
-    file = SectionFile()
+    file = ParsableFile()
     assert str(file) == '<file.ParsableFile:stub>'
