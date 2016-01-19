@@ -36,6 +36,15 @@ This is the third line.
 This string has the section.
 This string has the section.
 """
+
+FILE_HAS_SECTION_STR = """This string has the section.
+## START SECTION Test
+But it has been changed...
+## END SECTION Test
+This string has the section.
+This string has the section.
+"""
+
 FILE_WITHOUT_SECTION_STR = """This string does not have the section.
 This string does not have the section.
 This string does not have the section.
@@ -61,9 +70,14 @@ def test_sectionfile_is_applied(mock_read):
     assert file.is_applied(FILE_WITH_SECTION_STR)
     assert not file.is_applied(FILE_WITHOUT_SECTION_STR)
 
-def test_sectionfile_has_section():
-    """TODO: Test initialize SectionFile."""
-    pass
+@patch('ext_pylib.files.file.File.read')
+def test_sectionfile_has_section(mock_read):
+    """Test SectionFile has_section method."""
+    file = SectionFile()
+    mock_read.return_value = SECTION_STR
+    assert file.has_section(FILE_HAS_SECTION_STR)
+    assert file.has_section(FILE_WITH_SECTION_STR)
+    assert not file.has_section(FILE_WITHOUT_SECTION_STR)
 
 def test_sectionfile_apply_to():
     """TODO: Test initialize SectionFile."""
