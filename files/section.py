@@ -41,7 +41,7 @@ class SectionFile(File):
         """Returns true if data has the section, whether or not it is applied
         exactly."""
         self._start_pos = data.find(self.start_section)
-        self._end_pos = data.find(self.start_section)
+        self._end_pos = data.find(self.end_section)
         if self._start_pos < 0 and self._end_pos < 0:
             return False
         elif self._start_pos < self._end_pos:
@@ -52,9 +52,9 @@ class SectionFile(File):
 
     def apply_to(self, data, overwrite=False):
         """Returns a string in which the section is applied to the data."""
-        if is_applied(data):
+        if self.is_applied(data):
             return data
-        if has_section(data):
+        if self.has_section(data):
             if overwrite:
                 return data[:self._start_pos] + self.read() + \
                         data[self._end_pos + len(self.end_section) + 1:]
