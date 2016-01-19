@@ -23,16 +23,16 @@ def test_sectionfile_str_with_path():
     file = SectionFile({ 'path' : '/the/path'  })
     assert str(file) == '/the/path'
 
-SECTION_STR = """## START Section Test
+SECTION_STR = """## START SECTION Test
 This is the second line.
 This is the third line.
-## END Section Test"""
+## END SECTION Test"""
 
 FILE_WITH_SECTION_STR = """This string has the section.
-## START Section Test
+## START SECTION Test
 This is the second line.
 This is the third line.
-## END Section Test
+## END SECTION Test
 This string has the section.
 This string has the section.
 """
@@ -41,14 +41,15 @@ This string does not have the section.
 This string does not have the section.
 This string does not have the section.
 """
+
 FILE_WITHOUT_SECTION_STR_APPLIED = """This string does not have the section.
 This string does not have the section.
 This string does not have the section.
 This string does not have the section.
-## START Section Test
+## START SECTION Test
 This is the second line.
 This is the third line.
-## END Section Test
+## END SECTION Test
 """
 
 
