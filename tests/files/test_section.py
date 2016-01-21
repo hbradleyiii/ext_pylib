@@ -79,9 +79,15 @@ def test_sectionfile_has_section(mock_read):
     assert file.has_section(FILE_WITH_SECTION_STR)
     assert not file.has_section(FILE_WITHOUT_SECTION_STR)
 
-def test_sectionfile_apply_to():
-    """TODO: Test initialize SectionFile."""
-    pass
+@patch('ext_pylib.files.file.File.read')
+def test_sectionfile_apply_to(mock_read):
+    """Test SectionFile apply_to method."""
+    file = SectionFile()
+    mock_read.return_value = SECTION_STR
+    assert file.apply_to(FILE_WITH_SECTION_STR) == FILE_WITH_SECTION_STR
+    assert file.apply_to(FILE_WITHOUT_SECTION_STR) == FILE_WITHOUT_SECTION_STR + '\n' + SECTION_STR + '\n'
+    assert file.apply_to(FILE_HAS_SECTION_STR) == None
+    assert file.apply_to(FILE_HAS_SECTION_STR, overwrite=True) == FILE_WITH_SECTION_STR
 
 MULTILINE_STR = """This is the first line.
 This is the second line.
