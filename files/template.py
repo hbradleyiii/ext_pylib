@@ -31,7 +31,7 @@ class TemplateFile(File):
         return self.path
 
     def apply_using(self, placeholders):
-        _data = self.read()
-        for placeholder in placeholders:
-            pass  # Find and replace
+        _data = self.read() # temp, throw-away (after returning) data value
+        for placeholder, value in placeholders.iteritems():
+            _data = _data.replace(placeholder, value)
         return _data
