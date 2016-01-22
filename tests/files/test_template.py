@@ -5,19 +5,13 @@
 # email:            harold@bradleystudio.net
 # created on:       01/09/2016
 #
-# description:      A unit test for ext_pylib file module's Template class and
-#                   methods.
+# description:      A unit test for ext_pylib file module's Template mixin
+#                   class.
 #
 
-from ext_pylib.files import TemplateFile
-from mock import patch
+from ext_pylib.files import Template
 import pytest
 
-
-def test_templatefile_str():
-    """Test SectionFile __str__ without path."""
-    file = TemplateFile()
-    assert str(file) == '<file.TemplateFile:stub>'
 
 TEMPLATE_FILE = """This is a test template file.
 #PLACEHOLDER#
@@ -37,11 +31,14 @@ But not #DATA, DATA#, and DATA.
 This is the last line.
 """
 
-@patch('ext_pylib.files.file.File.read')
-def test_templatefile_apply_using(mock_read):
-    """Test SectionFile apply_using() method."""
-    file = TemplateFile()
-    mock_read.return_value = TEMPLATE_FILE
+# Monkey Patch function for read() method
+def read():
+    return TEMPLATE_FILE
+
+def test_templatefile_apply_using():
+    """Test Section apply_using() method."""
+    file = Template()
+    file.read = read
     assert EXPECTED_RESULT == file.apply_using({
         '#PLACEHOLDER#' : 'The placeholder text.',
          '#DATA#' : 'www.google.com',

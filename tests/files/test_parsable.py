@@ -5,13 +5,13 @@
 # email:            harold@bradleystudio.net
 # created on:       01/16/2016
 #
-# description:      A unit test for ext_pylib file module's Parsable class and
-#                   methods.
+# description:      A unit test for ext_pylib file module's Parsable mixin
+#                   class.
 #
 
-from ext_pylib.files.parsable import ParsableFile
+from ext_pylib.files import Parsable
 
-def test_sectionfile_str_without_path():
-    """Test ParsableFile __str__ without path."""
-    file = ParsableFile()
-    assert str(file) == '<file.ParsableFile:stub>'
+def test_parsable_parse():
+    """Test Parsable parse() method."""
+    file = Parsable()
+    pass

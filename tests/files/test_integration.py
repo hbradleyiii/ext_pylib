@@ -9,7 +9,7 @@
 #
 
 from datetime import datetime
-from ext_pylib.files import Dir
+from ext_pylib.files import Dir, File, Section
 import pytest
 
 
