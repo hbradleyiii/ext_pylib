@@ -36,6 +36,7 @@
 from dir import Dir
 from node import Node
 import os
+import re
 from ext_pylib.prompt import prompt
 
 
@@ -233,5 +234,9 @@ class Template():
 #   methods:
 #       parse(var)
 class Parsable():
-    def parse(self, var):
-        pass
+    def parse(self, regexes):
+        for attribute, regex in regexes.iteritems():
+            if hasattr(self, attribute):
+                raise AttributeError('Cannot use "' + attribute + \
+                        '" as parsable attribute of ' + str(self))
+            setattr(self, attribute, re.findall(regex, self.read()))
