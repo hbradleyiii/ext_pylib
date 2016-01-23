@@ -12,7 +12,7 @@
 import grp
 import os
 import pwd
-from user import get_current_username, get_current_groupname
+from ext_pylib.user import get_current_username, get_current_groupname
 
 
 # Node(atts)
