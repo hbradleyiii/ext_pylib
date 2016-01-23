@@ -81,7 +81,7 @@ class Node(object):
 
         atts += "'perms' : "
         if self.perms:
-            atts += self.perms + ", "
+            atts += format(self.perms, '04o') + ", "
         else:
             atts += 'None, '
 
@@ -113,9 +113,9 @@ class Node(object):
             raise IOError(self.path + ' does not exist. Cannot set owner and permissions. [!]')
         if not perms:
             perms = self.perms
-        if not self.perms:
+        if not perms:
             return True
-        print('Setting permissions on ' + self.path + ' to "' + perms  + '"...'),
+        print('Setting permissions on ' + self.path + ' to "' + format(perms, '04o')  + '"...'),
         try:
             os.chmod(self.path, perms) # Be sure to use leading '0' as chmod takes an octal
             print('[OK]')
@@ -132,11 +132,11 @@ class Node(object):
             raise IOError(self.path + ' does not exist. Cannot set owner and permissions. [!]')
         if not owner:
             owner = self.owner
-            if not self.owner:
+            if not owner:
                 owner = get_current_username()
         if not group:
             group = self.group
-            if not self.group:
+            if not group:
                 group = 'nogroup' if owner == 'nobody' else get_current_groupname()
         print('Setting owner on ' + self.path + ' to "' + owner  + ':' + group + '"...'),
         try:
@@ -178,7 +178,8 @@ class Node(object):
         if self.perms:
             print '--> Checking permissions for ' + self.path,
             perms_check = self.perms == self.actual_perms
-            print ' (should be: ' + self.perms + ', actual: ' + self.actual_perms + ')',
+            print ' (should be: ' + format(self.perms, '04o') + ', actual: ' + \
+                format(self.actual_perms, '04o') + ')',
             print '[OK]' if perms_check else '[WARN]'
             if not perms_check and repair:
                 perms_check = self.chmod()
@@ -251,16 +252,16 @@ class Node(object):
         """Returns the perms as it is on disk."""
         if not self.path:
             return None
-        return oct(os.stat(self.path).st_mode & 511)
+        return os.stat(self.path).st_mode & 511
 
     @property
     def perms(self):
-        """Returns the perms (string)."""
-        return None if not getattr(self, '_perms', None) else oct(getattr(self, '_perms', None))
+        """Returns the perms (oct/int)."""
+        return getattr(self, '_perms', None)
 
     @perms.setter
     def perms(self, perms):
-        """Sets the perms (string)."""
+        """Sets the perms (oct/int)."""
         if not perms:
             self._perms = None
             return
@@ -270,11 +271,8 @@ class Node(object):
             print e
             print '[ERROR] ' + perms + ' must be set to an int.'
             raise
-        # Check for empty string
-        # if perms == '':
-        #     raise ValueError('"perms" cannot be set to an empty string in an file.Node class.')
         if perms < 0 or 511 < perms:
-            raise ValueError('"perms" cannot be set to ' + str(perms) + '.')
+            raise ValueError('"perms" cannot be set to ' + format(perms, '04o') + '.')
         self._perms = perms
 
     @property

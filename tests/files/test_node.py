@@ -38,9 +38,9 @@ init_args = [
     ({'path' : '/etc/path/file'},
         {'path' : '/etc/path/file', 'perms' : None, 'owner' : None, 'group' : None}),
     ({'path' : '/etc/path/file', 'perms' : 0655},
-        {'path' : '/etc/path/file', 'perms' : '0655', 'owner' : None, 'group' : None}),
+        {'path' : '/etc/path/file', 'perms' : 0655, 'owner' : None, 'group' : None}),
     ({'path' : '/etc/path/file', 'perms' : 0655, 'owner' : 'root', 'group' : 'root'},
-        {'path' : '/etc/path/file', 'perms' : '0655', 'owner' : 'root', 'group' : 'root'}),
+        {'path' : '/etc/path/file', 'perms' : 0655, 'owner' : 'root', 'group' : 'root'}),
 ]
 @pytest.mark.parametrize(("atts", "expected"), init_args)
 def test_node_initialize(atts, expected):
@@ -125,7 +125,7 @@ def test_node_verify(mock_exists, mock_actual_perms, mock_actual_owner, mock_act
     # Test passing verification
     mock_exists.return_value = True
     node = Node(atts)
-    node.actual_perms = None if 'perms' not in atts else oct(atts['perms'])
+    node.actual_perms = None if 'perms' not in atts else atts['perms']
     node.actual_owner = None if 'owner' not in atts else atts['owner']
     node.actual_group = None if 'group' not in atts else atts['group']
     assert node.verify(False)
@@ -164,7 +164,7 @@ def test_node_chmod(mock_chmod, mock_path_exists, atts, expected):
     node = Node(atts)
     assert expected == node.chmod()
     if atts['path'] and node.perms:
-        mock_chmod.assert_called_once_with(atts['path'], oct(atts['perms']))
+        mock_chmod.assert_called_once_with(atts['path'], atts['perms'])
     else:
         assert not mock_chmod.called
 
