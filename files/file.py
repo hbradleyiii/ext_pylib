@@ -235,8 +235,11 @@ class Template():
 #       parse(var)
 class Parsable():
     def parse(self, regexes):
+        if hasattr(self, parsed):
+            return
         for attribute, regex in regexes.iteritems():
             if hasattr(self, attribute):
                 raise AttributeError('Cannot use "' + attribute + \
                         '" as parsable attribute of ' + str(self))
             setattr(self, attribute, re.findall(regex, self.read()))
+        self.parsed = True
