@@ -60,25 +60,6 @@ class File(Node):
             return '<file.File:stub>'
         return self.path
 
-    def read(self):
-        """Returns the contents of the file."""
-        try:
-            return self.data
-        except AttributeError:
-            try:
-                file_handle = open(self.path, 'r')
-                self.data = file_handle.read()
-                file_handle.close()
-                return self.data
-            except Exception as error:
-                print '[ERROR]'
-                print error
-                return False
-
-    def readlines(self):
-        """Returns the contents of the file as a list for iteration."""
-        return self.read().split('\n')
-
     def create(self, data = None):
         """Creates the file/directory."""
         if not self.path: # For stubs, just return True
@@ -111,6 +92,36 @@ class File(Node):
             return False
         return self.chmod() and self.chown()
 
+    def remove(self, ask = True):
+        """Removes the file/directory."""
+        if not self.path:
+            return True
+        if not self.exists():
+            print self.path + ' doesn\'t exist.'
+            return True
+        if not ask or prompt('Remove ' + self.path + '?'):
+            os.remove(self.path)
+            return True
+
+    def read(self):
+        """Returns the contents of the file."""
+        try:
+            return self.data
+        except AttributeError:
+            try:
+                file_handle = open(self.path, 'r')
+                self.data = file_handle.read()
+                file_handle.close()
+                return self.data
+            except Exception as error:
+                print '[ERROR]'
+                print error
+                return False
+
+    def readlines(self):
+        """Returns the contents of the file as a list for iteration."""
+        return self.read().split('\n')
+
     def write(self, data=None, append=True, handle=None):
         """Writes data to the file."""
         if not data:
@@ -138,17 +149,6 @@ class File(Node):
     def overwrite(self, data, handle=None):
         """Overwrites the file with data. Just a wrapper."""
         return self.write(data, False, handle)
-
-    def remove(self, ask = True):
-        """Removes the file/directory."""
-        if not self.path:
-            return True
-        if not self.exists():
-            print self.path + ' doesn\'t exist.'
-            return True
-        if not ask or prompt('Remove ' + self.path + '?'):
-            os.remove(self.path)
-            return True
 
     ################
     # Properties
