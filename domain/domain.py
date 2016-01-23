@@ -19,7 +19,7 @@ import socket
 #   A class to describe and manage a domain name and corresponding ip address.
 #
 #   methods:
-#       verify()
+#       set_ip()  - not yet implemented
 class Domain(object):
 
     def __init__(self, domain = ''):

@@ -9,6 +9,8 @@ several patterns for server scripts. It works well for building server scripts.
 
 ## Installing and Including in projects
 TODO
+### Installing ext_pylib
+TODO
 
 ### Running Tests
 ```

@@ -31,7 +31,6 @@
 #                   attribute names and regexes to be used. When parse() is
 #                   called, the regex is run on the data and the result (or
 #                   None) is assigned to an attribute on the instance.
-#                   TODO: how to keep from clobering important attributes?
 
 from dir import Dir
 from node import Node
@@ -45,8 +44,14 @@ from ext_pylib.prompt import prompt
 #   class.
 #
 #   methods:
-#       create()
-#       remove(ask)
+#       create()  - creates the file
+#       remove(ask)  - removes the file
+#       read()  - reads the file and returns a string
+#       readlines()  - returns the file's contents as a a list of strings for
+#                      each line (useful for iterating)
+#       write(data, append, handle)  - writes the data to the file
+#       append(data)  - a wrapper that forces append writing
+#       overwrite(data)  - a wrapper that forces overwriting the file
 class File(Node):
 
     def __str__(self):
@@ -168,7 +173,10 @@ class File(Node):
 #   A mixin class to work with a section template file.
 #
 #   methods:
-#       apply_to(data)
+#       is_applied(data)  - returns true if data contains the section *exactly*
+#       has_section(data)  - retursn true if data contains the section whether
+#                            or not it is applied exactly
+#       apply_to(data)  - returns a string with the section applied to the data
 class Section():
     def is_applied(self, data):
         """Returns true if data has this section applied exactly."""
@@ -219,7 +227,8 @@ class Section():
 #   A mixin to work with a template file with placeholders.
 #
 #   methods:
-#       apply_using(placeholders)
+#       apply_using(placeholders)  - returns a string with the placeholders
+#                                    replaced
 class Template():
     def apply_using(self, placeholders):
         _data = self.read() # temp, throw-away (after returning) data value
@@ -232,7 +241,8 @@ class Template():
 #   A mixin to be used with a File class to allow parsing.
 #
 #   methods:
-#       parse(var)
+#       parse(regexes)  - applies attributes with the result of the regexes to
+#                         the instance
 class Parsable():
     def parse(self, regexes):
         if hasattr(self, 'parsed'):

@@ -10,11 +10,11 @@
 #                   comprehensive.
 #
 
-
 from ext_pylib.files import File
 from mock import mock_open, patch
 import pytest
 from sys import version_info
+
 if version_info.major == 2:
     builtins = '__builtin__'
 else:

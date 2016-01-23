@@ -32,13 +32,15 @@ from ext_pylib.user import get_current_username, get_current_groupname
 #       group: the (string) group of the node
 #
 #   methods:
-#       create()
-#       remove(ask)
-#       chmod(perms)
-#       chown(owner, group)
-#       verify(repair)
-#       repair()
-#       exists()
+#       _atts_(string)  - returns the attributes of the node in a dict (or
+#                         string representing a dict)
+#       create()  - creates the node, must be implemented in subclass
+#       remove(ask)  - removes the node, must be implemented in subclass
+#       chmod(perms)  - changes the permissions of the node
+#       chown(owner, group)  - changes the ownership of the node
+#       exists()  - returns true if the node exists
+#       verify(repair)  - verifies the attributes of the node
+#       repair()  - runs verification with the force repair flag set
 class Node(object):
 
     def __init__(self, atts = {} ):
