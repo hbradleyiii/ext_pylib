@@ -1,3 +1,11 @@
+
+#    /''         |''\     |    |
+#    \.     |    |../     | *  |..
+#    /   \/ T    |   \  / | |  |  \
+#    \.../\.| __ |    \/  | |  |../
+#  ###################/###############
+#                    /
+
 """
 ext_pylib - extra python libraries for scaffolding server scripts.
 """

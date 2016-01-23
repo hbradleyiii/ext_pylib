@@ -9,12 +9,11 @@
 #                   random characters to be used as a password.
 #
 
-
 from random import choice
 from os import urandom
 
 
-DEFAULT_CHAR_SET = { 
+DEFAULT_CHAR_SET = {
     'small': 'abcdefghijklmnopqrstuvwxyz',
     'nums': '0123456789',
     'big': 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
@@ -36,7 +35,7 @@ def generate_pw(length=18, char_set = DEFAULT_CHAR_SET):
     return ''.join(password)
 
 def is_like_previous_char(password, current_char_set):
-    """Function to ensure that there are no consecutive 
+    """Function to ensure that there are no consecutive
     UPPERCASE/lowercase/numbers/special-characters."""
 
     num_of_chars = len(password)

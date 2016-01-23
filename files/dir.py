@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #
-# name:             mm_dir.py
+# name:             dir.py
 # author:           Harold Bradley III
 # email:            harold@bradleystudio.net
 # created on:       11/03/2015
@@ -43,9 +43,10 @@ def copytree(source, destination, symlinks=False, ignore=None):
 #   directory. This is primarily a wrapper for directory managment.
 #
 #   methods:
-#       create()
-#       remove(ask)
-#       fill(fill_with)
+#       create()  - Creates the directory structure
+#       remove(ask)  - Removes the directory structure
+#       fill(fill_with)  - Fills the directory with the contents of the Node
+#                          (Dir or File instance) passed in
 class Dir(Node):
 
     def __str__(self):
