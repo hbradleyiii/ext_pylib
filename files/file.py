@@ -235,7 +235,7 @@ class Template():
 #       parse(var)
 class Parsable():
     def parse(self, regexes):
-        if hasattr(self, parsed):
+        if hasattr(self, 'parsed'):
             return
         for attribute, regex in regexes.iteritems():
             if hasattr(self, attribute):
