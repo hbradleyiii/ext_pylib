@@ -108,13 +108,15 @@ class Node(object):
         if not self.path:
             return True
         print ''
-        print 'Checking ' + self.path + '...'
+        print 'Checking ' + self.path + '...',
         if not self.exists():
+            print '[WARN]'
             print '[!] ' + self.path + ' doesn\'t exist'
             if not repair:
                 return False
             self.create()
             return self.verify(repair)
+        print '[OK]'
 
         # Assume the checks pass
         perms_check = owner_check = group_check = True
