@@ -105,54 +105,6 @@ class Node(object):
     def remove(self, ask = True):
         raise NotImplementedError('[ERROR] Cannot call method on file.Node. It is an abstract class.')
 
-    def verify(self, repair = False):
-        """Verifies the existence, permissions, ownership, and group of the file/directory."""
-        if not self.path:
-            return True
-        print ''
-        print 'Checking ' + self.path + '...',
-        if not self.exists():
-            print '[WARN]'
-            print '[!] ' + self.path + ' doesn\'t exist'
-            if not repair:
-                return False
-            self.create()
-            return self.verify(repair)
-        print '[OK]'
-
-        # Assume the checks pass
-        perms_check = owner_check = group_check = True
-
-        if self.perms:
-            print '--> Checking permissions for ' + self.path,
-            perms_check = self.perms == self.actual_perms
-            print ' (should be: ' + self.perms + ', actual: ' + self.actual_perms + ')',
-            print '[OK]' if perms_check else '[WARN]'
-            if not perms_check and repair:
-                perms_check = self.chmod()
-                return self.verify(repair)
-
-        if self.owner:
-            print '--> Checking owner for ' + self.path,
-            owner_check = self.owner == self.actual_owner
-            print ' (should be: ' + self.owner + ', actual: ' + self.actual_owner + ')',
-            print '[OK]' if owner_check else '[WARN]'
-
-        if self.group:
-            print '--> Checking group for ' + self.path,
-            group_check = self.group == self.actual_group
-            print ' (should be: ' + self.group + ', actual: ' + self.actual_group + ')',
-            print '[OK]' if group_check else '[WARN]'
-            if not (group_check or owner_check) and repair:
-                group_check = owner_check = self.chown()
-                return self.verify(repair)
-
-        return perms_check and owner_check and group_check
-
-    def repair(self):
-        """Runs verify() with the repair flag set."""
-        return self.verify(True)
-
     def chmod(self, perms = None):
         """Sets the permissions on the file/directory."""
         if not self.path:
@@ -204,6 +156,54 @@ class Node(object):
         if os.path.exists(self.path):
             return True
         return False
+
+    def verify(self, repair = False):
+        """Verifies the existence, permissions, ownership, and group of the file/directory."""
+        if not self.path:
+            return True
+        print ''
+        print 'Checking ' + self.path + '...',
+        if not self.exists():
+            print '[WARN]'
+            print '[!] ' + self.path + ' doesn\'t exist'
+            if not repair:
+                return False
+            self.create()
+            return self.verify(repair)
+        print '[OK]'
+
+        # Assume the checks pass
+        perms_check = owner_check = group_check = True
+
+        if self.perms:
+            print '--> Checking permissions for ' + self.path,
+            perms_check = self.perms == self.actual_perms
+            print ' (should be: ' + self.perms + ', actual: ' + self.actual_perms + ')',
+            print '[OK]' if perms_check else '[WARN]'
+            if not perms_check and repair:
+                perms_check = self.chmod()
+                return self.verify(repair)
+
+        if self.owner:
+            print '--> Checking owner for ' + self.path,
+            owner_check = self.owner == self.actual_owner
+            print ' (should be: ' + self.owner + ', actual: ' + self.actual_owner + ')',
+            print '[OK]' if owner_check else '[WARN]'
+
+        if self.group:
+            print '--> Checking group for ' + self.path,
+            group_check = self.group == self.actual_group
+            print ' (should be: ' + self.group + ', actual: ' + self.actual_group + ')',
+            print '[OK]' if group_check else '[WARN]'
+            if not (group_check or owner_check) and repair:
+                group_check = owner_check = self.chown()
+                return self.verify(repair)
+
+        return perms_check and owner_check and group_check
+
+    def repair(self):
+        """Runs verify() with the repair flag set."""
+        return self.verify(True)
 
     ################
     # Properties
