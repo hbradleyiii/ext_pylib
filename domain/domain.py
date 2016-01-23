@@ -10,8 +10,12 @@
 #
 #                   TODO: add DNS API capabilities
 
+try:
+    import requests
+except ImportError:
+    raise ImportError('ext_pylib\'s domain module requires module requests.')
+
 import re
-import requests
 import socket
 
 
