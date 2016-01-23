@@ -32,7 +32,7 @@ def root(request):
 
 
 #@root
-def xtest_copytree(root):
+def test_copytree(root):
     """TODO:"""
     # assert root.exists
     pass
