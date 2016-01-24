@@ -68,7 +68,7 @@ class Dir(Node):
         except Exception as error:
             print '[ERROR]'
             print error
-        return self.chmod() and self.chown()
+        return all([self.chmod(), self.chown()])
 
     def remove(self, ask = True):
         """Removes the directory structure."""
