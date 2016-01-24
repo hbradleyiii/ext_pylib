@@ -64,7 +64,6 @@ class Dir(Node):
         try:
             os.makedirs(self.path)
             print '[OK]'
-            return True
         except Exception as error:
             print '[ERROR]'
             print error
