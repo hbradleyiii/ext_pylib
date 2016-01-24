@@ -90,7 +90,7 @@ class File(Node):
             print '[ERROR]'
             print error
             return False
-        return self.chmod() and self.chown()
+        return all([self.chmod(), self.chown()])
 
     def remove(self, ask = True):
         """Removes the file/directory."""
