@@ -33,8 +33,13 @@ The Section mixin adds methods useful for processing
 template section files. A section file is a template of a
 configuration file that only represents a particular
 section of that file. It begins and ends with a delineator
-(for example: ## START:SECTION_NAME ## and ##
-END:SECTION_NAME ##). A use case would be how WordPress
+For example:
+```
+## START:SECTION_NAME ##
+content here...
+## END:SECTION_NAME ##
+```
+A use case would be how WordPress
 delineates a particular section of the htaccess file in its
 root directory with a start line and an end line. This is a
 section of the full htaccess file and could be managed by a
@@ -54,7 +59,6 @@ The Parsable mixin adds a method useful for parsing
 attribute names and regexes to be used. When parse() is
 called, the regex is run on the data and the result (or
 None) is assigned to an attribute on the instance.
-TODO: how to keep from clobering important attributes?
 
 ### Password Module
 TODO
