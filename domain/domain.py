@@ -26,18 +26,18 @@ import socket
 #       set_ip()  - not yet implemented
 class Domain(object):
 
-    def __init__(self, domain = '', getip_urls = []):
+    def __init__(self, name = '', getip_urls = []):
         """Initializes a new Domain instance."""
-        self.domain = domain
+        self.name = name
         self.getip_urls = getip_urls
 
     def __repr__(self):
         """Returns a python string that evaluates to the object instance."""
-        return 'Domain(' + self.domain + ')'
+        return 'Domain("' + self.name + '")'
 
     def __str__(self):
         """Returns a string with the domain name."""
-        return self.domain
+        return self.name
 
     def __add__(self, other):
         """Allows concatenation."""
@@ -58,7 +58,7 @@ class Domain(object):
     @property
     def ip(self):
         """Returns the A Record IP of the domain."""
-        return socket.gethostbyname(self.domain)
+        return socket.gethostbyname(self.name)
 
     @property
     def server_ip(self):
@@ -70,25 +70,25 @@ class Domain(object):
         return server_ip
 
     @property
-    def domain(self):
-        """Return the domain as a string."""
-        return self.__domain
+    def name(self):
+        """Return the domain name as a string."""
+        return self.__name
 
-    @domain.setter
-    def domain(self, domain):
-        """Validate and set the domain, and, if necessary, prompt for correction."""
+    @name.setter
+    def name(self, name):
+        """Validate and set the domain name, and, if necessary, prompt for correction."""
         while True:
-            if domain == '' or domain == None:
-                domain = raw_input("What is the site domain? [example.com] ")
-            if domain[-1] == ".":
-                domain = domain[:-1] # strip exactly one dot from the right, if present
-            if len(domain) > 255:
-                print 'Domain cannot be longer than 255 characters.'
-                domain = '' # Forces reprompt and continues the loop
+            if name == '' or name == None:
+                name = raw_input("What is the site name? [example.com] ")
+            if name[-1] == ".":
+                name = name[:-1] # strip exactly one dot from the right, if present
+            if len(name) > 255:
+                print 'name cannot be longer than 255 characters.'
+                name = '' # Forces reprompt and continues the loop
             allowed = re.compile("(?!-)[A-Z\d-]{1,63}(?<!-)$", re.IGNORECASE)
-            if not all(allowed.match(x) for x in domain.split(".")):
-                print 'Domain ' + domain + ' is not valid.'
-                domain = '' # Forces reprompt and continues the loop
-            if domain != '':
+            if not all(allowed.match(x) for x in name.split(".")):
+                print 'Domain name ' + name + ' is not valid.'
+                name = '' # Forces reprompt and continues the loop
+            if name != '':
                 break
-        self.__domain = domain
+        self.__name = name
