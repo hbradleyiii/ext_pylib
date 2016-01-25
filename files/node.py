@@ -81,7 +81,7 @@ class Node(object):
 
         atts += "'perms' : "
         if self.perms:
-            atts += format(self.perms, '04o') + ", "
+            atts += self.perms_as_string() + ", "
         else:
             atts += 'None, '
 
@@ -115,7 +115,8 @@ class Node(object):
             perms = self.perms
         if not perms:
             return True
-        print('Setting permissions on ' + self.path + ' to "' + format(perms, '04o')  + '"...'),
+        print('Setting permissions on ' + self.path + ' to "' + \
+              self.perms_as_string(perms)  + '"...'),
         try:
             os.chmod(self.path, perms) # Be sure to use leading '0' as chmod takes an octal
             print('[OK]')
@@ -178,8 +179,8 @@ class Node(object):
         if self.perms:
             print '--> Checking permissions for ' + self.path,
             perms_check = self.perms == self.actual_perms
-            print ' (should be: ' + format(self.perms, '04o') + ', actual: ' + \
-                format(self.actual_perms, '04o') + ')',
+            print ' (should be: ' + self.perms_as_string() + ', actual: ' + \
+                self.perms_as_string(self.actual_perms) + ')',
             print '[OK]' if perms_check else '[WARN]'
             if not perms_check and repair:
                 perms_check = self.chmod()
@@ -272,8 +273,16 @@ class Node(object):
             print '[ERROR] ' + perms + ' must be set to an int.'
             raise
         if perms < 0 or 511 < perms:
-            raise ValueError('"perms" cannot be set to ' + format(perms, '04o') + '.')
+            raise ValueError('"perms" cannot be set to ' + self.perms_as_string(perms) + '.')
         self._perms = perms
+
+    def perms_as_string(self, perms=None):
+        """Returns the perms as a string."""
+        if not perms:
+            if not self.perms:
+                return 'None'
+            return format(self.perms, '04o')
+        return format(perms, '04o')
 
     @property
     def actual_owner(self):
