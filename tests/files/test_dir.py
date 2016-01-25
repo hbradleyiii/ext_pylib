@@ -30,11 +30,14 @@ def test_dir_initialization(atts, expected):
     dir = Dir({'path' : atts})
     assert str(dir) == expected
 
+@patch('ext_pylib.files.node.Node.chown')
+@patch('ext_pylib.files.node.Node.chmod')
 @patch('ext_pylib.files.node.Node.exists')
 @patch('os.makedirs')
-def test_dir_create(mock_makedirs, mock_exists):
+def test_dir_create(mock_makedirs, mock_exists, mock_chmod, mock_chown):
     """Test directory creation."""
     mock_exists.return_value = False
+    mock_chown.return_value = mock_chmod.return_value = True
     dir = Dir({'path' : '/test/dir/'})
     assert dir.create()
     mock_makedirs.assert_called_once_with('/test/dir/')
