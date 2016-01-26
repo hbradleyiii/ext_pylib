@@ -244,7 +244,9 @@ class Template():
 #       parse(regexes)  - applies attributes with the result of the regexes to
 #                         the instance
 class Parsable():
-    def parse(self, regexes):
+    def parse(self, regexes=None):
+        if not regexes:
+            regexes = self.regexes
         if hasattr(self, 'parsed'):
             return
         for attribute, regex in regexes.iteritems():
