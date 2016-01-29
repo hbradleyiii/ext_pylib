@@ -177,7 +177,7 @@ class File(Node):
 #       has_section(data)  - retursn true if data contains the section whether
 #                            or not it is applied exactly
 #       apply_to(data)  - returns a string with the section applied to the data
-class Section():
+class Section(object):
     def is_applied(self, data):
         """Returns true if data has this section applied exactly."""
         return self.read() in data
@@ -229,7 +229,7 @@ class Section():
 #   methods:
 #       apply_using(placeholders)  - returns a string with the placeholders
 #                                    replaced
-class Template():
+class Template(object):
     def apply_using(self, placeholders):
         _data = self.read() # temp, throw-away (after returning) data value
         for placeholder, value in placeholders.iteritems():
@@ -243,7 +243,7 @@ class Template():
 #   methods:
 #       parse(regexes)  - applies attributes with the result of the regexes to
 #                         the instance
-class Parsable():
+class Parsable(object):
     def parse(self, regexes=None):
         if not regexes:
             regexes = self.regexes

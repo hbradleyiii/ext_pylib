@@ -21,7 +21,7 @@ else:
     builtins = 'builtins'
 
 
-class Mock_Parent_Dir():
+class Mock_Parent_Dir(object):
     """A Mock class for parent_dir property."""
     def __init__(self, _exists):
         self._exists = _exists
@@ -33,7 +33,7 @@ class Mock_Parent_Dir():
         self.create_called += 1
 
 
-class Mock_Handle():
+class Mock_Handle(object):
     """A Mock class for a handle."""
     data = None
     def write(self, data):
