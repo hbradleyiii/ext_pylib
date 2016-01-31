@@ -56,9 +56,10 @@ method as a dict. The resulting data is returned
 
 The Parsable mixin adds a method useful for parsing
 (presumably) configuration files. It takes a dict of
-attribute names and regexes to be used. When parse() is
-called, the regex is run on the data and the result (or
-None) is assigned to an attribute on the instance.
+attribute names and regexes to be used. When
+setup_parsing() is called, a dynamic property is created
+for getting and setting a value in self.data based on the
+regex.
 
 ### Password Module
 TODO
