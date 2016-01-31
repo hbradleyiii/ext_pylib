@@ -238,10 +238,10 @@ class Section(object):
 #                                    replaced
 class Template(object):
     def apply_using(self, placeholders):
-        _data = self.read() # temp, throw-away (after returning) data value
+        data = self.read() # temp, throw-away (after returning) data value
         for placeholder, value in placeholders.iteritems():
-            _data = _data.replace(placeholder, value)
-        return _data
+            data = data.replace(placeholder, value)
+        return data
 
 
 # Parsable()
