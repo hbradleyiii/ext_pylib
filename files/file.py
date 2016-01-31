@@ -253,6 +253,11 @@ class Template(object):
 #                         the instance
 class Parsable(object):
     def parse(self, regexes=None):
+        """Takes a dict of name:regex to parse self.data with.
+           regex is either a string, a tuple of one, or a tuple of two with the
+           second element being the regex mask used for assigning a new value
+           to this property. It must contain '{}' to be the marker for the
+           placeholder of the new value."""
         if not regexes:
             regexes = self.regexes
         if hasattr(self, 'parsed'):
