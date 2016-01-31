@@ -109,9 +109,12 @@ class File(Node):
 
     def read(self):
         """Returns the contents of the file.
+           If the file doesn't exist, returns an empty string.
 
            Note that method first attempts to return the contents as in memory
            (which might differ from what is on disk)."""
+        if not self.exists():
+            return ''
         try:
             return self.data
         except AttributeError:
