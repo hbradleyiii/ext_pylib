@@ -37,6 +37,7 @@ from node import Node
 import os
 import re
 from ext_pylib.prompt import prompt
+from ext_pylib.meta import setdynattr
 
 
 # File(atts)
@@ -260,5 +261,27 @@ class Parsable(object):
             if hasattr(self, attribute):
                 raise AttributeError('Cannot use "' + attribute + \
                         '" as parsable attribute of ' + str(self))
-            setattr(self, attribute, re.findall(regex, self.read()))
+            self.create_parseable_attr(attribute, regex)
         self.parsed = True
+
+    def create_parseable_attr(self, attribute, regex_tuple):
+        """Creates a dynamic attribure on the Parsable class.
+           This dynamically creates a property with a getter and setter. The
+           regex is a closure. Each time the attribute is accessed, the regex
+           is run against the data in memory. When the attribute is set to a
+           new value, this value is changed in memory. file.write() must be
+           called to write the changes to memory."""
+        if len(regex_tuple) == 2:
+            regex, mask = regex_tuple
+        else:
+            regex = regex_tuple[0]
+            mask = '{}'
+        def getter_func(self):
+            return re.findall(regex, self.read())
+
+        def setter_func(self, value):
+            """Note that this is only changing the value in memory.
+               You must call write()."""
+            self.data = re.sub(regex, mask.format(value), self.read())
+
+        setdynattr(self, attribute, getter_func, setter_func)
