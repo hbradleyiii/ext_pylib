@@ -84,8 +84,10 @@ class File(Node):
         # Create the file
         try:
             file_handle = open(self.path, 'w')
-            if data:
-                self.write(data, False, file_handle)
+            if data:  # If data was passed or data exists, write it.
+                self.data = data
+            if getattr(self, 'data', None):
+                self.write(self.data, False, file_handle)
             file_handle.close()
             print('[OK]')
         except Exception as error:
