@@ -28,9 +28,10 @@
 #
 #                   The Parsable mixin adds a method useful for parsing
 #                   (presumably) configuration files. It takes a dict of
-#                   attribute names and regexes to be used. When parse() is
-#                   called, the regex is run on the data and the result (or
-#                   None) is assigned to an attribute on the instance.
+#                   attribute names and regexes to be used. When
+#                   setup_parsing() is called, a dynamic property is created
+#                   for getting and setting a value in self.data based on the
+#                   regex.
 
 from dir import Dir
 from node import Node
@@ -249,10 +250,20 @@ class Template(object):
 #   A mixin to be used with a File class to allow parsing.
 #
 #   methods:
-#       parse(regexes)  - applies attributes with the result of the regexes to
-#                         the instance
+#       setup_parsing(regexes) - creates dynamic properties on the object from a
+#                                dict of regex to use for parsing self.data.
+#                                The dict is made of { name : regex }. regex is
+#                                either a string, a tuple with only one value
+#                                or a tuple with the regex used to get the
+#                                value and a string mask (must contain {}) used
+#                                for setting the value.
+#       create_parseable_attr(attribute, regex) - Does the work of creating the
+#                                dynamic properties. Note that getting and
+#                                setting functions work on the data as it is in
+#                                memory. self.write() must be called in order
+#                                to save any changes.
 class Parsable(object):
-    def parse(self, regexes=None):
+    def setup_parsing(self, regexes=None):
         """Takes a dict of name:regex to parse self.data with.
            regex is either a string, a tuple of one, or a tuple of two with the
            second element being the regex mask used for assigning a new value
@@ -260,14 +271,11 @@ class Parsable(object):
            placeholder of the new value."""
         if not regexes:
             regexes = self.regexes
-        if hasattr(self, 'parsed'):
-            return
         for attribute, regex in regexes.iteritems():
             if hasattr(self, attribute):
-                raise AttributeError('Cannot use "' + attribute + \
-                        '" as parsable attribute of ' + str(self))
+                raise AttributeError('Attribute "' + attribute + \
+                        '" already in use.')
             self.create_parseable_attr(attribute, regex)
-        self.parsed = True
 
     def create_parseable_attr(self, attribute, regex_tuple):
         """Creates a dynamic attribure on the Parsable class.

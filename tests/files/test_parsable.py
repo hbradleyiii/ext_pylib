@@ -31,18 +31,18 @@ class ParsableFile(Parsable, File): pass
 
 
 def test_parsable_parse_with_existing_attribute():
-    """Test Parsable parse() method on an existing attribute."""
+    """Test Parsable setup_parsing() method on an existing attribute."""
     parsable = ParsableFile()
     parsable.existing = 'already exists'
     with pytest.raises(AttributeError):
-        parsable.parse({ 'existing' : '*' })
+        parsable.setup_parsing({ 'existing' : '*' })
 
-def test_parsable_parse():
-    """Test Parsable parse() method."""
+def test_parsable_setup_parsing():
+    """Test Parsable setup_parsing() method."""
     file = Parsable()
     Parsable.read = read
     file.data = FILE
-    file.parse({
+    file.setup_parsing({
         'htdocs' : ('DocumentRoot (.*)',),
         'debug'  :  'DEBUG = (.*)',
         'secure' : ('SECURE[ ]*=[ ]*([^ \n]*)', 'SECURE = {}'),
