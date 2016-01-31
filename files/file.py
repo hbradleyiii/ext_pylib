@@ -104,7 +104,10 @@ class File(Node):
             return True
 
     def read(self):
-        """Returns the contents of the file."""
+        """Returns the contents of the file.
+
+           Note that method first attempts to return the contents as in memory
+           (which might differ from what is on disk)."""
         try:
             return self.data
         except AttributeError:
@@ -125,9 +128,13 @@ class File(Node):
     def write(self, data=None, append=True, handle=None):
         """Writes data to the file."""
         if not data:
-            raise UnboundLocalError('Must pass data to write method of File class.')
+            try:  # Try to get in memory data
+                data = self.data
+            except AttributeError:
+                raise UnboundLocalError('Must pass data to write method of File class.')
+        self.data = data  # Keep the data we're saving in memory.
         if handle: # When passed a handle, rely on the caller to close the file and
-              # handle exceptions.
+            # TODO: handle exceptions.
             file_handle = handle
             file_handle.write(data)
         else:
