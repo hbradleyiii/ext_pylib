@@ -18,11 +18,14 @@ This is a sample file.
 This is a sample file.
 DocumentRoot /var/www/google.com
 This is a sample file.
+DEBUG = True
+SECURE = False
+DocumentRoot /var/www/example.com
 """
 
 # Monkey Patch function for read() method
-def read():
-    return FILE
+def read(self):
+    return self.data
 
 class ParsableFile(Parsable, File): pass
 
@@ -37,6 +40,16 @@ def test_parsable_parse_with_existing_attribute():
 def test_parsable_parse():
     """Test Parsable parse() method."""
     file = Parsable()
-    file.read = read
-    file.parse({ 'htdocs' : 'DocumentRoot (.*)'})
+    Parsable.read = read
+    file.data = FILE
+    file.parse({
+        'htdocs' : ('DocumentRoot (.*)',),
+        'debug'  :  'DEBUG = (.*)',
+        'secure' : ('SECURE[ ]*=[ ]*([^ \n]*)', 'SECURE = {}'),
+    })
     assert file.htdocs[0] == '/var/www/google.com'
+    assert file.htdocs[1] == '/var/www/example.com'
+    assert file.debug == 'True'
+    assert file.secure == 'False'
+    file.secure = 'True'
+    assert file.secure == 'True'

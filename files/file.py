@@ -271,13 +271,22 @@ class Parsable(object):
            is run against the data in memory. When the attribute is set to a
            new value, this value is changed in memory. file.write() must be
            called to write the changes to memory."""
-        if len(regex_tuple) == 2:
-            regex, mask = regex_tuple
+        if isinstance(regex_tuple, tuple):
+            if len(regex_tuple) == 2:
+                regex, mask = regex_tuple
+            else:
+                regex = regex_tuple[0]
+                mask = '{}'
         else:
-            regex = regex_tuple[0]
+            regex = regex_tuple
             mask = '{}'
         def getter_func(self):
-            return re.findall(regex, self.read())
+            results = re.findall(regex, self.read())
+            if len(results) == 0:
+                return None
+            elif len(results) == 1:
+                return results[0]
+            return results
 
         def setter_func(self, value):
             """Note that this is only changing the value in memory.
