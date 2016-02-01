@@ -134,6 +134,28 @@ def test_file_create_with_data(mock_write, mock_exists, mock_chmod, mock_chown):
         assert mock_parent_dir.exists_called == 1
         assert mock_parent_dir.create_called == 0
 
+@patch('ext_pylib.files.node.Node.chown')
+@patch('ext_pylib.files.node.Node.chmod')
+@patch('ext_pylib.files.node.Node.exists')
+@patch('ext_pylib.files.file.File.write')
+def test_file_create_with_data_but_not_as_arg(mock_write, mock_exists, mock_chmod, mock_chown):
+    """Tests file creation with data."""
+    mock_parent_dir = Mock_Parent_Dir(True)
+    mock_exists.return_value = False
+    mock_chown.return_value = mock_chmod.return_value = True
+    File.parent_dir = mock_parent_dir
+    file = File(DEFAULT_ARGS)
+    m_open = mock_open()
+    with patch(builtins + '.open', m_open, create=True):
+        data = 'The data...'
+        file.data = data
+        assert file.create()
+        m_open.assert_called_once_with(DEFAULT_ARGS['path'], 'w')
+        mock_write.assert_called_once_with(data, False, m_open())
+        m_open().close.assert_called_once()
+        assert mock_parent_dir.exists_called == 1
+        assert mock_parent_dir.create_called == 0
+
 @patch('ext_pylib.files.node.Node.exists')
 def test_write_no_data(mock_exists):
     """Tests writing to a File with no data passed in."""
@@ -191,3 +213,21 @@ def test_file_remove(mock_remove, mock_exists):
     file = File(DEFAULT_ARGS)
     assert file.remove(False)
     mock_remove.assert_called_once_with(DEFAULT_ARGS['path'])
+
+@patch('ext_pylib.files.node.Node.exists')
+def test_file_read_nonexisting_file(mock_exists):
+    """Tests File read method."""
+    mock_exists.return_value = False
+    file = File(DEFAULT_ARGS)
+    assert file.read() == ''
+
+@patch('ext_pylib.files.node.Node.exists')
+def test_file_read_file_with_data(mock_exists):
+    mock_exists.return_value = True
+    file = File(DEFAULT_ARGS)
+    file.data = 'Test data'
+    assert file.read() == file.data
+    assert file.read() == 'Test data'
+    file.data = 'New data'
+    assert file.read() == file.data
+    assert file.read() == 'New data'
