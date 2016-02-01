@@ -21,6 +21,8 @@ This is a sample file.
 DEBUG = True
 SECURE = False
 DocumentRoot /var/www/example.com
+LIST = first_item
+LIST = second_item
 """
 
 # Monkey Patch function for read() method
@@ -46,6 +48,8 @@ def test_parsable_setup_parsing():
         'htdocs' : ('DocumentRoot (.*)',),
         'debug'  :  'DEBUG = (.*)',
         'secure' : ('SECURE[ ]*=[ ]*([^ \n]*)', 'SECURE = {}'),
+        'speed'  : ('SPEED[ ]*=[ ]*([^ \n]*)', 'SPEED = {}'),
+        'list'   : ('LIST[ ]*=[ ]*([^ \n]*)', 'LIST = {}'),
     })
     assert file.htdocs[0] == '/var/www/google.com'
     assert file.htdocs[1] == '/var/www/example.com'
@@ -53,3 +57,10 @@ def test_parsable_setup_parsing():
     assert file.secure == 'False'
     file.secure = 'True'
     assert file.secure == 'True'
+    assert file.speed == None
+    file.speed = 'fastest'
+    assert file.speed == 'fastest'
+    file.speed = 'fastest' # setting it more than once with the same value
+                           # shouldn't affect the number of times it is added.
+    assert isinstance(file.speed, str) # Shouldn't be a list
+    assert len(file.list) == 2 # Should be a list

@@ -309,6 +309,10 @@ class Parsable(object):
         def setter_func(self, value):
             """Note that this is only changing the value in memory.
                You must call write()."""
-            self.data = re.sub(regex, mask.format(value), self.read())
+            if len(re.findall(regex, self.read())) == 0:
+                # If the value doesn't exist, add it to the end of data
+                self.data = self.data + '\n' + mask.format(value)
+            else:  # otherwise just change it everywhere it exists
+                self.data = re.sub(regex, mask.format(value), self.read())
 
         setdynattr(self, attribute, getter_func, setter_func)
