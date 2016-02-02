@@ -78,7 +78,7 @@ class Domain(object):
     def name(self, name):
         """Validate and set the domain name, and, if necessary, prompt for correction."""
         while True:
-            if name == '' or name == None:
+            if name == '' or name is None:
                 name = raw_input("What is the site name? [example.com] ")
             if name[-1] == ".":
                 name = name[:-1] # strip exactly one dot from the right, if present
