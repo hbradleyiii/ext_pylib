@@ -222,6 +222,14 @@ def test_file_read_nonexisting_file(mock_exists):
     assert file.read() == ''
 
 @patch('ext_pylib.files.node.Node.exists')
+def test_file_read_nonexisting_file_with_data_in_memory(mock_exists):
+    """Tests File read method."""
+    mock_exists.return_value = False
+    file = File(DEFAULT_ARGS)
+    file.data = 'Data is in memory...'
+    assert file.read() == 'Data is in memory...'
+
+@patch('ext_pylib.files.node.Node.exists')
 def test_file_read_file_with_data(mock_exists):
     mock_exists.return_value = True
     file = File(DEFAULT_ARGS)
