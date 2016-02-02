@@ -62,7 +62,7 @@ class File(Node):
             return '<file.File:stub>'
         return self.path
 
-    def create(self, data = None):
+    def create(self, data=None):
         """Creates the file/directory."""
         if not self.path: # For stubs, just return True
             return True
@@ -173,7 +173,7 @@ class File(Node):
     def path(self, path):
         """Sets the path."""
         # Check for None
-        if path == None:
+        if path is None:
             return
         # File cannot end in '/'
         if path.endswith('/'):

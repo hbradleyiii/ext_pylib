@@ -110,7 +110,7 @@ class Dir(Node):
     def path(self, path):
         """Sets the path."""
         # Check for None
-        if path == None:
+        if path is None:
             return
         # Force directory to end in '/'
         if not path.endswith('/'):

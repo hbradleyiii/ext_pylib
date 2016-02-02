@@ -105,7 +105,7 @@ class Node(object):
     def remove(self, ask = True):
         raise NotImplementedError('[ERROR] Cannot call method on file.Node. It is an abstract class.')
 
-    def chmod(self, perms = None):
+    def chmod(self, perms=None):
         """Sets the permissions on the file/directory."""
         if not self.path:
             return True
@@ -125,7 +125,7 @@ class Node(object):
             print '[FAILED]'
             print error
 
-    def chown(self, owner = None, group = None):
+    def chown(self, owner=None, group=None):
         """Sets the owner and group of the directory."""
         if not self.path:
             return True
@@ -219,7 +219,7 @@ class Node(object):
     def path(self, path):
         """Validates, then sets the path."""
         # Check for None
-        if path == None:
+        if path is None:
             print '[Notice] file.Node was initialized with an empty path. Continuing as a stub.'
             self._path = None
             return
@@ -299,7 +299,7 @@ class Node(object):
     @owner.setter
     def owner(self, owner):
         """Sets the owner (string)."""
-        if owner == None:
+        if owner is None:
             owner = get_current_username()
         else:
             try:
@@ -326,7 +326,7 @@ class Node(object):
     def group(self, group):
         """Sets the group (string)."""
         # Check for empty string
-        if group == None:
+        if group is None:
             group = get_current_groupname()
         else:
             try:
