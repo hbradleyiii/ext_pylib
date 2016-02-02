@@ -293,11 +293,9 @@ class Parsable(object):
             if len(regex_tuple) == 2:
                 regex, mask = regex_tuple
             else:
-                regex = regex_tuple[0]
-                mask = '{}'
+                regex, mask = regex_tuple[0], '{}'
         else:
-            regex = regex_tuple
-            mask = '{}'
+            regex, mask = regex_tuple, '{}'
         def getter_func(self):
             results = re.findall(regex, self.read())
             if len(results) == 0:
