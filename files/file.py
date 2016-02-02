@@ -234,9 +234,9 @@ class Section(object):
     def end_section(self):
         """Returns the string that denotes the end of the section."""
         lines = self.readlines()
-        if lines[len(lines)-1] != '':  # If the last line is blank, use the line before it.
-            return lines[len(lines)-1]
-        return lines[len(lines)-2]
+        if lines[-1] != '':  # If the last line is blank, use the line before it.
+            return lines[-1]
+        return lines[-2]
 
 
 # Template()
