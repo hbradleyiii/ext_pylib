@@ -21,4 +21,3 @@ def test_domain(prompt_text, default, response, expected):
     default
     response
     expected
-    pass
