@@ -33,7 +33,7 @@ class MockParentDir(object):
         self.create_called += 1
 
 
-class Mock_Handle(object):
+class MockHandle(object):
     """A Mock class for a handle."""
     data = None
     def write(self, data):
@@ -163,7 +163,7 @@ def test_write_no_data():
 def test_write_data_with_handle():
     """Tests writing to a File with a handle passed in."""
     file = File(DEFAULT_ARGS)
-    mock_handle = Mock_Handle()
+    mock_handle = MockHandle()
     data = 'Some mock data...'
     file.write(data=data, handle=mock_handle)
     assert mock_handle.called_once_with(data)
