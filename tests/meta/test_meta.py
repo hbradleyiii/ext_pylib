@@ -21,7 +21,7 @@ def addfive_getter(self):
 def addfive_setter(self, value):
     self._value = value + 5  # Add 5 for testing
 
-def test_DynamicProperty():
+def test_dynamicproperty():
     """Tests DynamicProperty."""
     dummy = DummyClass()
 
