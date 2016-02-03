@@ -19,6 +19,18 @@ import re
 import socket
 
 
+def get_server_ip(self):
+    """Return the IP of this server."""
+    # TODO: Turn this into a list of values that can be passed in at init.
+    server_ip = requests.get('http://mediamarketers.com/myip/').text
+    if server_ip == '127.0.0.1':
+        server_ip = requests.get('http://dev.mediamarketers.com/myip/').text
+    return server_ip
+
+
+SERVER_IP = get_server_ip
+
+
 # Domain(domain)
 #   A class to describe and manage a domain name and corresponding ip address.
 #
@@ -60,15 +72,6 @@ class Domain(object):
     def ip(self):
         """Returns the A Record IP of the domain."""
         return socket.gethostbyname(self.name)
-
-    @property
-    def server_ip(self):
-        """Return the IP of this server."""
-        # TODO: Turn this into a list of values that can be passed in at init.
-        server_ip = requests.get('http://mediamarketers.com/myip/').text
-        if server_ip == '127.0.0.1':
-            server_ip = requests.get('http://dev.mediamarketers.com/myip/').text
-        return server_ip
 
     @property
     def name(self):
