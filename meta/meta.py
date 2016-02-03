@@ -34,6 +34,7 @@ class DynamicProperty(object):
         self.set_func = setter
         return self
 
+    @staticmethod
     def set_func(self, instance, value):
         raise TypeError("Cannot modify property.  It doesn't have a setter function.")
 

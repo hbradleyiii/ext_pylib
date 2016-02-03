@@ -100,10 +100,12 @@ class Node(object):
 
         return atts
 
-    def create(self):
+    @staticmethod
+    def create():
         raise NotImplementedError('[ERROR] Cannot call method on file.Node. It is an abstract class.')
 
-    def remove(self, ask = True):
+    @staticmethod
+    def remove():
         raise NotImplementedError('[ERROR] Cannot call method on file.Node. It is an abstract class.')
 
     def chmod(self, perms=None):
