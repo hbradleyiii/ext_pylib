@@ -8,7 +8,7 @@
 # description:      A unit test for ext_pylib's meta classes and functions.
 #
 
-from ext_pylib.meta import dynamic_property, setdynattr
+from ext_pylib.meta import DynamicProperty, setdynattr
 from mock import patch
 import pytest
 
@@ -21,15 +21,15 @@ def addfive_getter(self):
 def addfive_setter(self, value):
     self._value = value + 5  # Add 5 for testing
 
-def test_dynamic_property():
-    """Tests dynamic_property."""
+def test_DynamicProperty():
+    """Tests DynamicProperty."""
     dummy = DummyClass()
 
     # Make sure property doesn't already exist
     assert not getattr(dummy, 'addfive', None)
 
     # Create it (It MUST be on the class, not the object(instance) )
-    dummy.__class__.addfive = dynamic_property(addfive_getter)
+    dummy.__class__.addfive = DynamicProperty(addfive_getter)
     dummy.__class__.addfive = dummy.__class__.addfive.setter(addfive_setter)
 
     assert not dummy.addfive

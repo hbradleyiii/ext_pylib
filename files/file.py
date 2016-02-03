@@ -281,7 +281,7 @@ class Parsable(object):
         for attribute, regex in regexes.iteritems():
             att = getattr(self.__class__, attribute, None)
             if att or hasattr(self, attribute):
-                if att.__class__.__name__ == 'dynamic_property':
+                if att.__class__.__name__ == 'DynamicProperty':
                     continue
                 else:
                     raise AttributeError('Attribute "' + attribute + \
