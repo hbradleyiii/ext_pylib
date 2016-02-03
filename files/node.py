@@ -25,10 +25,10 @@ class Node(object):
     path = None. This effectively makes the Node a "Stub", in which methods do
     nothing but return True (except exists()) enabling a graceful fail.
 
-    :param atts['path']: The full (NOT relative) path of the node
-    :param atts['perms']: The (int) permissions of the node
-    :param atts['owner']: The (string) owner of the node
-    :param atts['group']: The (string) group of the node
+    :param atts['path']: The path (string) of the node.
+    :param atts['perms']: The permissions (int or octal) of the node.
+    :param atts['owner']: The owner (string) of the node.
+    :param atts['group']: The group (string) of the node.
 
    methods:
        get_atts(string)  - returns the attributes of the node in a dict (or
@@ -232,9 +232,6 @@ class Node(object):
         for char in path:
             if char not in '-_.() abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/':
                 raise ValueError('"' + path + '" is not allowed as an file.Node.')
-        # Directory must start with '/'
-        if not path.startswith('/'):
-            raise ValueError('Relative paths (' + path + ') are not allowed as an file.Node.')
         # Clean path of extra slashes
         while "//" in path:
             path = path.replace('//', '/')
