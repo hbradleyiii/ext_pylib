@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 #
 # name:             domain.py
 # author:           Harold Bradley III
@@ -15,7 +16,6 @@ try:
 except ImportError:
     raise ImportError('ext_pylib\'s domain module requires module requests.')
 
-from ext_pylib.prompt import prompt
 import re
 import socket
 
@@ -45,14 +45,13 @@ class Domain(object):
 
         >>> import ww
         >>> domain = Domain('example.com')
+        >>> domain.name
+        'example.com'
     """
 
-    def __init__(self, name='', prompt=False):
+    def __init__(self, name=''):
         """Initializes a new Domain instance."""
-        if prompt:
-            self.prompt()  # set name using prompts
-        else:
-            self.name = name
+        self.name = name
 
     def __repr__(self):
         """Returns a python string that evaluates to the object instance."""
