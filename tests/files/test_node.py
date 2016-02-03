@@ -68,8 +68,8 @@ def test_node_repr(atts, expected):
     assert node.__repr__() == "Node(" + expected + ")"
 
 @pytest.mark.parametrize(("atts", "expected"), repr_args)
-def test_node__atts_(atts, expected):
-    """Test Node _atts_ method."""
+def test_node_get_atts(atts, expected):
+    """Test Node get_atts method."""
     node = Node(atts)
     if 'perms' not in atts:
         atts['perms'] = None
@@ -77,8 +77,8 @@ def test_node__atts_(atts, expected):
         atts['owner'] = None
     if 'group' not in atts:
         atts['group'] = None
-    assert node._atts_(string = True) == expected
-    assert node._atts_(string = False) == atts
+    assert node.get_atts(string = True) == expected
+    assert node.get_atts(string = False) == atts
 
 concat_args = [
     ({'path' : None}, '<files.Node:stub>'),
@@ -287,10 +287,6 @@ def test_node_parent_node(atts, expected):
     else:
         assert node.parent_node == expected
 
-def test_node_set_perms_none():
-    node = Node({'path' : '/this/path/', 'perms' : None })
-    assert not node._perms
-
 def test_node_set_perms_invalid():
     """Tests setting node's perms as invalid values."""
     node = Node(DEFUALT_ATTS)
@@ -312,7 +308,6 @@ def test_node_set_owner_root():
     node = Node(DEFUALT_ATTS)
     node.owner = 'root'
     assert node.owner == 'root'
-    assert node._owner == 'root'
 
 def test_node_set_bad_group():
     """Tests setting node's group to an invalid user."""
@@ -325,4 +320,3 @@ def test_node_set_group_root():
     node = Node(DEFUALT_ATTS)
     node.group = 'root'
     assert node.group == 'root'
-    assert node._group == 'root'
