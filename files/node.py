@@ -272,7 +272,7 @@ class Node(object):
             print e
             print '[ERROR] ' + perms + ' must be set to an int.'
             raise
-        if perms < 0 or 511 < perms:
+        if not 0 <= perms <= 511:
             raise ValueError('"perms" cannot be set to ' + self.perms_as_string(perms) + '.')
         self._perms = perms
 
