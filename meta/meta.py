@@ -23,6 +23,7 @@ class DynamicProperty(object):
         self.getter = getter
 
     def __get__(self, instance, owner):
+        self.owner = owner  # Not used
         if instance is None:
             return self
         return self.getter(instance)

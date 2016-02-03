@@ -17,4 +17,8 @@ import pytest
 ])
 def test_domain(prompt_text, default, response, expected):
     """Test domain class"""
+    prompt_text
+    default
+    response
+    expected
     pass

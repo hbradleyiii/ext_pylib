@@ -34,10 +34,11 @@ def root(request):
 #@root
 def test_copytree(root):
     """TODO:"""
+    root
     # assert root.exists
     pass
 
-def test_dir_actual_create_and_remove(tmpdir):
+def test_dir_actual_create_and_remove():
     """[Integration Test] Test actual creation and removal of directory."""
     # Setup a root dir to use to test
     root_dir = Dir({'path' : '/tmp/ext_pylib/'})
@@ -61,6 +62,7 @@ def test_dir_actual_create_and_remove(tmpdir):
 
 def test_file_actual_creation_write_and_removal(tmpdir):
     """[Integration Test] Test actual creation, writing, and removal of file."""
+    tmpdir
     pass
 
 
@@ -118,7 +120,7 @@ FILE_CONTENTS_WITHOUT_SECTION = """This is a test file that does not contain the
 It is used for integration tests.
 """
 
-def test_section_file_apply_to_file(tmpdir):
+def test_section_file_apply_to_file():
     """[Integration Test] Test """
     # Setup a root dir to use to test
     root_dir = Dir({'path' : '/tmp/ext_pylib/'})
@@ -155,5 +157,3 @@ def test_section_file_apply_to_file(tmpdir):
     # Cleanup
     assert root_dir.remove(False)
     assert not root_dir.exists()
-
-

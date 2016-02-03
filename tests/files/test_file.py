@@ -69,8 +69,7 @@ def test_file_create_stub():
 
 @patch('ext_pylib.files.file.prompt')
 @patch('ext_pylib.files.node.Node.exists')
-@patch('ext_pylib.files.file.File.write')
-def test_file_create_already_existing_file_not_replacing(mock_write, mock_exists, mock_prompt):
+def test_file_create_already_existing_file_not_replacing(mock_exists, mock_prompt):
     """Tests file creation of an already existing file (NOT replacing the file)."""
     mock_exists.return_value = True
     mock_prompt.return_value = False # Answer no, don't replace
@@ -81,8 +80,7 @@ def test_file_create_already_existing_file_not_replacing(mock_write, mock_exists
 @patch('ext_pylib.files.node.Node.chmod')
 @patch('ext_pylib.files.file.prompt')
 @patch('ext_pylib.files.node.Node.exists')
-@patch('ext_pylib.files.file.File.write')
-def test_file_create_already_existing_file_replacing(mock_write, mock_exists, mock_prompt, mock_chmod, mock_chown):
+def test_file_create_already_existing_file_replacing(mock_exists, mock_prompt, mock_chmod, mock_chown):
     """Tests file creation of an already existing file (replacing the file)."""
     mock_parent_dir = MockParentDir(True)
     mock_exists.return_value = True
@@ -156,8 +154,7 @@ def test_file_create_with_data_but_not_as_arg(mock_write, mock_exists, mock_chmo
         assert mock_parent_dir.exists_called == 1
         assert mock_parent_dir.create_called == 0
 
-@patch('ext_pylib.files.node.Node.exists')
-def test_write_no_data(mock_exists):
+def test_write_no_data():
     """Tests writing to a File with no data passed in."""
     file = File(DEFAULT_ARGS)
     with pytest.raises(UnboundLocalError):

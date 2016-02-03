@@ -63,6 +63,8 @@ class Domain(object):
     def set_ip(self, ip = ''):
         """Points the domain's A record to this server -- not yet implemented."""
         print '[*] DNS API not yet implemented.'
+        print '[*] Cannot set to IP: ' + ip
+        print '[*] DNS API not yet implemented.'
         self.verify()
 
     ################
