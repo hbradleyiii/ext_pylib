@@ -304,7 +304,7 @@ class Parsable(object):
             regex, mask = regex_tuple, '{}'
         def getter_func(self):
             results = re.findall(regex, self.read())
-            if len(results) == 0:
+            if not results:
                 return None
             elif len(results) == 1:
                 return results[0]
@@ -313,7 +313,7 @@ class Parsable(object):
         def setter_func(self, value):
             """Note that this is only changing the value in memory.
                You must call write()."""
-            if len(re.findall(regex, self.read())) == 0:
+            if not re.findall(regex, self.read()):
                 # If the value doesn't exist, add it to the end of data
                 self.data = self.data + '\n' + mask.format(value)
             else:  # otherwise just change it everywhere it exists
