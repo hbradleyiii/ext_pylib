@@ -36,7 +36,6 @@ def test_copytree(root):
     """TODO:"""
     root
     # assert root.exists
-    pass
 
 def test_dir_actual_create_and_remove():
     """[Integration Test] Test actual creation and removal of directory."""
@@ -63,7 +62,6 @@ def test_dir_actual_create_and_remove():
 def test_file_actual_creation_write_and_removal(tmpdir):
     """[Integration Test] Test actual creation, writing, and removal of file."""
     tmpdir
-    pass
 
 
     ## Strings for Section template file integration tests. ##
