@@ -119,4 +119,4 @@ class Dir(Node):
 
     @property
     def parent_dir(self):
-        return Dir(self.parent_node._atts_())
+        return Dir(self.parent_node.get_atts())

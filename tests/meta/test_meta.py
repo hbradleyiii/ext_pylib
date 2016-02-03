@@ -47,10 +47,8 @@ def test_setdynattr():
     assert not dummy.a_property
     dummy.a_property = 5
     assert dummy.a_property == 5
-    assert dummy._a_property == 5
 
     setdynattr(dummy, 'addfive', addfive_getter, addfive_setter)
     assert not dummy.addfive
     dummy.addfive = 5
     assert dummy.addfive == 10
-    assert dummy._value == 10

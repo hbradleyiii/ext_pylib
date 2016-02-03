@@ -32,8 +32,8 @@ from ext_pylib.user import get_current_username, get_current_groupname
 #       group: the (string) group of the node
 #
 #   methods:
-#       _atts_(string)  - returns the attributes of the node in a dict (or
-#                         string representing a dict)
+#       get_atts(string)  - returns the attributes of the node in a dict (or
+#                           string representing a dict)
 #       create()  - creates the node, must be implemented in subclass
 #       remove(ask)  - removes the node, must be implemented in subclass
 #       chmod(perms)  - changes the permissions of the node
@@ -59,7 +59,7 @@ class Node(object):
 
     def __repr__(self):
         """Returns a python string that evaluates to the object instance."""
-        return "{0}({1})".format(self.__class__.__name__, self._atts_(string = True))
+        return "{0}({1})".format(self.__class__.__name__, self.get_atts(string = True))
 
     def __add__(self, other):
         """Allows string concatenation with the path."""
@@ -69,7 +69,7 @@ class Node(object):
         """Allows string concatenation with the path."""
         return other + str(self)
 
-    def _atts_(self, string = False):
+    def get_atts(self, string = False):
         """Returns a python string of attributes (as a dict) used to create this object."""
         if not string:
             return { 'path' : self.path, 'perms' : getattr(self, '_perms', None), 'owner' : self.owner, 'group' : self.group }
