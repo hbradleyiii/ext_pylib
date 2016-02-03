@@ -58,7 +58,7 @@ class Node(object):
 
     def __repr__(self):
         """Returns a python string that evaluates to the object instance."""
-        return "%s(%s)" % (self.__class__.__name__, self._atts_(string = True))
+        return "{0}({1})".format(self.__class__.__name__, self._atts_(string = True))
 
     def __add__(self, other):
         """Allows string concatenation with the path."""
