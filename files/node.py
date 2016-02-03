@@ -14,34 +14,33 @@ import os
 import pwd
 from ext_pylib.user import get_current_username, get_current_groupname
 
-
-# Node(atts)
-#   An abstract class that is primarily a wrapper for directory and file
-#   managment. This class is intended to be extended by file and directory
-#   classes.
-#
-#   Node is initialized with a dict of attributes. Attributes that aren't
-#   given are just initialized as None. If a path isn't given, the node is set
-#   to path = None. This effectively makes the Node a "Stub", in which methods
-#   do nothing but return True (except exists()) enabling a graceful fail.
-#
-#   atts dict can have the following values:
-#       path: the full (NOT relative) path of the node
-#       perms: the (int) permissions of the node
-#       owner: the (string) owner of the node
-#       group: the (string) group of the node
-#
-#   methods:
-#       get_atts(string)  - returns the attributes of the node in a dict (or
-#                           string representing a dict)
-#       create()  - creates the node, must be implemented in subclass
-#       remove(ask)  - removes the node, must be implemented in subclass
-#       chmod(perms)  - changes the permissions of the node
-#       chown(owner, group)  - changes the ownership of the node
-#       exists()  - returns true if the node exists
-#       verify(repair)  - verifies the attributes of the node
-#       repair()  - runs verification with the force repair flag set
 class Node(object):
+    """An abstract class representing a node object.
+
+    This class is intended primarily as a wrapper for directory and file
+    management and is designed to be extended by file and directory classes.
+
+    Node is initialized with a dict of attributes. Attributes that aren't given
+    are just initialized as None. If a path isn't given, the node is set to
+    path = None. This effectively makes the Node a "Stub", in which methods do
+    nothing but return True (except exists()) enabling a graceful fail.
+
+    :param atts['path']: The full (NOT relative) path of the node
+    :param atts['perms']: The (int) permissions of the node
+    :param atts['owner']: The (string) owner of the node
+    :param atts['group']: The (string) group of the node
+
+   methods:
+       get_atts(string)  - returns the attributes of the node in a dict (or
+                           string representing a dict)
+       create()  - creates the node, must be implemented in subclass
+       remove(ask)  - removes the node, must be implemented in subclass
+       chmod(perms)  - changes the permissions of the node
+       chown(owner, group)  - changes the ownership of the node
+       exists()  - returns true if the node exists
+       verify(repair)  - verifies the attributes of the node
+       repair()  - runs verification with the force repair flag set
+    """
 
     def __init__(self, atts=None ):
         """Initializes a new Node instance."""
