@@ -43,8 +43,9 @@ from ext_pylib.user import get_current_username, get_current_groupname
 #       repair()  - runs verification with the force repair flag set
 class Node(object):
 
-    def __init__(self, atts = {} ):
+    def __init__(self, atts=None ):
         """Initializes a new Node instance."""
+        atts = atts or {}
         if 'path' not in atts:
             self.path = None # !! Make sure path is at least initialized
         for attribute in atts:

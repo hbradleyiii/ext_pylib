@@ -26,8 +26,9 @@ import socket
 #       set_ip()  - not yet implemented
 class Domain(object):
 
-    def __init__(self, name = '', getip_urls = []):
+    def __init__(self, name='', getip_urls=None):
         """Initializes a new Domain instance."""
+        getip_urls = getip_urls or []
         self.name = name
         self.getip_urls = getip_urls
 
