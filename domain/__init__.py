@@ -1,1 +1,1 @@
-from domain import Domain, SERVER_IP
+from domain import Domain, get_server_ip
