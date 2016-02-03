@@ -169,8 +169,7 @@ def test_node_chmod(mock_chmod, mock_path_exists, atts, expected):
         assert not mock_chmod.called
 
 @patch('ext_pylib.files.node.Node.exists')
-@patch('os.chmod')
-def test_node_chmod_nonexisting(mock_chmod, mock_path_exists):
+def test_node_chmod_nonexisting(mock_path_exists):
     """Tests Node's chown method with a nonexisting node."""
     mock_path_exists.return_value = False
     node = Node(DEFUALT_ATTS)
@@ -219,10 +218,7 @@ def test_node_chown(mock_chown, mock_getgrnam, mock_getpwnam, mock_path_exists, 
         mock_chown.assert_called_once_with(atts['path'], 123, 123)
 
 @patch('ext_pylib.files.node.Node.exists')
-@patch('pwd.getpwnam')
-@patch('grp.getgrnam')
-@patch('os.chown')
-def test_node_chown_nonexisting(mock_chown, mock_getgrnam, mock_getpwnam, mock_path_exists):
+def test_node_chown_nonexisting(mock_path_exists):
     """Tests Node's chown method with a nonexisting node."""
     mock_path_exists.return_value = False
     node = Node(DEFUALT_ATTS)
