@@ -15,34 +15,44 @@ try:
 except ImportError:
     raise ImportError('ext_pylib\'s domain module requires module requests.')
 
+from ext_pylib.prompt import prompt
 import re
 import socket
 
 
-def get_server_ip(self):
+def get_server_ip(get_ip_urls = None):
     """Return the IP of this server."""
-    # TODO: Turn this into a list of values that can be passed in at init.
-    server_ip = requests.get('http://mediamarketers.com/myip/').text
-    if server_ip == '127.0.0.1':
-        server_ip = requests.get('http://dev.mediamarketers.com/myip/').text
-    return server_ip
+    get_ip_urls = get_ip_urls or ['http://mediamarketers.com/myip/',
+                                  'http://dev.mediamarketers.com/myip/']
+    for url in get_ip_urls:
+        ip = requests.get(url).text
+        if not ip == '127.0.0.1':
+            return ip
+    else:  # No IP found
+        raise LookupError('Could not successfully retrieve ip of server.')
 
 
-SERVER_IP = get_server_ip
-
-
-# Domain(domain)
-#   A class to describe and manage a domain name and corresponding ip address.
-#
-#   methods:
-#       set_ip()  - not yet implemented
 class Domain(object):
+    """An interface for a Domain object.
 
-    def __init__(self, name='', getip_urls=None):
+    Used for binding an IP and a domain name in one object. Also provides a
+    method for setting the IP using a DNS API. Note that this is yet to be
+    implemented.
+
+    :param name: The domain name the Domain() object represents.
+
+    Usage::
+
+        >>> import ww
+        >>> domain = Domain('example.com')
+    """
+
+    def __init__(self, name='', prompt=False):
         """Initializes a new Domain instance."""
-        getip_urls = getip_urls or []
-        self.name = name
-        self.getip_urls = getip_urls
+        if prompt:
+            self.prompt()  # set name using prompts
+        else:
+            self.name = name
 
     def __repr__(self):
         """Returns a python string that evaluates to the object instance."""
@@ -62,39 +72,35 @@ class Domain(object):
 
     def set_ip(self, ip = ''):
         """Points the domain's A record to this server -- not yet implemented."""
+        # TODO: Implement DNS API
         print '[*] DNS API not yet implemented.'
         print '[*] Cannot set to IP: ' + ip
         print '[*] DNS API not yet implemented.'
-        self.verify()
-
-    ################
-    # Properties
 
     @property
-    def ip(self):
+    def ip(self, flush_memory=False):
         """Returns the A Record IP of the domain."""
-        return socket.gethostbyname(self.name)
+        try:
+            return self._ip
+        except AttributeError:
+            self._ip = socket.gethostbyname(self.name)
+            return self._ip
 
     @property
     def name(self):
         """Return the domain name as a string."""
-        return self.__name
+        return self._name
 
     @name.setter
     def name(self, name):
-        """Validate and set the domain name, and, if necessary, prompt for correction."""
-        while True:
-            if name in ['', None]:
-                name = raw_input("What is the site name? [example.com] ")
-            if name[-1] == ".":
-                name = name[:-1] # strip exactly one dot from the right, if present
-            if len(name) > 255:
-                print 'name cannot be longer than 255 characters.'
-                name = '' # Forces reprompt and continues the loop
-            allowed = re.compile("(?!-)[A-Z\d-]{1,63}(?<!-)$", re.IGNORECASE)
-            if not all(allowed.match(x) for x in name.split(".")):
-                print 'Domain name ' + name + ' is not valid.'
-                name = '' # Forces reprompt and continues the loop
-            if name != '':
-                break
-        self.__name = name
+        """Validate and set the domain name."""
+        if name in ['', None]:
+            raise ValueError('Domain name cannot be an empty string.')
+        if name[-1] == ".":
+            name = name[:-1]  # strip exactly one dot from the right, if present
+        if len(name) > 255:
+            raise ValueError('Domain Name cannot be longer than 255 characters.')
+        allowed_chars = re.compile("(?!-)[A-Z\d-]{1,63}(?<!-)$", re.IGNORECASE)
+        if not all(allowed_chars.match(x) for x in name.split(".")):
+            raise ValueError('Domain Name ' + name + ' is not valid.')
+        self._name = name
