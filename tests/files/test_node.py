@@ -262,16 +262,6 @@ def test_node_set_path_invalid_char(invalid_char):
     with pytest.raises(ValueError):
         node = Node({'path' : '/path/to' + invalid_char})
 
-def test_node_set_path_relative():
-    """Test that Node throws an error when setting path to relative path."""
-    node = Node()
-    with pytest.raises(ValueError):
-        node.path = 'path/to'
-    with pytest.raises(ValueError):
-        node = Node({'path' : 'path/to'})
-    with pytest.raises(ValueError):
-        node = Node({'path' : './path/to'})
-
 parent_dirs_args = [
     ({'path' : None}, None),
     ({'path' : '/this/path/'}, '/this/'),
