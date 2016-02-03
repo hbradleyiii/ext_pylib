@@ -7,7 +7,7 @@
 #
 # description:      Classes and functions for meta-programming with python.
 #                   This is mostly experimental stuff. For now, class
-#                   dynamic_property is merely a close reimplementation of
+#                   DynamicProperty is merely a close reimplementation of
 #                   python's native property().
 #
 #                   Credit for much of this goes to:
@@ -15,7 +15,7 @@
 #
 
 
-class dynamic_property(object):
+class DynamicProperty(object):
     """A re-implementation of python's native property().
     most of this code from: http://eev.ee/blog/2012/05/23/python-faq-descriptors/"""
 
@@ -46,6 +46,6 @@ def setdynattr(obj, attribute, getter_func=None, setter_func=None):
         def setter_func(self, value):
             return setattr(self, '_' + attribute, value)
 
-    setattr(obj.__class__, attribute, dynamic_property(getter_func))
+    setattr(obj.__class__, attribute, DynamicProperty(getter_func))
     prop = getattr(obj.__class__, attribute)
     prop = prop.setter(setter_func)

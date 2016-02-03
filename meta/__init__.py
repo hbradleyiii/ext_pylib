@@ -1,1 +1,1 @@
-from meta import dynamic_property, setdynattr
+from meta import DynamicProperty, setdynattr

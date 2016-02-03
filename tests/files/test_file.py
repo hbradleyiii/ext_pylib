@@ -21,7 +21,7 @@ else:
     builtins = 'builtins'
 
 
-class Mock_Parent_Dir(object):
+class MockParentDir(object):
     """A Mock class for parent_dir property."""
     def __init__(self, _exists):
         self._exists = _exists
@@ -84,7 +84,7 @@ def test_file_create_already_existing_file_not_replacing(mock_write, mock_exists
 @patch('ext_pylib.files.file.File.write')
 def test_file_create_already_existing_file_replacing(mock_write, mock_exists, mock_prompt, mock_chmod, mock_chown):
     """Tests file creation of an already existing file (replacing the file)."""
-    mock_parent_dir = Mock_Parent_Dir(True)
+    mock_parent_dir = MockParentDir(True)
     mock_exists.return_value = True
     mock_chown.return_value = mock_chmod.return_value = True
     mock_prompt.return_value = True # Answer yes, replace
@@ -100,7 +100,7 @@ def test_file_create_already_existing_file_replacing(mock_write, mock_exists, mo
 @patch('ext_pylib.files.node.Node.exists')
 def test_file_create_and_create_parent_dirs(mock_exists, mock_chmod, mock_chown):
     """Tests file creation while creating parent dirs."""
-    mock_parent_dir = Mock_Parent_Dir(False)
+    mock_parent_dir = MockParentDir(False)
     mock_exists.return_value = False
     mock_chown.return_value = mock_chmod.return_value = True
     File.parent_dir = mock_parent_dir
@@ -119,7 +119,7 @@ def test_file_create_and_create_parent_dirs(mock_exists, mock_chmod, mock_chown)
 @patch('ext_pylib.files.file.File.write')
 def test_file_create_with_data(mock_write, mock_exists, mock_chmod, mock_chown):
     """Tests file creation with data."""
-    mock_parent_dir = Mock_Parent_Dir(True)
+    mock_parent_dir = MockParentDir(True)
     mock_exists.return_value = False
     mock_chown.return_value = mock_chmod.return_value = True
     File.parent_dir = mock_parent_dir
@@ -140,7 +140,7 @@ def test_file_create_with_data(mock_write, mock_exists, mock_chmod, mock_chown):
 @patch('ext_pylib.files.file.File.write')
 def test_file_create_with_data_but_not_as_arg(mock_write, mock_exists, mock_chmod, mock_chown):
     """Tests file creation with data."""
-    mock_parent_dir = Mock_Parent_Dir(True)
+    mock_parent_dir = MockParentDir(True)
     mock_exists.return_value = False
     mock_chown.return_value = mock_chmod.return_value = True
     File.parent_dir = mock_parent_dir
