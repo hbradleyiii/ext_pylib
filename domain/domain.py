@@ -6,7 +6,7 @@
 # email:            harold@bradleystudio.net
 # created on:       11/03/2015
 #
-# description:      A class to describe and manage a domain name and
+# description:      A class to describe and manage a domain name and it's
 #                   corresponding ip address.
 #
 #                   TODO: add DNS API capabilities
@@ -14,7 +14,7 @@
 try:
     import requests
 except ImportError:
-    raise ImportError('ext_pylib\'s domain module requires module requests.')
+    raise ImportError("ext_pylib's domain module requires module requests.")
 
 import re
 import socket
@@ -72,6 +72,7 @@ class Domain(object):
     def set_ip(self, ip = ''):
         """Points the domain's A record to this server -- not yet implemented."""
         # TODO: Implement DNS API
+        print 'Current serverip: ' + self.ip
         print '[*] DNS API not yet implemented.'
         print '[*] Cannot set to IP: ' + ip
         print '[*] DNS API not yet implemented.'
