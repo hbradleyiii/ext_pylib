@@ -9,7 +9,6 @@
 #
 
 from ext_pylib.password import generate_pw
-from ext_pylib.password.password import is_like_previous_char
 from ext_pylib.password.password import DEFAULT_CHAR_SET
 import pytest
 
@@ -18,7 +17,7 @@ import pytest
     (1, {'a' : '$'}, '$'),
 ])
 def test_generate_pw(length, charset, expected):
-    """Test generate_pw function"""
+    """Tests generate_pw function."""
     assert generate_pw(length, charset) == expected
 
 @pytest.mark.parametrize(("length", "charset", "expected"), [
@@ -28,9 +27,8 @@ def test_generate_pw(length, charset, expected):
     (20, {'set' : 'abc', 'set2' : 'ABC'}, 20),
 ])
 def test_generate_pw_length(length, charset, expected):
-    """Test generate_pw_length function."""
+    """Testsgenerate_pw_length function."""
     assert len(generate_pw(length, charset)) == expected
-
 
 @pytest.mark.parametrize(("pw", "charset", "expected"), [
     ('', DEFAULT_CHAR_SET['big'], False),
@@ -38,6 +36,9 @@ def test_generate_pw_length(length, charset, expected):
     ('$', DEFAULT_CHAR_SET['special'], True),
     ('W1$z', DEFAULT_CHAR_SET['big'], False),
 ])
-def test_is_like_previous_char(pw, charset, expected):
-    """Test is_like_previous_char function."""
-    assert is_like_previous_char(pw, charset) == expected
+def test_generate_pw_no_dup_char_sets(pw, charset, expected):
+    """Tests that generate_pw doesn't use the same subset twice in a row."""
+    for _ in range(50):
+        password = generate_pw(2, {'a' : 'a', 'b' : 'b'})
+        assert password != 'aa'
+        assert password != 'bb'
