@@ -29,7 +29,7 @@ import pytest
     ('Answer the question', True, ['asdyes', 'nno', 'yesno', 'y'], True),
 ])
 def test_prompt(prompt_text, default, response, expected):
-    """Test prompt function"""
+    """Test prompt function."""
     with mock.patch('__builtin__.raw_input', side_effect=response):
         assert prompt(prompt_text, default) == expected
 
@@ -39,7 +39,7 @@ def test_prompt(prompt_text, default, response, expected):
     ('Answer the question', '', True),
 ])
 def test_prompt_no_default(prompt_text, response, expected):
-    """Test prompt function with bad input"""
+    """Test prompt function with bad input."""
     with mock.patch('__builtin__.raw_input', return_value=response):
         assert prompt(prompt_text) == expected
 
@@ -49,7 +49,7 @@ def test_prompt_no_default(prompt_text, response, expected):
     ('Answer the question', 'Answer', 'anotheranswer', 'anotheranswer'),
 ])
 def test_prompt_str(prompt_text, default, response, expected):
-    """Test prompt_str function"""
+    """Test prompt_str function."""
     with mock.patch('__builtin__.raw_input', return_value=response):
         assert prompt_str(prompt_text, default) == expected
 
@@ -59,6 +59,6 @@ def test_prompt_str(prompt_text, default, response, expected):
     ('Delete all of your files?', 'DELETE', ['delete', 'asdf', 'n'], False),
 ])
 def test_warn_prompt(prompt_text, default, response, expected):
-    """Test warn_prompt function"""
+    """Test warn_prompt function."""
     with mock.patch('__builtin__.raw_input', side_effect=response):
         assert warn_prompt(prompt_text, default) == expected
