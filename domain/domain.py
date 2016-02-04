@@ -78,7 +78,7 @@ class Domain(object):
         print '[*] DNS API not yet implemented.'
 
     @property
-    def ip(self, flush_memory=False):
+    def ip(self):
         """Returns the A Record IP of the domain."""
         try:
             return self._ip
