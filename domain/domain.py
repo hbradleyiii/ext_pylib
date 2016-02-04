@@ -43,7 +43,7 @@ class Domain(object):
 
     Usage::
 
-        >>> import ww
+        >>> from ext_pylib.domain import Domain
         >>> domain = Domain('example.com')
         >>> domain.name
         'example.com'
