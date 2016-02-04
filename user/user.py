@@ -13,7 +13,9 @@ import os
 import pwd
 
 def get_current_username():
+    """Returns the current username as a string."""
     return pwd.getpwuid(os.getuid()).pw_name
 
 def get_current_groupname():
+    """Returns the current groupname as a string."""
     return grp.getgrgid(os.getgid()).gr_name
