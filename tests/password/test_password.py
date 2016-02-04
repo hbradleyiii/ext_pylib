@@ -30,13 +30,7 @@ def test_generate_pw_length(length, charset, expected):
     """Testsgenerate_pw_length function."""
     assert len(generate_pw(length, charset)) == expected
 
-@pytest.mark.parametrize(("pw", "charset", "expected"), [
-    ('', DEFAULT_CHAR_SET['big'], False),
-    ('a', DEFAULT_CHAR_SET['small'], True),
-    ('$', DEFAULT_CHAR_SET['special'], True),
-    ('W1$z', DEFAULT_CHAR_SET['big'], False),
-])
-def test_generate_pw_no_dup_char_sets(pw, charset, expected):
+def test_generate_pw_no_dup_char_sets():
     """Tests that generate_pw doesn't use the same subset twice in a row."""
     for _ in range(50):
         password = generate_pw(2, {'a' : 'a', 'b' : 'b'})
