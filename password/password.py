@@ -12,7 +12,7 @@
 from random import choice
 from os import urandom
 
-
+# Defines the default characters for use in generating a password
 DEFAULT_CHAR_SET = {
     'small': 'abcdefghijklmnopqrstuvwxyz',
     'nums': '0123456789',
@@ -20,8 +20,8 @@ DEFAULT_CHAR_SET = {
     'special': '^!$%&=?{[]}+~#-_.:,;<>|'
 }
 
-def generate_pw(length=18, char_set = DEFAULT_CHAR_SET):
-    """Generates and returns a randomly generated password as a string."""
+def generate_pw(length=18, char_set=DEFAULT_CHAR_SET):
+    """Generates a pseudo-randomly generated password and returns it as a string."""
     password = []
 
     while len(password) < length:
