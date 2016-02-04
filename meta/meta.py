@@ -32,16 +32,17 @@ class DynamicProperty(object):
 
     def __set__(self, instance, value):
         """Calls the setter function.
-        self.set_func(instance, value)
+        This is a wrapper for the property's actual setter function."""
+        self.setter(instance, value)
 
-    def setter(self, setter):
+    def create_setter(self, setter):
         """Sets the setter function to the passed arg setter (a function).
         Returns self. (Composite Pattern)."""
-        self.set_func = setter
+        self.setter = setter
         return self
 
     @staticmethod
-    def set_func(*args, **kwargs):
+    def setter(*args, **kwargs):
         """A stub. If it isn't overwritten, the property is read-only."""
         raise TypeError("Cannot modify property.  It doesn't have a setter function.")
 
@@ -63,4 +64,4 @@ def setdynattr(obj, attribute, getter_func=None, setter_func=None):
 
     setattr(obj.__class__, attribute, DynamicProperty(getter_func))
     prop = getattr(obj.__class__, attribute)
-    prop = prop.setter(setter_func)
+    prop = prop.create_setter(setter_func)

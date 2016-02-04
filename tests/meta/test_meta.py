@@ -33,7 +33,7 @@ def test_dynamicproperty():
 
     # Create it (It MUST be on the class, not the object(instance) )
     dummy.__class__.addfive = DynamicProperty(addfive_getter)
-    dummy.__class__.addfive = dummy.__class__.addfive.setter(addfive_setter)
+    dummy.__class__.addfive = dummy.__class__.addfive.create_setter(addfive_setter)
 
     assert not dummy.addfive
     dummy.addfive = 5
