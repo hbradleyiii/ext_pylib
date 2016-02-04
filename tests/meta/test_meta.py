@@ -13,12 +13,15 @@ from mock import patch
 import pytest
 
 
-class DummyClass(object): pass
+class DummyClass(object):
+    """Just a dummy class."""
 
 def addfive_getter(self):
+    """A test getter function that just returns _value."""
     return getattr(self, '_value', None)
 
 def addfive_setter(self, value):
+    """A test setter function that adds 5 to the value passed before storing as _value."""
     self._value = value + 5  # Add 5 for testing
 
 def test_dynamicproperty():
