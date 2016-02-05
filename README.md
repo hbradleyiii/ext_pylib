@@ -1,5 +1,6 @@
 # ext_pylib
 [![Code Issues](https://www.quantifiedcode.com/api/v1/project/b9f8a6c7f3724ee4896e7cd8d2a865aa/badge.svg)](https://www.quantifiedcode.com/app/project/b9f8a6c7f3724ee4896e7cd8d2a865aa)
+[![Build Status](https://travis-ci.org/hbradleyiii/ext_pylib.svg?branch=master)](https://travis-ci.org/hbradleyiii/ext_pylib)
 ---
 Extra Python Libraries
 
