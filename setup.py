@@ -2,16 +2,18 @@
 # -*- coding: utf-8 -*-
 
 
-from setuptools import setup
 from codecs import open
+from setuptools import setup
 from os import path
+
+try:
+   import pyandoc
+   long_description = pyandoc.convert('README.md', 'rst')
+except (IOError, ImportError):
+   long_description = open('README.md').read()
 
 
 here = path.abspath(path.dirname(__file__))
-
-# Get the long description from the README file
-with open(path.join(here, 'README.rst'), encoding = 'utf-8') as f:
-    long_description = f.read()
 
 setup(
     name = 'ext_pylib',
@@ -72,7 +74,7 @@ setup(
     # your project is installed. For an analysis of "install_requires" vs pip's
     # requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
-    install_requires = ['peppercorn'],
+    install_requires = ['peppercorn', 'pyandoc'],
 
     # List additional groups of dependencies here (e.g. development
     # dependencies). You can install these using the following syntax,
