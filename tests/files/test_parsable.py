@@ -28,9 +28,11 @@ LIST = second_item
 
 # Monkey Patch function for read() method
 def read(self):
+    """Monkey Patch read function."""
     return self.data
 
-class ParsableFile(Parsable, File): pass
+class ParsableFile(Parsable, File):
+    """Dummy class extending Parsable and File."""
 
 
 def test_parsable_parse_with_existing_attribute():

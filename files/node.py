@@ -30,17 +30,6 @@ class Node(object):
     :param atts['perms']: The permissions (int or octal) of the node.
     :param atts['owner']: The owner (string) of the node.
     :param atts['group']: The group (string) of the node.
-
-   methods:
-       get_atts(string)  - returns the attributes of the node in a dict (or
-                           string representing a dict)
-       create()  - creates the node, must be implemented in subclass
-       remove(ask)  - removes the node, must be implemented in subclass
-       chmod(perms)  - changes the permissions of the node
-       chown(owner, group)  - changes the ownership of the node
-       exists()  - returns true if the node exists
-       verify(repair)  - verifies the attributes of the node
-       repair()  - runs verification with the force repair flag set
     """
 
     def __init__(self, atts=None ):
@@ -102,10 +91,12 @@ class Node(object):
 
     @staticmethod
     def create():
+        """A stub to be implemented by child class."""
         raise NotImplementedError('[ERROR] Cannot call method on file.Node. It is an abstract class.')
 
     @staticmethod
     def remove():
+        """A stub to be implemented by child class."""
         raise NotImplementedError('[ERROR] Cannot call method on file.Node. It is an abstract class.')
 
     def chmod(self, perms=None):
