@@ -16,7 +16,7 @@ import pytest
 
 @pytest.fixture()
 def root(request):
-    # Setup a root dir to use to test
+    """Sets up a root directory to use for testing."""
     root_dir = Dir({'path' : '/tmp/ext_pylib/' + datetime.now().strftime('%Y-%m-%d--%H-%M-%S')})
     assert root_dir.remove(False) # If it already exists, remove it.
     assert root_dir.create()
@@ -120,7 +120,7 @@ It is used for integration tests.
 """
 
 def test_section_file_apply_to_file():
-    """[Integration Test] Test """
+    """[Integration Test] Test apply_to_file() method of Section class."""
     # Setup a root dir to use to test
     root_dir = Dir({'path' : '/tmp/ext_pylib/'})
     assert root_dir.remove(False) # If it already exists, remove it.
@@ -132,7 +132,8 @@ def test_section_file_apply_to_file():
     assert file_without_section.overwrite(FILE_CONTENTS_WITHOUT_SECTION)
     assert file_without_section.exists()
 
-    class SectionFile(Section, File): pass
+    class SectionFile(Section, File):
+        """Dummy Class extending Section and File."""
 
     section = SectionFile({'path' : '/tmp/ext_pylib/section'})
     assert section.create()

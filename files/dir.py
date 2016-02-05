@@ -16,10 +16,9 @@ from ext_pylib.prompt import prompt
 import shutil
 
 
-# copytree(source, destination, symlinks, ignore)
-#   allow copying into directories that already exist
-#   adapted from: http://stackoverflow.com/questions/1868714
 def copytree(source, destination, symlinks=False, ignore=None):
+    """A wrappper around copytree that allows copying into an existing directory.
+    Adapted from: http://stackoverflow.com/questions/1868714."""
     for item in os.listdir(source):
         item_src = os.path.join(source, item)
         item_dst = os.path.join(destination, item)
@@ -39,16 +38,9 @@ def copytree(source, destination, symlinks=False, ignore=None):
             return True
 
 
-# Dir(path, atts)
-#   A class that describes a directory and gives functions to create the
-#   directory. This is primarily a wrapper for directory managment.
-#
-#   methods:
-#       create()  - Creates the directory structure
-#       remove(ask)  - Removes the directory structure
-#       fill(fill_with)  - Fills the directory with the contents of the Node
-#                          (Dir or File instance) passed in
 class Dir(Node):
+    """A class that describes a directory node. Extends Node class.
+    See Node class for atts to pass in at init."""
 
     def __str__(self):
         """Returns a string with the path."""
@@ -88,7 +80,7 @@ class Dir(Node):
                 print error
 
     def fill(self, fill_with):
-        """Fills the directory with the contents of "fill_with" (a Dir instance)."""
+        """Fills the directory with the contents of "fill_with" (another Dir instance)."""
         if not self.exists():
             print 'Copy failed. [ERROR]'
             raise IOError(self.path + 'does not exist')
@@ -109,8 +101,8 @@ class Dir(Node):
 
     @Node.path.setter
     def path(self, path):
-        """Sets the path."""
-        # Check for None
+        """Sets the path. A Dir path must end in '/'.
+        If it doesn't end in '/', one is appended automatically."""
         if path is None:
             return
         # Force directory to end in '/'
@@ -120,4 +112,5 @@ class Dir(Node):
 
     @property
     def parent_dir(self):
+        """Returns a Dir instance representing the parent directory."""
         return Dir(self.parent_node.get_atts())

@@ -34,6 +34,7 @@ This is the last line.
 
 # Monkey Patch function for read() method
 def read():
+    """Monkey Patch read function."""
     return TEMPLATE_FILE
 
 def test_templatefile_apply_using():

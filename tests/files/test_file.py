@@ -229,6 +229,7 @@ def test_file_read_nonexisting_file_with_data_in_memory(mock_exists):
 
 @patch('ext_pylib.files.node.Node.exists')
 def test_file_read_file_force_clear_memory(mock_exists):
+    """Tests file read method forcing read from memory."""
     mock_exists.return_value = True
     file = File(DEFAULT_ARGS)
     m_open = mock_open()
@@ -241,6 +242,7 @@ def test_file_read_file_force_clear_memory(mock_exists):
 
 @patch('ext_pylib.files.node.Node.exists')
 def test_file_read_file_with_data(mock_exists):
+    """Tests file read() a file that has data altered in memory."""
     mock_exists.return_value = True
     file = File(DEFAULT_ARGS)
     file.data = 'Test data'

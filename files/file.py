@@ -9,30 +9,6 @@
 # description:      A class to manage and create files. Also includes three
 #                   mixin classes Parsable, Section, and Template.
 #
-#                   The Section mixin adds methods useful for processing
-#                   template section files. A section file is a template of a
-#                   configuration file that only represents a particular
-#                   section of that file. It begins and ends with a delineator
-#                   (for example: ## START:SECTION_NAME ## and ##
-#                   END:SECTION_NAME ##). A use case would be how WordPress
-#                   delineates a particular section of the htaccess file in its
-#                   root directory with a start line and an end line. This is a
-#                   section of the full htaccess file and could be managed by a
-#                   Section mixin.
-#
-#                   The Template mixin adds a method useful for processing a
-#                   regular template file: apply_using(). It assumes that the
-#                   file contains placeholder text to be replaced by actual
-#                   data. The placeholders and actual data are passsed into the
-#                   method as a dict. The resulting data is returned
-#                   (presumably to be saved in another file.)
-#
-#                   The Parsable mixin adds a method useful for parsing
-#                   (presumably) configuration files. It takes a dict of
-#                   attribute names and regexes to be used. When
-#                   setup_parsing() is called, a dynamic property is created
-#                   for getting and setting a value in self.data based on the
-#                   regex.
 
 from dir import Dir
 from node import Node
@@ -42,20 +18,29 @@ from ext_pylib.prompt import prompt
 from ext_pylib.meta import setdynattr
 
 
-# File(atts)
-#   An class to manage a file's permissions, ownership, and path. Extends Node
-#   class.
-#
-#   methods:
-#       create()  - creates the file
-#       remove(ask)  - removes the file
-#       read()  - reads the file and returns a string
-#       readlines()  - returns the file's contents as a a list of strings for
-#                      each line (useful for iterating)
-#       write(data, append, handle)  - writes the data to the file
-#       append(data)  - a wrapper that forces append writing
-#       overwrite(data)  - a wrapper that forces overwriting the file
 class File(Node):
+    """An class to manage a file's permissions, ownership, and path. Extends Node.
+
+    The Section mixin adds methods useful for processing template section
+    files. A section file is a template of a configuration file that only
+    represents a particular section of that file. It begins and ends with a
+    delineator (for example: ## START:SECTION_NAME ## and ## END:SECTION_NAME
+    ##). A use case would be how WordPress delineates a particular section of
+    the htaccess file in its root directory with a start line and an end line.
+    This is a section of the full htaccess file and could be managed by a
+    Section mixin.
+
+    The Template mixin adds a method useful for processing a regular template
+    file: apply_using(). It assumes that the file contains placeholder text to
+    be replaced by actual data. The placeholders and actual data are passsed
+    into the method as a dict. The resulting data is returned (presumably to be
+    saved in another file.)
+
+    The Parsable mixin adds a method useful for parsing (presumably)
+    configuration files. It takes a dict of attribute names and regexes to be
+    used. When setup_parsing() is called, a dynamic property is created for
+    getting and setting a value in self.data based on the regex.
+    """
 
     def __str__(self):
         """Returns a string with the path."""
@@ -167,9 +152,6 @@ class File(Node):
         """Overwrites the file with data. Just a wrapper."""
         return self.write(data, False, handle)
 
-    ################
-    # Properties
-
     @Node.path.setter
     def path(self, path):
         """Sets the path."""
@@ -183,18 +165,13 @@ class File(Node):
 
     @property
     def parent_dir(self):
+        """Returns a Dir instance representing the parent directory."""
         return Dir(self.parent_node.get_atts())
 
 
-# Section()
-#   A mixin class to work with a section template file.
-#
-#   methods:
-#       is_applied(data)  - returns true if data contains the section *exactly*
-#       has_section(data)  - retursn true if data contains the section whether
-#                            or not it is applied exactly
-#       apply_to(data)  - returns a string with the section applied to the data
 class Section(object):
+    """A mixin class to work with a section template file."""
+
     def is_applied(self, data):
         """Returns true if data has this section applied exactly."""
         return self.read() in data
@@ -241,36 +218,25 @@ class Section(object):
 
 
 # Template()
-#   A mixin to work with a template file with placeholders.
 #
 #   methods:
 #       apply_using(placeholders)  - returns a string with the placeholders
 #                                    replaced
 class Template(object):
+    """A mixin to work with a template file with placeholders."""
+
     def apply_using(self, placeholders):
+        """Returns a string with placeholders replaced.
+        Takes a dict of placeholders and values to replace."""
         data = self.read() # temp, throw-away (after returning) data value
         for placeholder, value in placeholders.iteritems():
             data = data.replace(placeholder, value)
         return data
 
 
-# Parsable()
-#   A mixin to be used with a File class to allow parsing.
-#
-#   methods:
-#       setup_parsing(regexes) - creates dynamic properties on the object from a
-#                                dict of regex to use for parsing self.data.
-#                                The dict is made of { name : regex }. regex is
-#                                either a string, a tuple with only one value
-#                                or a tuple with the regex used to get the
-#                                value and a string mask (must contain {}) used
-#                                for setting the value.
-#       create_parseable_attr(attribute, regex) - Does the work of creating the
-#                                dynamic properties. Note that getting and
-#                                setting functions work on the data as it is in
-#                                memory. self.write() must be called in order
-#                                to save any changes.
 class Parsable(object):
+    """A mixin to be used with a File class to allow parsing."""
+
     def setup_parsing(self, regexes=None):
         """Takes a dict of name:regex to parse self.data with.
            regex is either a string, a tuple of one, or a tuple of two with the
@@ -291,11 +257,11 @@ class Parsable(object):
 
     def create_parseable_attr(self, attribute, regex_tuple):
         """Creates a dynamic attribure on the Parsable class.
-           This dynamically creates a property with a getter and setter. The
-           regex is a closure. Each time the attribute is accessed, the regex
-           is run against the data in memory. When the attribute is set to a
-           new value, this value is changed in memory. file.write() must be
-           called to write the changes to memory."""
+        This dynamically creates a property with a getter and setter. The regex
+        is a closure. Each time the attribute is accessed, the regex is run
+        against the data in memory. When the attribute is set to a new value,
+        this value is changed in memory. file.write() must be called to write
+        the changes to memory."""
         if isinstance(regex_tuple, tuple):
             if len(regex_tuple) == 2:
                 regex, mask = regex_tuple
@@ -304,6 +270,7 @@ class Parsable(object):
         else:
             regex, mask = regex_tuple, '{}'
         def getter_func(self):
+            """Parsable dynamic attribute getter function."""
             results = re.findall(regex, self.read())
             if not results:
                 return None
@@ -312,8 +279,9 @@ class Parsable(object):
             return results
 
         def setter_func(self, value):
-            """Note that this is only changing the value in memory.
-               You must call write()."""
+            """Parsable dynamic attribute setter function.
+            Note that this is only changing the value in memory.  You must call
+            write()."""
             if not re.findall(regex, self.read()):
                 # If the value doesn't exist, add it to the end of data
                 self.data = self.data + '\n' + mask.format(value)

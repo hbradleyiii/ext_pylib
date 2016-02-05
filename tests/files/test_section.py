@@ -53,10 +53,12 @@ This is the third line.
 
 # Monkey Patch function for read() method
 def read():
+    """Monkey Patch read function."""
     return SECTION_STR
 
 # Monkey Patch function for readline() method
 def readlines(self):
+    """Monkey Patch readlines function."""
     return self.read().split('\n')
 
 Section.readlines = readlines
@@ -96,10 +98,12 @@ This is the last line.
 
 # Monkey Patch function for read() method
 def read_multiline_str():
+    """Monkey Patch read function that returns a multiline string."""
     return MULTILINE_STR
 
 # Monkey Patch function for read() method
 def read_multiline_str_with_return():
+    """Monkey Patch read function that returns a multiline string with a newline."""
     return MULTILINE_STR_WITH_RETURN
 
 def test_section_start_section_property():
