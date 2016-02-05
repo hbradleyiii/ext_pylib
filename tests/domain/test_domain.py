@@ -35,6 +35,7 @@ bad_args = [ 'x' * 256, '#example.com', '.example.com', '', None,
             'example..com', 'bad_stuff.com']
 @pytest.mark.parametrize(("args"), bad_args)
 def test_domain_name_bad_values(args):
+    """Tests domain name given bad values."""
     with pytest.raises(ValueError):
         domain = Domain(args)
 
