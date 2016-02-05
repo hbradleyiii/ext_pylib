@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 #
 # name:             password.py
 # adapted from:     http://code.activestate.com/recipes/578169-extremely-strong-password-generator/
