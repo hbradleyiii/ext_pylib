@@ -11,6 +11,7 @@
 #                   comprehensive.
 
 from __future__ import print_function, unicode_literals
+
 from ext_pylib.files import File
 from mock import mock_open, patch
 import pytest
