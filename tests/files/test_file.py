@@ -25,12 +25,15 @@ else:
 class MockParentDir(object):
     """A Mock class for parent_dir property."""
     def __init__(self, _exists):
+        """MockParentDir init method."""
         self._exists = _exists
         self.exists_called, self.create_called = 0, 0
     def exists(self):
+        """MockParentDir exists method."""
         self.exists_called += 1
         return self._exists
     def create(self):
+        """MockParentDir create method."""
         self.create_called += 1
 
 
@@ -38,8 +41,10 @@ class MockHandle(object):
     """A Mock class for a handle."""
     data = None
     def write(self, data):
+        """MockHande write method."""
         self.data = data
     def called_once_with(self, var):
+        """MockHande called_once_with method."""
         if var != self.data:
             print 'Mock handle was not called with: ' + var
             return False
