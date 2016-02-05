@@ -1,8 +1,7 @@
 # ext_pylib
-Extra Python Libraries
-
 [![Code Issues](https://www.quantifiedcode.com/api/v1/project/b9f8a6c7f3724ee4896e7cd8d2a865aa/badge.svg)](https://www.quantifiedcode.com/app/project/b9f8a6c7f3724ee4896e7cd8d2a865aa)
 ---
+Extra Python Libraries
 
 This is a work in progress. Use at your own risk.
 
