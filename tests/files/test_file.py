@@ -9,7 +9,6 @@
 # description:      A unit test for ext_pylib file module's File class and
 #                   methods. This is fairly ugly, but it's pretty
 #                   comprehensive.
-#
 
 from ext_pylib.files import File
 from mock import mock_open, patch

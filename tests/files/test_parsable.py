@@ -50,9 +50,9 @@ def test_parsable_setup_parsing():
     file.setup_parsing({
         'htdocs' : ('DocumentRoot (.*)',),
         'debug'  :  'DEBUG = (.*)',
-        'secure' : ('SECURE[ ]*=[ ]*([^ \n]*)', 'SECURE = {}'),
-        'speed'  : ('SPEED[ ]*=[ ]*([^ \n]*)', 'SPEED = {}'),
-        'list'   : ('LIST[ ]*=[ ]*([^ \n]*)', 'LIST = {}'),
+        'secure' : ('SECURE[ ]*=[ ]*([^ \n]*)', 'SECURE = {0}'),
+        'speed'  : ('SPEED[ ]*=[ ]*([^ \n]*)', 'SPEED = {0}'),
+        'list'   : ('LIST[ ]*=[ ]*([^ \n]*)', 'LIST = {0}'),
     })
     assert file.htdocs[0] == '/var/www/google.com'
     assert file.htdocs[1] == '/var/www/example.com'
