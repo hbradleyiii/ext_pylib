@@ -10,6 +10,7 @@
 #                   create the directory. It extends Node.
 #
 
+from __future__ import print_function, unicode_literals
 from node import Node
 import os
 from ext_pylib.prompt import prompt
@@ -31,7 +32,7 @@ def copytree(source, destination, symlinks=False, ignore=None):
         else: # It's a file
             if os.path.exists(item_dst):
                 if not prompt(item_dst + ' already exists. Replace with ' + item_src + '?'):
-                    print 'Skipping.'
+                    print('Skipping.')
                     return True
                 os.remove(item_dst) # It's a file that already exists; remove it, then copy
             shutil.copy2(item_src, item_dst)
@@ -51,15 +52,15 @@ class Dir(Node):
     def create(self):
         """Creates the directory structure."""
         if self.exists():
-            print self.path + ' already exists.'
+            print(self.path + ' already exists.')
             return True
         print('Creating directories "' + self.path + '"...'),
         try:
             os.makedirs(self.path)
-            print '[OK]'
+            print('[OK]')
         except Exception as error:
-            print '[ERROR]'
-            print error
+            print('[ERROR]')
+            print(error)
         return all([self.chmod(), self.chown()])
 
     def remove(self, ask = True):
@@ -67,34 +68,34 @@ class Dir(Node):
         if not self.path:
             return True
         if not self.exists():
-            print self.path + ' doesn\'t exist.'
+            print(self.path + ' doesn\'t exist.')
             return True
         if not ask or prompt('Completely remove ' + self.path + ' and all containing files and folders?'):
             print('Removing "' + self.path + '"...'),
             try:
                 shutil.rmtree(self.path)
-                print '[OK]'
+                print('[OK]')
                 return True
             except Exception as error:
-                print '[ERROR]'
-                print error
+                print('[ERROR]')
+                print(error)
 
     def fill(self, fill_with):
         """Fills the directory with the contents of "fill_with" (another Dir instance)."""
         if not self.exists():
-            print 'Copy failed. [ERROR]'
+            print('Copy failed. [ERROR]')
             raise IOError(self.path + 'does not exist')
         if not fill_with.exists(): # Requires a Dir object, NOT a string
-            print 'Copy failed. [ERROR]'
+            print('Copy failed. [ERROR]')
             raise IOError(fill_with + 'does not exist')
         print('Filling "' + self.path + '" with contents of "' + fill_with + '"...')
         try:
             copytree(fill_with.path, self.path) # copytree(source, destination)
-            print 'Copy complete. [OK]'
+            print('Copy complete. [OK]')
             return True
         except Exception as error:
-            print 'Copy failed. [ERROR]'
-            print error
+            print('Copy failed. [ERROR]')
+            print(error)
 
     ################
     # Properties

@@ -10,6 +10,9 @@
 #                   terminal.
 #
 
+from __future__ import print_function, unicode_literals
+
+
 def prompt(prompt_text, default = True):
     """Displays a yes/no prompt and returns the response as bool."""
     default_text = " [y] " if default else " [n] "
@@ -25,7 +28,7 @@ def prompt(prompt_text, default = True):
         if response in responses:
             return responses[response]
         else:
-            print 'Response not understood.'
+            print('Response not understood.')
 
 def prompt_str(prompt_text, default_str=''):
     """Prompts for a string, returns the result."""
@@ -48,4 +51,4 @@ def warn_prompt(prompt_text, required_response):
         elif response.lower() in ['n', 'no']:
             return False
         else:
-            print 'Response not understood. Please type "n" or "required_response"'
+            print('Response not understood. Please type "n" or "required_response"')

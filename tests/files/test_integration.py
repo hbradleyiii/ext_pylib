@@ -9,6 +9,7 @@
 # description:      Integration tests for ext_pylib's file module.
 #
 
+from __future__ import print_function, unicode_literals
 from datetime import datetime
 from ext_pylib.files import Dir, File, Section
 import pytest
@@ -146,12 +147,12 @@ def test_section_file_apply_to_file():
     assert file_with_section.exists()
 
     assert section.has_section(file_with_section.read())
-    print 'Without:'
-    print file_without_section.read()
-    print 'Without (Applied):'
-    print section.apply_to(file_without_section.read())
-    print 'With:'
-    print file_with_section.read()
+    print('Without:')
+    print(file_without_section.read())
+    print('Without (Applied):')
+    print(section.apply_to(file_without_section.read()))
+    print('With:')
+    print(file_with_section.read())
     assert section.apply_to(file_without_section.read()) == file_with_section.read()
 
     # Cleanup

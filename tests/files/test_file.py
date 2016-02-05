@@ -10,6 +10,7 @@
 #                   methods. This is fairly ugly, but it's pretty
 #                   comprehensive.
 
+from __future__ import print_function, unicode_literals
 from ext_pylib.files import File
 from mock import mock_open, patch
 import pytest
@@ -45,7 +46,7 @@ class MockHandle(object):
     def called_once_with(self, var):
         """MockHande called_once_with method."""
         if var != self.data:
-            print 'Mock handle was not called with: ' + var
+            print('Mock handle was not called with: ' + var)
             return False
         return True
 
