@@ -16,7 +16,7 @@ from mock import mock_open, patch
 import pytest
 from sys import version_info
 
-if version_info.major == 2:
+if 2 == version_info[0] or version_info.major:
     builtins = '__builtin__'
 else:
     builtins = 'builtins'
