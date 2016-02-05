@@ -10,6 +10,7 @@
 #                   directory and file class respectively.
 #
 
+from __future__ import print_function, unicode_literals
 import grp
 import os
 import pwd
@@ -116,8 +117,8 @@ class Node(object):
             print('[OK]')
             return True
         except Exception as error:
-            print '[FAILED]'
-            print error
+            print('[FAILED]')
+            print(error)
 
     def chown(self, owner=None, group=None):
         """Sets the owner and group of the directory."""
@@ -141,8 +142,8 @@ class Node(object):
             print('[OK]')
             return True
         except Exception as error:
-            print '[FAILED]'
-            print error
+            print('[FAILED]')
+            print(error)
 
     def exists(self):
         """Returns true if this directory exists on disk."""
@@ -156,41 +157,42 @@ class Node(object):
         """Verifies the existence, permissions, ownership, and group of the file/directory."""
         if not self.path:
             return True
-        print ''
-        print 'Checking ' + self.path + '...',
+        print('')
+        print('Checking ' + self.path + '...',)
         if not self.exists():
-            print '[WARN]'
-            print '[!] ' + self.path + ' doesn\'t exist'
+            print('[WARN]')
+            print('[!] ' + self.path + ' doesn\'t exist')
             if not repair:
                 return False
             self.create()
             return self.verify(repair)
-        print '[OK]'
+        print('[OK]')
 
         # Assume the checks pass
         perms_check = owner_check = group_check = True
 
         if self.perms:
-            print '--> Checking permissions for ' + self.path,
+            print('--> Checking permissions for ' + self.path,)
             perms_check = self.perms == self.actual_perms
-            print ' (should be: ' + self.perms_as_string() + ', actual: ' + \
-                self.perms_as_string(self.actual_perms) + ')',
-            print '[OK]' if perms_check else '[WARN]'
+            print(' (should be: ' + self.perms_as_string() + ', actual: ' + \
+                self.perms_as_string(self.actual_perms) + ')'),
+            print('[OK]' if perms_check else '[WARN]')
             if not perms_check and repair:
                 perms_check = self.chmod()
                 return self.verify(repair)
 
         if self.owner:
-            print '--> Checking owner for ' + self.path,
+            print('--> Checking owner for ' + self.path,)
             owner_check = self.owner == self.actual_owner
-            print ' (should be: ' + self.owner + ', actual: ' + self.actual_owner + ')',
-            print '[OK]' if owner_check else '[WARN]'
+            print(' (should be: ' + self.owner + ', actual: ' +
+                  self.actual_owner + ')',)
+            print('[OK]' if owner_check else '[WARN]')
 
         if self.group:
-            print '--> Checking group for ' + self.path,
+            print('--> Checking group for ' + self.path,)
             group_check = self.group == self.actual_group
-            print ' (should be: ' + self.group + ', actual: ' + self.actual_group + ')',
-            print '[OK]' if group_check else '[WARN]'
+            print(' (should be: ' + self.group + ', actual: ' + self.actual_group + ')'),
+            print('[OK]' if group_check else '[WARN]')
             if not (group_check or owner_check) and repair:
                 group_check = owner_check = self.chown()
                 return self.verify(repair)
@@ -214,7 +216,7 @@ class Node(object):
         """Validates, then sets the path."""
         # Check for None
         if path is None:
-            print '[Notice] file.Node was initialized with an empty path. Continuing as a stub.'
+            print('[Notice] file.Node was initialized with an empty path.  Continuing as a stub.')
             self._path = None
             return
         # Check for empty string
@@ -260,8 +262,8 @@ class Node(object):
         try:
             perms = int(perms)
         except ValueError as e:
-            print e
-            print '[ERROR] ' + perms + ' must be set to an int.'
+            print(e)
+            print('[ERROR] ' + perms + ' must be set to an int.')
             raise
         if not 0 <= perms <= 511:
             raise ValueError('"perms" cannot be set to ' + self.perms_as_string(perms) + '.')
@@ -297,7 +299,7 @@ class Node(object):
                 # Is this a valid user?
                 uid = pwd.getpwnam(owner)
             except KeyError:
-                print '[ERROR] ' + owner + ' is not a valid user.'
+                print('[ERROR] ' + owner + ' is not a valid user.')
                 raise
         self._owner = owner
 
@@ -324,6 +326,6 @@ class Node(object):
                 # Is this a valid group?
                 gid = grp.getgrnam(group)
             except KeyError:
-                print '[ERROR] ' + group + ' is not a valid group.'
+                print('[ERROR] ' + group + ' is not a valid group.')
                 raise
         self._group = group

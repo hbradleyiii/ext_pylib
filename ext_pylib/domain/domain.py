@@ -16,6 +16,7 @@ try:
 except ImportError:
     raise ImportError("ext_pylib's domain module requires module requests.")
 
+from __future__ import print_function, unicode_literals
 import re
 import socket
 
@@ -72,10 +73,10 @@ class Domain(object):
     def set_ip(self, ip = ''):
         """Points the domain's A record to this server -- not yet implemented."""
         # TODO: Implement DNS API
-        print 'Current serverip: ' + self.ip
-        print '[*] DNS API not yet implemented.'
-        print '[*] Cannot set to IP: ' + ip
-        print '[*] DNS API not yet implemented.'
+        print('Current serverip: ' + self.ip)
+        print('[*] DNS API not yet implemented.')
+        print('[*] Cannot set to IP: ' + ip)
+        print('[*] DNS API not yet implemented.')
 
     @property
     def ip(self):
