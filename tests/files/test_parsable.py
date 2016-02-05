@@ -65,5 +65,5 @@ def test_parsable_setup_parsing():
     assert file.speed == 'fastest'
     file.speed = 'fastest' # setting it more than once with the same value
                            # shouldn't affect the number of times it is added.
-    assert isinstance(file.speed, str) # Shouldn't be a list
+    assert type(file.speed) == unicode  # Shouldn't be a list
     assert len(file.list) == 2 # Should be a list
