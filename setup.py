@@ -6,12 +6,6 @@ from codecs import open
 from setuptools import setup
 from os import path
 
-try:
-   import pyandoc
-   long_description = pyandoc.convert('README.md', 'rst')
-except (IOError, ImportError):
-   long_description = open('README.md').read()
-
 
 here = path.abspath(path.dirname(__file__))
 
@@ -21,7 +15,7 @@ setup(
     version = '0.1',
 
     description = 'Extra python libraries for scaffolding server scripts.',
-    long_description = long_description,
+    long_description = open('README.rst').read(),
 
     # The project's main homepage.
     url = 'https://github.com/hbradleyiii/ext_pylib',
@@ -79,7 +73,7 @@ setup(
     # your project is installed. For an analysis of "install_requires" vs pip's
     # requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
-    install_requires = ['pyandoc', 'requests'],
+    install_requires = ['requests'],
 
     test_requires = ['pytest>=2.8.0']
 
