@@ -71,7 +71,7 @@ setup(
         'ext_pylib.files',
         'ext_pylib.meta',
         'ext_pylib.password',
-        'ext_pylib.prompt',
+        'ext_pylib.input',
         'ext_pylib.user',
     ],
 
