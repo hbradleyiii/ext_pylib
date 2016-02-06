@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# name:             prompt.py
+# name:             prompts.py
 # author:           Harold Bradley III
 # email:            harold@bradleystudio.net
 # created on:       11/03/2015
 
 """
-ext_pylib.prompt.prompt
+ext_pylib.input.prompts
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 Functions for displaying and handling prompts on the terminal.
@@ -15,16 +15,14 @@ Functions for displaying and handling prompts on the terminal.
 
 from __future__ import print_function, unicode_literals
 
+from ext_pylib.input import INPUT
 
-try:
-    INPUT = raw_input
-except NameError:
-    INPUT = input
 
 def prompt(prompt_text, default=True):
     """Displays a yes/no prompt and returns the response as bool."""
     default_text = " [y] " if default else " [n] "
     while True:
+        print(type(INPUT))
         response = INPUT('[?] ' + prompt_text + default_text).lower()
         responses = {
             ''    : default,

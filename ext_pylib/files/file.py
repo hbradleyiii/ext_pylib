@@ -22,7 +22,7 @@ import re
 
 from .dir import Dir
 from .node import Node
-from ..prompt import prompt
+from ..input import prompt
 from ..meta import setdynattr
 
 
