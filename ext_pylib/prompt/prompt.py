@@ -7,14 +7,15 @@
 # created on:       11/03/2015
 
 """
-ext_pylib.prompt
-~~~~~~~~~~~~~~~~
+ext_pylib.prompt.prompt
+~~~~~~~~~~~~~~~~~~~~~~~
 
 Functions for displaying and handling prompts on the terminal.
 """
 
 from __future__ import print_function, unicode_literals
 
+from sys import version_info
 
 def prompt(prompt_text, default = True):
     """Displays a yes/no prompt and returns the response as bool."""

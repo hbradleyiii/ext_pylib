@@ -17,12 +17,15 @@ Section, and Template.
 
 from __future__ import absolute_import, print_function, unicode_literals
 
-from dir import Dir
-from node import Node
 import os
 import re
-from ext_pylib.prompt import prompt
-from ext_pylib.meta import setdynattr
+
+from builtins import object
+
+from .dir import Dir
+from .node import Node
+from ..prompt import prompt
+from ..meta import setdynattr
 
 
 class File(Node):

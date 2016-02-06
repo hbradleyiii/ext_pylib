@@ -17,10 +17,11 @@ It extends Node.
 
 from __future__ import absolute_import, print_function, unicode_literals
 
-from node import Node
 import os
-from ext_pylib.prompt import prompt
 import shutil
+
+from .node import Node
+from ..prompt import prompt
 
 
 def copytree(source, destination, symlinks=False, ignore=None):

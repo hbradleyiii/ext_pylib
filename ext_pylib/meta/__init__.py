@@ -8,4 +8,6 @@ ext_pylib.meta
 Classes and function for metaprogramming
 """
 
-from meta import DynamicProperty, setdynattr
+from __future__ import absolute_import
+
+from .meta import DynamicProperty, setdynattr
