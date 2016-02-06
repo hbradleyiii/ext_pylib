@@ -19,11 +19,15 @@ several patterns for server scripts. It works well for building server scripts.
 
 Installing and Including in projects
 ====================================
-TODO
 
 Installing ext_pylib
 --------------------
-TODO
+
+.. code:: bash
+
+    $ git clone git@github.com:hbradleyiii/ext_pylib.git
+    $ cd <project directory>
+    $ pip install -e .
 
 Running Tests
 -------------
@@ -35,7 +39,6 @@ Running Tests
 
 Modules
 =======
-TODO
 
 Domain Module
 -------------
