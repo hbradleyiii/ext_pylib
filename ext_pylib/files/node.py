@@ -20,7 +20,11 @@ from __future__ import absolute_import, print_function, unicode_literals
 import grp
 import os
 import pwd
-from ext_pylib.user import get_current_username, get_current_groupname
+
+from builtins import object, str
+
+from ..user import get_current_username, get_current_groupname
+
 
 class Node(object):
     """An abstract class representing a node object.

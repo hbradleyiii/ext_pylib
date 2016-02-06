@@ -17,13 +17,15 @@ A class to describe and manage a domain name and it's corresponding ip address.
 
 from __future__ import print_function
 
+import re
+import socket
+
 try:
     import requests
 except ImportError:
     raise ImportError("ext_pylib's domain module requires module requests.")
 
-import re
-import socket
+from builtins import object, str
 
 
 def get_server_ip(get_ip_urls = None):

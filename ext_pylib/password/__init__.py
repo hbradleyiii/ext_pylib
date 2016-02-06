@@ -8,4 +8,6 @@ ext_pylib.password
 Module for working with passwords.
 """
 
-from password import generate_pw
+from __future__ import absolute_import
+
+from .password import generate_pw

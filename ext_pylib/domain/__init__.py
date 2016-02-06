@@ -8,4 +8,6 @@ ext_pylib.domain
 Classes and functions for manipulating domains.
 """
 
-from domain import Domain, get_server_ip
+from __future__ import absolute_import
+
+from .domain import Domain, get_server_ip

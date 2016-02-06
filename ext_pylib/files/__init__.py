@@ -8,5 +8,7 @@ ext_pylib.files
 Class objects for files and directories.
 """
 
-from dir import Dir
-from file import File, Section, Template, Parsable
+from __future__ import absolute_import
+
+from .dir import Dir
+from .file import File, Section, Template, Parsable
