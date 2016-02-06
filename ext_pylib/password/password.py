@@ -15,7 +15,6 @@ This module helps with creating passwords.
 """
 
 from random import choice
-from os import urandom
 
 
 # Defines the default characters for use in generating a password
@@ -32,15 +31,12 @@ def generate_pw(length=18, char_set=None):
     password = []
 
     while len(password) < length:
-        character = urandom(1)
         subset = choice(list(char_set.keys()))  # Get a random subset of characters
                                                 # from which to choose
-        # Make sure character is in subset
-        if character in char_set[subset]:
-            # Make sure it isn't the same subset as the previous character
-            if password and password[-1] in char_set[subset]:
-                continue  # Try again
-            else:
-                password.append(character)
+        # Ensure it isn't the same subset as the previous character in the password.
+        if password and password[-1] in char_set[subset]:
+            continue
+        else:
+            password.append(choice(char_set[subset]))
 
     return ''.join(password)
