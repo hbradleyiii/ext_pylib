@@ -161,13 +161,13 @@ def test_file_create_with_data_but_not_as_arg(mock_write, mock_exists, mock_chmo
         assert mock_parent_dir.exists_called == 1
         assert mock_parent_dir.create_called == 0
 
-def test_write_no_data():
+def test_file_write_no_data():
     """Tests writing to a File with no data passed in."""
     file = File(DEFAULT_ARGS)
     with pytest.raises(UnboundLocalError):
         file.write()
 
-def test_write_data_with_handle():
+def test_file_write_data_with_handle():
     """Tests writing to a File with a handle passed in."""
     file = File(DEFAULT_ARGS)
     mock_handle = MockHandle()
@@ -175,7 +175,7 @@ def test_write_data_with_handle():
     file.write(data=data, handle=mock_handle)
     assert mock_handle.called_once_with(data)
 
-def test_write_append_data_without_handle():
+def test_file_write_append_data_without_handle():
     """Tests appending to a file without a handle."""
     m_open = mock_open()
     with patch(BUILTINS + '.open', m_open, create=True):
@@ -186,7 +186,7 @@ def test_write_append_data_without_handle():
         m_open().write.assert_called_once_with(data)
         m_open().close.assert_called_once()
 
-def test_write_data_without_handle():
+def test_file_write_data_without_handle():
     """Tests writing to a file without a handle."""
     m_open = mock_open()
     with patch(BUILTINS + '.open', m_open, create=True):
