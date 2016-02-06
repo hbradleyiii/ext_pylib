@@ -98,7 +98,7 @@ def test_file_create_already_existing_file_replacing(mock_exists, mock_prompt, m
     with patch(BUILTINS + '.open', m_open, create=True):
         assert file.create()
         m_open.assert_called_once_with(DEFAULT_ARGS['path'], 'w')
-        m_open().close.assert_called_once()
+        m_open().close.assert_called_once_with()
 
 @patch('ext_pylib.files.node.Node.chown')
 @patch('ext_pylib.files.node.Node.chmod')
@@ -114,7 +114,7 @@ def test_file_create_and_create_parent_dirs(mock_exists, mock_chmod, mock_chown)
     with patch(BUILTINS + '.open', m_open, create=True):
         assert file.create()
         m_open.assert_called_once_with(DEFAULT_ARGS['path'], 'w')
-        m_open().close.assert_called_once()
+        m_open().close.assert_called_once_with()
         assert mock_parent_dir.exists_called == 1
         assert mock_parent_dir.create_called == 1
 
@@ -135,7 +135,7 @@ def test_file_create_with_data(mock_write, mock_exists, mock_chmod, mock_chown):
         assert file.create(data)
         m_open.assert_called_once_with(DEFAULT_ARGS['path'], 'w')
         mock_write.assert_called_once_with(data, False, m_open())
-        m_open().close.assert_called_once()
+        m_open().close.assert_called_once_with()
         assert mock_parent_dir.exists_called == 1
         assert mock_parent_dir.create_called == 0
 
@@ -157,7 +157,7 @@ def test_file_create_with_data_but_not_as_arg(mock_write, mock_exists, mock_chmo
         assert file.create()
         m_open.assert_called_once_with(DEFAULT_ARGS['path'], 'w')
         mock_write.assert_called_once_with(data, False, m_open())
-        m_open().close.assert_called_once()
+        m_open().close.assert_called_once_with()
         assert mock_parent_dir.exists_called == 1
         assert mock_parent_dir.create_called == 0
 
@@ -184,7 +184,7 @@ def test_file_write_append_data_without_handle():
         assert file.write(data)
         m_open.assert_called_once_with(DEFAULT_ARGS['path'], 'a')
         m_open().write.assert_called_once_with(data)
-        m_open().close.assert_called_once()
+        m_open().close.assert_called_once_with()
 
 def test_file_write_data_without_handle():
     """Tests writing to a file without a handle."""
@@ -195,7 +195,7 @@ def test_file_write_data_without_handle():
         assert file.write(data, False)
         m_open.assert_called_once_with(DEFAULT_ARGS['path'], 'w')
         m_open().write.assert_called_once_with(data)
-        m_open().close.assert_called_once()
+        m_open().close.assert_called_once_with()
 
 @patch('ext_pylib.files.file.File.write')
 def test_file_append(mock_write):
@@ -244,7 +244,7 @@ def test_file_read_file_force_clear_memory(mock_exists):
         file.data = data_in_memory = 'The data...'
         assert file.read(True) == data_on_disk
         m_open.assert_called_once_with(DEFAULT_ARGS['path'], 'r')
-        m_open().close.assert_called_once()
+        m_open().close.assert_called_once_with()
 
 @patch('ext_pylib.files.node.Node.exists')
 def test_file_read_file_with_data(mock_exists):
