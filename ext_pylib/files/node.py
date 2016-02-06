@@ -275,8 +275,8 @@ class Node(object):
         if not perms:
             if not self.perms:
                 return 'None'
-            return format(self.perms, '04o')
-        return format(perms, '04o')
+            return format(self.perms, '#o')
+        return format(perms, '#o')
 
     @property
     def actual_owner(self):
