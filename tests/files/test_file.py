@@ -17,10 +17,10 @@ from mock import mock_open, patch
 import pytest
 from sys import version_info
 
-if 2 == version_info[0] or version_info.major:
-    builtins = '__builtin__'
+if version_info[0] == 2 or version_info.major == 2:
+    BUILTINS = '__builtin__'
 else:
-    builtins = 'builtins'
+    BUILTINS = 'builtins'
 
 
 class MockParentDir(object):
@@ -95,7 +95,7 @@ def test_file_create_already_existing_file_replacing(mock_exists, mock_prompt, m
     mock_prompt.return_value = True # Answer yes, replace
     file = File(DEFAULT_ARGS)
     m_open = mock_open()
-    with patch(builtins + '.open', m_open, create=True):
+    with patch(BUILTINS + '.open', m_open, create=True):
         assert file.create()
         m_open.assert_called_once_with(DEFAULT_ARGS['path'], 'w')
         m_open().close.assert_called_once()
@@ -111,7 +111,7 @@ def test_file_create_and_create_parent_dirs(mock_exists, mock_chmod, mock_chown)
     File.parent_dir = mock_parent_dir
     file = File(DEFAULT_ARGS)
     m_open = mock_open()
-    with patch(builtins + '.open', m_open, create=True):
+    with patch(BUILTINS + '.open', m_open, create=True):
         assert file.create()
         m_open.assert_called_once_with(DEFAULT_ARGS['path'], 'w')
         m_open().close.assert_called_once()
@@ -130,7 +130,7 @@ def test_file_create_with_data(mock_write, mock_exists, mock_chmod, mock_chown):
     File.parent_dir = mock_parent_dir
     file = File(DEFAULT_ARGS)
     m_open = mock_open()
-    with patch(builtins + '.open', m_open, create=True):
+    with patch(BUILTINS + '.open', m_open, create=True):
         data = 'The data...'
         assert file.create(data)
         m_open.assert_called_once_with(DEFAULT_ARGS['path'], 'w')
@@ -151,7 +151,7 @@ def test_file_create_with_data_but_not_as_arg(mock_write, mock_exists, mock_chmo
     File.parent_dir = mock_parent_dir
     file = File(DEFAULT_ARGS)
     m_open = mock_open()
-    with patch(builtins + '.open', m_open, create=True):
+    with patch(BUILTINS + '.open', m_open, create=True):
         data = 'The data...'
         file.data = data
         assert file.create()
@@ -178,7 +178,7 @@ def test_write_data_with_handle():
 def test_write_append_data_without_handle():
     """Tests appending to a file without a handle."""
     m_open = mock_open()
-    with patch(builtins + '.open', m_open, create=True):
+    with patch(BUILTINS + '.open', m_open, create=True):
         file = File(DEFAULT_ARGS)
         data = 'Some mock data...'
         assert file.write(data)
@@ -189,7 +189,7 @@ def test_write_append_data_without_handle():
 def test_write_data_without_handle():
     """Tests writing to a file without a handle."""
     m_open = mock_open()
-    with patch(builtins + '.open', m_open, create=True):
+    with patch(BUILTINS + '.open', m_open, create=True):
         file = File(DEFAULT_ARGS)
         data = 'Some mock data...'
         assert file.write(data, False)
@@ -239,7 +239,7 @@ def test_file_read_file_force_clear_memory(mock_exists):
     mock_exists.return_value = True
     file = File(DEFAULT_ARGS)
     m_open = mock_open()
-    with patch(builtins + '.open', m_open, create=True):
+    with patch(BUILTINS + '.open', m_open, create=True):
         m_open.return_value.read.return_value = data_on_disk = 'The data on disk..'
         file.data = data_in_memory = 'The data...'
         assert file.read(True) == data_on_disk
