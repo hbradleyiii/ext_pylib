@@ -31,7 +31,7 @@ setup(
     author_email = 'harold@bradleystudio.net',
 
     # Choose your license
-    license = 'GPL v2',
+    license = 'MIT License',
 
     # See https://pypi.python.org/pypi?%3Aaction = list_classifiers
     classifiers = [
@@ -46,7 +46,7 @@ setup(
         'Topic :: Software Development :: Build Tools',
 
         # Pick your license as you wish (should match "license" above)
-        'License :: OSI Approved :: GNU General Public License v2 (GPLv2)',
+        'License :: OSI Approved :: MIT License',
 
         # Specify the Python versions you support here. In particular, ensure
         # that you indicate whether you support Python 2, Python 3 or both.
@@ -92,7 +92,7 @@ setup(
     # If there are data files included in your packages that need to be
     # installed, specify them here.  If using Python 2.6 or less, then these
     # have to be included in MANIFEST.in as well.
-    package_data = { },
+    package_data = { '' : ['LICENSE'], },
 
     # Although 'package_data' is the preferred approach, in some case you may
     # need to place data files outside of your packages. See:
