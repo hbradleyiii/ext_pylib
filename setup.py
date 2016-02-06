@@ -7,6 +7,9 @@ from setuptools import setup
 from os import path
 
 
+with open('README.rst', 'r', 'utf-8') as f:
+    readme = f.read()
+
 here = path.abspath(path.dirname(__file__))
 
 setup(
@@ -15,7 +18,7 @@ setup(
     version = '0.1',
 
     description = 'Extra python libraries for scaffolding server scripts.',
-    long_description = open('README.rst').read().decode('utf-8'),
+    long_description = readme,
 
     # The project's main homepage.
     url = 'https://github.com/hbradleyiii/ext_pylib',
