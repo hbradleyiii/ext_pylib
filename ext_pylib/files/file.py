@@ -20,8 +20,6 @@ from __future__ import absolute_import, print_function, unicode_literals
 import os
 import re
 
-from builtins import object
-
 from .dir import Dir
 from .node import Node
 from ..prompt import prompt
