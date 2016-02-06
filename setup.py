@@ -75,7 +75,7 @@ setup(
     # https://packaging.python.org/en/latest/requirements.html
     install_requires = ['requests'],
 
-    test_requires = ['pytest>=2.8.0'],
+    test_requires = ['pytest>=2.8.0', 'mock'],
 
     # If there are data files included in your packages that need to be
     # installed, specify them here.  If using Python 2.6 or less, then these
