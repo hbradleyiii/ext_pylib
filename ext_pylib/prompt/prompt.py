@@ -23,12 +23,12 @@ def prompt(prompt_text, default = True):
     while True:
         response = raw_input('[?] ' + prompt_text + default_text).lower()
         responses = {
-                ''    : default,
-                'y'   : True,
-                'yes' : True,
-                'n'   : False,
-                'no'  : False,
-                }
+            ''    : default,
+            'y'   : True,
+            'yes' : True,
+            'n'   : False,
+            'no'  : False,
+        }
         if response in responses:
             return responses[response]
         else:
@@ -37,7 +37,7 @@ def prompt(prompt_text, default = True):
 def prompt_str(prompt_text, default_str=''):
     """Prompts for a string, returns the result."""
     add_text = " "
-    if not default_str == '':
+    if default_str != '':
         add_text = " [" + default_str + "] "
 
     response = raw_input('[?] ' + prompt_text + add_text)

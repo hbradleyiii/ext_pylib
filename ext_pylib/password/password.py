@@ -26,14 +26,15 @@ DEFAULT_CHAR_SET = {
     'special': '^!$%&=?{[]}+~#-_.:,;<>|'
 }
 
-def generate_pw(length=18, char_set=DEFAULT_CHAR_SET):
+def generate_pw(length=18, char_set=None):
     """Generates a pseudo-randomly generated password and returns it as a string."""
+    char_set = char_set or DEFAULT_CHAR_SET
     password = []
 
     while len(password) < length:
         character = urandom(1)
-        subset = choice(char_set.keys())  # Get a random subset of characters
-                                          # from which to choose
+        subset = choice(list(char_set.keys()))  # Get a random subset of characters
+                                                # from which to choose
         # Make sure character is in subset
         if character in char_set[subset]:
             # Make sure it isn't the same subset as the previous character

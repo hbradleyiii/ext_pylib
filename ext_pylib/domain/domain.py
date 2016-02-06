@@ -28,7 +28,7 @@ except ImportError:
 from builtins import object, str
 
 
-def get_server_ip(get_ip_urls = None):
+def get_server_ip(get_ip_urls=None):
     """Return the IP of this server."""
     get_ip_urls = get_ip_urls or ['http://mediamarketers.com/myip/',
                                   'http://dev.mediamarketers.com/myip/']
@@ -77,7 +77,7 @@ class Domain(object):
         """Allows concatenation."""
         return other + str(self)
 
-    def set_ip(self, ip = ''):
+    def set_ip(self, ip=''):
         """Points the domain's A record to this server -- not yet implemented."""
         # TODO: Implement DNS API
         print('Current serverip: ' + self.ip)
@@ -108,7 +108,7 @@ class Domain(object):
             name = name[:-1]  # strip exactly one dot from the right, if present
         if len(name) > 255:
             raise ValueError('Domain Name cannot be longer than 255 characters.')
-        allowed_chars = re.compile("(?!-)[A-Z\d-]{1,63}(?<!-)$", re.IGNORECASE)
+        allowed_chars = re.compile(r"(?!-)[A-Z\d-]{1,63}(?<!-)$", re.IGNORECASE)
         if not all(allowed_chars.match(x) for x in name.split(".")):
             raise ValueError('Domain Name ' + name + ' is not valid.')
         self._name = name
