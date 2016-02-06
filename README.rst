@@ -9,6 +9,8 @@ extra python modules for server script scaffolding
 .. image:: https://www.quantifiedcode.com/api/v1/project/b9f8a6c7f3724ee4896e7cd8d2a865aa/badge.svg
     :target: https://www.quantifiedcode.com/app/project/b9f8a6c7f3724ee4896e7cd8d2a865aa :alt: Code issues
 
+----
+
 This is a work in progress. Use at your own risk.
 
 ext_pylib is a group of submodules that are useful scaffolding for other larger
@@ -26,7 +28,8 @@ TODO
 Running Tests
 -------------
 
-.. code-block:: bash
+.. code:: bash
+
     $ cd <project directory>
     $ py.test
 
@@ -51,7 +54,9 @@ configuration file that only represents a particular
 section of that file. It begins and ends with a delineator
 
 For example:
-.. code-block:: bash
+
+.. code:: bash
+
     ## START:SECTION_NAME ##
     content here...
     ## END:SECTION_NAME ##
