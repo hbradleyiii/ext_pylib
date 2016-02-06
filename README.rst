@@ -1,5 +1,7 @@
-ext_pylib: extra python modules for server script scaffolding
-#############################################################
+ext_pylib
+#########
+extra python modules for server script scaffolding
+==================================================
 
 .. image:: https://travis-ci.org/hbradleyiii/ext_pylib.svg?branch=master
     :target: https://travis-ci.org/hbradleyiii/ext_pylib
