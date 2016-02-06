@@ -239,7 +239,7 @@ class Template(object):
         """Returns a string with placeholders replaced.
         Takes a dict of placeholders and values to replace."""
         data = self.read() # temp, throw-away (after returning) data value
-        for placeholder, value in placeholders.iteritems():
+        for placeholder, value in list(placeholders.items()):
             data = data.replace(placeholder, value)
         return data
 
@@ -255,7 +255,7 @@ class Parsable(object):
            placeholder of the new value."""
         if not regexes:
             regexes = self.regexes
-        for attribute, regex in regexes.iteritems():
+        for attribute, regex in list(regexes.items()):
             att = getattr(self.__class__, attribute, None)
             if att or hasattr(self, attribute):
                 if att.__class__.__name__ == 'DynamicProperty':
