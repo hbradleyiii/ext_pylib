@@ -6,11 +6,16 @@
 # email:            harold@bradleystudio.net
 # created on:       11/04/2015
 #
-# description:      A class to manage and create files. Also includes three
-#                   mixin classes Parsable, Section, and Template.
-#
 
-from __future__ import print_function, unicode_literals
+"""
+ext_pylib.files.file
+~~~~~~~~~~~~~~~~~~~~
+
+A class to manage and create files. Also includes three mixin classes Parsable,
+Section, and Template.
+"""
+
+from __future__ import absolute_import, print_function, unicode_literals
 
 from dir import Dir
 from node import Node

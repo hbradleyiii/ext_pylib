@@ -6,11 +6,16 @@
 # email:            harold@bradleystudio.net
 # created on:       11/03/2015
 #
-# description:      An abstract class that describes a node to be extended by a
-#                   directory and file class respectively.
-#
 
-from __future__ import print_function, unicode_literals
+"""
+ext_pylib.files.node
+~~~~~~~~~~~~~~~~~~~~
+
+An abstract class that describes a node to be extended by a directory and file
+class respectively.
+"""
+
+from __future__ import absolute_import, print_function, unicode_literals
 
 import grp
 import os

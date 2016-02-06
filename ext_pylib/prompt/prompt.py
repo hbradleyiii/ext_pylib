@@ -5,10 +5,13 @@
 # author:           Harold Bradley III
 # email:            harold@bradleystudio.net
 # created on:       11/03/2015
-#
-# description:      Functions for displaying and handling prompts on the
-#                   terminal.
-#
+
+"""
+ext_pylib.prompt
+~~~~~~~~~~~~~~~~
+
+Functions for displaying and handling prompts on the terminal.
+"""
 
 from __future__ import print_function, unicode_literals
 

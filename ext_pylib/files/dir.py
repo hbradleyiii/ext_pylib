@@ -6,11 +6,16 @@
 # email:            harold@bradleystudio.net
 # created on:       11/03/2015
 #
-# description:      A class that describes a directory and gives functions to
-#                   create the directory. It extends Node.
-#
 
-from __future__ import print_function, unicode_literals
+"""
+ext_pylib.files.dir
+~~~~~~~~~~~~~~~~~~~
+
+A class that describes a directory and gives functions to create the directory.
+It extends Node.
+"""
+
+from __future__ import absolute_import, print_function, unicode_literals
 
 from node import Node
 import os

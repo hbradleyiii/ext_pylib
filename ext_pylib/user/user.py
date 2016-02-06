@@ -6,8 +6,13 @@
 # email:            harold@bradleystudio.net
 # created on:       01/13/2016
 #
-# description:      Functions for managing users.
-#
+
+"""
+ext_pylib.user.user
+~~~~~~~~~~~~~~~~~~~
+
+Functions for managing users.
+"""
 
 import grp
 import os
