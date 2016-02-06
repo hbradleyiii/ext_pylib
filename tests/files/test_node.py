@@ -38,10 +38,10 @@ init_args = [
         {'path' : '/etc/path/file', 'perms' : None, 'owner' : None, 'group' : None}),
     ({'path' : '/etc/path/file'},
         {'path' : '/etc/path/file', 'perms' : None, 'owner' : None, 'group' : None}),
-    ({'path' : '/etc/path/file', 'perms' : 0655},
-        {'path' : '/etc/path/file', 'perms' : 0655, 'owner' : None, 'group' : None}),
-    ({'path' : '/etc/path/file', 'perms' : 0655, 'owner' : 'root', 'group' : 'root'},
-        {'path' : '/etc/path/file', 'perms' : 0655, 'owner' : 'root', 'group' : 'root'}),
+    ({'path' : '/etc/path/file', 'perms' : 0o655},
+        {'path' : '/etc/path/file', 'perms' : 0o655, 'owner' : None, 'group' : None}),
+    ({'path' : '/etc/path/file', 'perms' : 0o655, 'owner' : 'root', 'group' : 'root'},
+        {'path' : '/etc/path/file', 'perms' : 0o655, 'owner' : 'root', 'group' : 'root'}),
 ]
 @pytest.mark.parametrize(("atts", "expected"), init_args)
 def test_node_initialize(atts, expected):
@@ -57,10 +57,10 @@ repr_args = [
         "{'path' : None, 'perms' : None, 'owner' : None, 'group' : None}"),
     ({'path' : '/this/path/file'},
         "{'path' : '/this/path/file', 'perms' : None, 'owner' : None, 'group' : None}"),
-    ({'path' : '/etc/path/file', 'perms' : 0655},
-        "{'path' : '/etc/path/file', 'perms' : 0655, 'owner' : None, 'group' : None}"),
-    ({'path' : '/etc/path/file', 'perms' : 0655, 'owner' : 'root', 'group' : 'root'},
-        "{'path' : '/etc/path/file', 'perms' : 0655, 'owner' : 'root', 'group' : 'root'}"),
+    ({'path' : '/etc/path/file', 'perms' : 0o655},
+        "{'path' : '/etc/path/file', 'perms' : 0o655, 'owner' : None, 'group' : None}"),
+    ({'path' : '/etc/path/file', 'perms' : 0o655, 'owner' : 'root', 'group' : 'root'},
+        "{'path' : '/etc/path/file', 'perms' : 0o655, 'owner' : 'root', 'group' : 'root'}"),
 ]
 @pytest.mark.parametrize(("atts", "expected"), repr_args)
 def test_node_repr(atts, expected):
@@ -108,13 +108,13 @@ def test_node_remove():
 verify_args = [
     ({'path' : None}),
     ({'path' : '/this/path/file'}),
-    ({'path' : '/this/path/', 'perms' : 0655}),
+    ({'path' : '/this/path/', 'perms' : 0o655}),
     ({'path' : '/this/path/', 'owner' : 'root'}),
     ({'path' : '/this/path/', 'group' : 'root'}),
-    ({'path' : '/this/path/', 'perms' : 0655, 'owner' : 'root'}),
-    ({'path' : '/this/path/', 'perms' : 0655, 'group' : 'root'}),
+    ({'path' : '/this/path/', 'perms' : 0o655, 'owner' : 'root'}),
+    ({'path' : '/this/path/', 'perms' : 0o655, 'group' : 'root'}),
     ({'path' : '/this/path/', 'owner' : 'root', 'group' : 'root'}),
-    ({'path' : '/etc/path/file', 'perms' : 0655, 'owner' : 'root', 'group' : 'root'}),
+    ({'path' : '/etc/path/file', 'perms' : 0o655, 'owner' : 'root', 'group' : 'root'}),
 ]
 @pytest.mark.parametrize(("atts"), verify_args)
 @patch('ext_pylib.files.node.Node.actual_group')
@@ -149,9 +149,9 @@ def test_node_repair(mock_verify):
     mock_verify.assert_called_once_with(True)
 
 chmod_args = [
-    ({'path' : None, 'perms' : 0600 },
+    ({'path' : None, 'perms' : 0o600 },
         True),
-    ({'path' : '/this/path/file', 'perms' : 0700 },
+    ({'path' : '/this/path/file', 'perms' : 0o700 },
         True),
     ({'path' : '/this/path/file' },
         True),
