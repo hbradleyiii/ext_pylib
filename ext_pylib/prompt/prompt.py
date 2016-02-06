@@ -17,11 +17,17 @@ from __future__ import print_function, unicode_literals
 
 from sys import version_info
 
-def prompt(prompt_text, default = True):
+
+if 2 == version_info[0] or version_info.major:
+    INPUT = raw_input
+else:
+    INPUT = input
+
+def prompt(prompt_text, default=True):
     """Displays a yes/no prompt and returns the response as bool."""
     default_text = " [y] " if default else " [n] "
     while True:
-        response = raw_input('[?] ' + prompt_text + default_text).lower()
+        response = INPUT('[?] ' + prompt_text + default_text).lower()
         responses = {
             ''    : default,
             'y'   : True,
@@ -40,7 +46,7 @@ def prompt_str(prompt_text, default_str=''):
     if default_str != '':
         add_text = " [" + default_str + "] "
 
-    response = raw_input('[?] ' + prompt_text + add_text)
+    response = INPUT('[?] ' + prompt_text + add_text)
     if response == '':
         response = default_str
     return response
@@ -49,7 +55,7 @@ def warn_prompt(prompt_text, required_response):
     """Warning prompt that prompts for a specific text (required_response).
     This is useful for potentially dangerous actions."""
     while True:
-        response = raw_input("[!!] " + prompt_text + " [type n or '" + required_response + "'] ")
+        response = INPUT("[!!] " + prompt_text + " [type n or '" + required_response + "'] ")
         if response == required_response:
             return True
         elif response.lower() in ['n', 'no']:
