@@ -15,12 +15,10 @@ Functions for displaying and handling prompts on the terminal.
 
 from __future__ import print_function, unicode_literals
 
-from sys import version_info
 
-
-if 2 == version_info[0] or version_info.major:
+try:
     INPUT = raw_input
-else:
+except NameError:
     INPUT = input
 
 def prompt(prompt_text, default=True):
