@@ -19,8 +19,6 @@ Credit for much of this goes to:
     http://eev.ee/blog/2012/05/23/python-faq-descriptors/
 """
 
-from builtins import object
-
 
 class DynamicProperty(object):
     """A re-implementation of python's native property().

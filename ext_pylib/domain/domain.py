@@ -25,8 +25,6 @@ try:
 except ImportError:
     raise ImportError("ext_pylib's domain module requires module requests.")
 
-from builtins import object, str
-
 
 def get_server_ip(get_ip_urls=None):
     """Return the IP of this server."""
