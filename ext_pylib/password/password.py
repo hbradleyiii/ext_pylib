@@ -6,12 +6,17 @@
 # maintainer:       Harold Bradley III
 # email:            harold@bradleystudio.net
 #
-# description:      A script that generates an arbitrary length string of
-#                   random characters to be used as a password.
-#
+
+"""
+ext_pylib.password.password
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This module helps with creating passwords.
+"""
 
 from random import choice
 from os import urandom
+
 
 # Defines the default characters for use in generating a password
 DEFAULT_CHAR_SET = {

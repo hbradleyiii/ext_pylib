@@ -6,12 +6,16 @@
 # email:            harold@bradleystudio.net
 # created on:       11/03/2015
 #
-# description:      A class to describe and manage a domain name and it's
-#                   corresponding ip address.
-#
 #                   TODO: add DNS API capabilities
 
-from __future__ import print_function, unicode_literals
+"""
+ext_pylib.domain.domain
+~~~~~~~~~~~~~~~~~~~~~~~
+
+A class to describe and manage a domain name and it's corresponding ip address.
+"""
+
+from __future__ import print_function
 
 try:
     import requests

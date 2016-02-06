@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-#
+
 #    /''         |''\     |    |
 #    \.     |    |../     | *  |..
 #    /   \/ T    |   \  / | |  |  \
@@ -9,7 +9,10 @@
 #                    /
 
 """
-ext_pylib - extra python libraries for scaffolding server scripts.
+ext_pylib
+~~~~~~~~~
+
+Extra python libraries for scaffolding server scripts.
 """
 
 __title__ = 'ext_pylib'

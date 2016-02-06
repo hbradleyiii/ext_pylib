@@ -6,13 +6,18 @@
 # email:            harold@bradleystudio.net
 # created on:       01/28/2016
 #
-# description:      Classes and functions for meta-programming with python.
-#                   This is mostly experimental stuff. For now, class
-#                   DynamicProperty is merely a close reimplementation of
-#                   python's native property().
-#
-#                   Credit for much of this goes to:
-#                   http://eev.ee/blog/2012/05/23/python-faq-descriptors/
+
+"""
+ext_pylib.meta.meta
+~~~~~~~~~~~~~~~~~~~
+
+Classes and functions for meta-programming with python.
+This is mostly experimental stuff. For now, class DynamicProperty is merely a
+close reimplementation of python's native property().
+
+Credit for much of this goes to:
+    http://eev.ee/blog/2012/05/23/python-faq-descriptors/
+"""
 
 
 class DynamicProperty(object):
