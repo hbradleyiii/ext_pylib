@@ -15,7 +15,7 @@ setup(
     version = '0.1',
 
     description = 'Extra python libraries for scaffolding server scripts.',
-    long_description = open('README.rst').read(),
+    long_description = open('README.rst').read().decode('utf-8'),
 
     # The project's main homepage.
     url = 'https://github.com/hbradleyiii/ext_pylib',
