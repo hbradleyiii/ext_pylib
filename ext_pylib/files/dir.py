@@ -21,7 +21,7 @@ import os
 import shutil
 
 from .node import Node
-from ..prompt import prompt
+from ..input import prompt
 
 
 def copytree(source, destination, symlinks=False, ignore=None):

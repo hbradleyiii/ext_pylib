@@ -20,7 +20,7 @@ from __future__ import absolute_import
 from . import domain
 from . import files
 from . import password
-from . import prompt
+from . import input
 from . import user
 
 
