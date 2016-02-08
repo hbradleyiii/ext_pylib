@@ -18,18 +18,18 @@ import os
 import pytest
 
 
-init_args = [
+INIT_ARGS = [
     (None, '<files.Dir:stub>'),
     ('/this/path', '/this/path/'),
     ('/this//path/dir', '/this/path/dir/'),
     ('/this//path//', '/this/path/'),
     ('/this///path////', '/this/path/'),
 ]
-@pytest.mark.parametrize(("atts", "expected"), init_args)
+@pytest.mark.parametrize(("atts", "expected"), INIT_ARGS)
 def test_dir_initialization(atts, expected):
     """Test initialize Dir."""
-    dir = Dir({'path' : atts})
-    assert str(dir) == expected
+    the_dir = Dir({'path' : atts})
+    assert str(the_dir) == expected
 
 @patch('ext_pylib.files.node.Node.chown')
 @patch('ext_pylib.files.node.Node.chmod')
@@ -39,8 +39,8 @@ def test_dir_create(mock_makedirs, mock_exists, mock_chmod, mock_chown):
     """Test directory creation."""
     mock_exists.return_value = False
     mock_chown.return_value = mock_chmod.return_value = True
-    dir = Dir({'path' : '/test/dir/'})
-    assert dir.create()
+    the_dir = Dir({'path' : '/test/dir/'})
+    assert the_dir.create()
     mock_makedirs.assert_called_once_with('/test/dir/')
 
 @patch('ext_pylib.files.node.Node.exists')
@@ -48,8 +48,8 @@ def test_dir_create(mock_makedirs, mock_exists, mock_chmod, mock_chown):
 def test_dir_create_existing(mock_makedirs, mock_exists):
     """Test creating dir when it already exists."""
     mock_exists.return_value = True
-    dir = Dir({'path' : '/test/dir/'})
-    assert dir.create()
+    the_dir = Dir({'path' : '/test/dir/'})
+    assert the_dir.create()
     assert not mock_makedirs.called
 
 @patch('ext_pylib.files.node.Node.exists')
@@ -57,8 +57,8 @@ def test_dir_create_existing(mock_makedirs, mock_exists):
 def test_dir_remove(mock_rmtree, mock_exists):
     """Test directory removal."""
     mock_exists.return_value = True
-    dir = Dir({'path' : '/test/dir/'})
-    assert dir.remove(False)
+    the_dir = Dir({'path' : '/test/dir/'})
+    assert the_dir.remove(False)
     mock_rmtree.assert_called_once_with('/test/dir/')
 
 @patch('ext_pylib.files.node.Node.exists')
@@ -66,10 +66,10 @@ def test_dir_remove(mock_rmtree, mock_exists):
 def test_dir_remove_nonexisting(mock_rmtree, mock_exists):
     """Test non-existing directory removal."""
     mock_exists.return_value = False
-    dir = Dir({'path' : '/test/dir/'})
-    dir2 = Dir({'path' : None})
-    assert dir.remove(False)
-    assert dir2.remove(False)
+    the_dir = Dir({'path' : '/test/dir/'})
+    the_dir2 = Dir({'path' : None})
+    assert the_dir.remove(False)
+    assert the_dir2.remove(False)
     assert not mock_rmtree.called
 
 @patch('ext_pylib.files.node.Node.exists')
@@ -77,7 +77,7 @@ def test_dir_remove_nonexisting(mock_rmtree, mock_exists):
 def test_dir_fill(mock_copytree, mock_exists):
     """Tests filling one Dir with another."""
     mock_exists.return_value = True
-    dir = Dir({'path' : '/test/dir/'})
+    the_dir = Dir({'path' : '/test/dir/'})
     fill_with = Dir({'path' : '/another/test/dir/'})
-    assert dir.fill(fill_with)
+    assert the_dir.fill(fill_with)
     mock_copytree.assert_called_once_with('/another/test/dir/', '/test/dir/')
