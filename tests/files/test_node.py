@@ -5,14 +5,16 @@
 # author:           Harold Bradley III
 # email:            harold@bradleystudio.net
 # created on:       11/08/2015
-#
-# description:      A unit test for ext_pylib file module's Node class and
-#                   methods.
-#
 
-from ext_pylib.files.node import Node
-from mock import Mock, patch
+# pylint:           disable=invalid-name,line-too-long
+
+"""
+A unit test for ext_pylib file module's Node class and methods.
+"""
+
 import pytest
+from mock import patch
+from ext_pylib.files.node import Node
 from ext_pylib.user import get_current_username, get_current_groupname
 
 

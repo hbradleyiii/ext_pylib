@@ -5,15 +5,18 @@
 # author:           Harold Bradley III
 # email:            harold@bradleystudio.net
 # created on:       12/17/2015
-#
-# description:      Integration tests for ext_pylib's file module.
-#
+
+# pylint:           disable=invalid-name,line-too-long
+
+"""
+Integration tests for ext_pylib's file module.
+"""
 
 from __future__ import print_function, unicode_literals
 
 from datetime import datetime
-from ext_pylib.files import Dir, File, Section
 import pytest
+from ext_pylib.files import Dir, File, Section
 
 
 @pytest.fixture()

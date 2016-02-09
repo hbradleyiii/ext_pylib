@@ -5,13 +5,12 @@
 # author:           Harold Bradley III
 # email:            harold@bradleystudio.net
 # created on:       01/09/2016
-#
-# description:      A unit test for ext_pylib file module's Template mixin
-#                   class.
-#
+
+"""
+A unit test for ext_pylib file module's Template mixin class.
+"""
 
 from ext_pylib.files import Template
-import pytest
 
 
 TEMPLATE_FILE = """This is a test template file.

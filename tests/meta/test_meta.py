@@ -5,16 +5,15 @@
 # author:           Harold Bradley III
 # email:            harold@bradleystudio.net
 # created on:       01/29/2016
-#
-# description:      A unit test for ext_pylib's meta classes and functions.
-#
+
+"""
+A unit test for ext_pylib's meta classes and functions.
+"""
 
 from ext_pylib.meta import DynamicProperty, setdynattr
-from mock import patch
-import pytest
 
 
-class DummyClass(object):
+class DummyClass(object):  # pylint: disable=too-few-public-methods
     """Just a dummy class."""
 
 def addfive_getter(self):

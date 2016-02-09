@@ -6,12 +6,15 @@
 # email:            harold@bradleystudio.net
 # created on:       01/10/2016
 #
-# description:      A unit test for ext_pylib file module's Section mixin class.
-#
+# pylint:           disable=invalid-name,line-too-long
 
+"""
+A unit test for ext_pylib file module's Section mixin class.
+"""
+
+import pytest
 from ext_pylib.files import Section
 from ext_pylib.files.file import AlteredSectionFile
-import pytest
 
 
 SECTION_STR = """## START SECTION Test
