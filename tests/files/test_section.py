@@ -10,6 +10,7 @@
 #
 
 from ext_pylib.files import Section
+from ext_pylib.files.file import AlteredSectionFile
 import pytest
 
 
@@ -84,7 +85,8 @@ def test_section_apply_to():
     file.read = read
     assert file.apply_to(FILE_WITH_SECTION_STR) == FILE_WITH_SECTION_STR
     assert file.apply_to(FILE_WITHOUT_SECTION_STR) == FILE_WITHOUT_SECTION_STR + '\n' + SECTION_STR + '\n'
-    assert file.apply_to(FILE_HAS_SECTION_STR) == None
+    with pytest.raises(AlteredSectionFile):
+        file.apply_to(FILE_HAS_SECTION_STR, overwrite=False)
     assert file.apply_to(FILE_HAS_SECTION_STR, overwrite=True) == FILE_WITH_SECTION_STR
 
 MULTILINE_STR = """This is the first line.

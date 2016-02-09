@@ -176,6 +176,8 @@ class File(Node):
         """Returns a Dir instance representing the parent directory."""
         return Dir(self.parent_node.get_atts())
 
+class AlteredSectionFile(Exception):
+    """Exception for when a section file's contents exist but have been altered."""
 
 class Section(object):
     """A mixin class to work with a section template file."""
@@ -206,8 +208,7 @@ class Section(object):
                 return data[:self._start_pos] + self.read() + '\n' + \
                         data[self._end_pos + len(self.end_section) + 1:]
             else:
-                # error ?
-                return None
+                raise AlteredSectionFile('[WARN] Section already exists, but overwrite flag was not set.')
         else:
             return data + '\n' + self.read() + '\n'
 
