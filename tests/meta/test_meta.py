@@ -22,7 +22,7 @@ def addfive_getter(self):
 
 def addfive_setter(self, value):
     """A test setter function that adds 5 to the value passed before storing as _value."""
-    self._value = value + 5  # Add 5 for testing
+    self._value = value + 5  # Add 5 for testing. pylint: disable=protected-access
 
 def test_dynamicproperty():
     """Tests DynamicProperty."""
@@ -48,7 +48,7 @@ def test_setdynattr():
 
     setdynattr(dummy, 'a_property')
     assert not dummy.a_property
-    dummy.a_property = 5
+    dummy.a_property = 5  # pylint: disable=attribute-defined-outside-init
     assert dummy.a_property == 5
 
     setdynattr(dummy, 'addfive', addfive_getter, addfive_setter)

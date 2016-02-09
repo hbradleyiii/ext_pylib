@@ -21,31 +21,31 @@ from ext_pylib.user import get_current_username, get_current_groupname
 CURRENT_USER = get_current_username()
 CURRENT_GROUP = get_current_groupname()
 
-DEFUALT_ATTS = { 'path' : '/etc/path/file' }
+DEFUALT_ATTS = {'path' : '/etc/path/file'}
 
-init_args = [
+INIT_ARGS = [
     ({'path' : None},
-        {'path' : '<files.Node:stub>', 'perms' : None, 'owner' : None, 'group' : None}),
+     {'path' : '<files.Node:stub>', 'perms' : None, 'owner' : None, 'group' : None}),
     ({'path' : '/this/path/file'},
-        {'path' : '/this/path/file', 'perms' : None, 'owner' : None, 'group' : None}),
+     {'path' : '/this/path/file', 'perms' : None, 'owner' : None, 'group' : None}),
     ({'path' : '/this/path/'},
-        {'path' : '/this/path/', 'perms' : None, 'owner' : None, 'group' : None}),
+     {'path' : '/this/path/', 'perms' : None, 'owner' : None, 'group' : None}),
     ({'path' : '/this//path/'},
-        {'path' : '/this/path/', 'perms' : None, 'owner' : None, 'group' : None}),
+     {'path' : '/this/path/', 'perms' : None, 'owner' : None, 'group' : None}),
     ({'path' : '/this//path//'},
-        {'path' : '/this/path/', 'perms' : None, 'owner' : None, 'group' : None}),
+     {'path' : '/this/path/', 'perms' : None, 'owner' : None, 'group' : None}),
     ({'path' : '/this///path////'},
-        {'path' : '/this/path/', 'perms' : None, 'owner' : None, 'group' : None}),
+     {'path' : '/this/path/', 'perms' : None, 'owner' : None, 'group' : None}),
     ({'path' : '/etc/path/file'},
-        {'path' : '/etc/path/file', 'perms' : None, 'owner' : None, 'group' : None}),
+     {'path' : '/etc/path/file', 'perms' : None, 'owner' : None, 'group' : None}),
     ({'path' : '/etc/path/file'},
-        {'path' : '/etc/path/file', 'perms' : None, 'owner' : None, 'group' : None}),
+     {'path' : '/etc/path/file', 'perms' : None, 'owner' : None, 'group' : None}),
     ({'path' : '/etc/path/file', 'perms' : 0o655},
-        {'path' : '/etc/path/file', 'perms' : 0o655, 'owner' : None, 'group' : None}),
+     {'path' : '/etc/path/file', 'perms' : 0o655, 'owner' : None, 'group' : None}),
     ({'path' : '/etc/path/file', 'perms' : 0o655, 'owner' : 'root', 'group' : 'root'},
-        {'path' : '/etc/path/file', 'perms' : 0o655, 'owner' : 'root', 'group' : 'root'}),
+     {'path' : '/etc/path/file', 'perms' : 0o655, 'owner' : 'root', 'group' : 'root'}),
 ]
-@pytest.mark.parametrize(("atts", "expected"), init_args)
+@pytest.mark.parametrize(("atts", "expected"), INIT_ARGS)
 def test_node_initialize(atts, expected):
     """Test initialize Node."""
     node = Node(atts)
@@ -54,23 +54,23 @@ def test_node_initialize(atts, expected):
     assert node.owner == expected['owner']
     assert node.group == expected['group']
 
-repr_args = [
+REPR_ARGS = [
     ({'path' : None},
-        "{'path' : None, 'perms' : None, 'owner' : None, 'group' : None}"),
+     "{'path' : None, 'perms' : None, 'owner' : None, 'group' : None}"),
     ({'path' : '/this/path/file'},
-        "{'path' : '/this/path/file', 'perms' : None, 'owner' : None, 'group' : None}"),
+     "{'path' : '/this/path/file', 'perms' : None, 'owner' : None, 'group' : None}"),
     ({'path' : '/etc/path/file', 'perms' : 0o655},
-        "{'path' : '/etc/path/file', 'perms' : 0o655, 'owner' : None, 'group' : None}"),
+     "{'path' : '/etc/path/file', 'perms' : 0o655, 'owner' : None, 'group' : None}"),
     ({'path' : '/etc/path/file', 'perms' : 0o655, 'owner' : 'root', 'group' : 'root'},
-        "{'path' : '/etc/path/file', 'perms' : 0o655, 'owner' : 'root', 'group' : 'root'}"),
+     "{'path' : '/etc/path/file', 'perms' : 0o655, 'owner' : 'root', 'group' : 'root'}"),
 ]
-@pytest.mark.parametrize(("atts", "expected"), repr_args)
+@pytest.mark.parametrize(("atts", "expected"), REPR_ARGS)
 def test_node_repr(atts, expected):
     """Test Node repr."""
     node = Node(atts)
     assert node.__repr__() == "Node(" + expected + ")"
 
-@pytest.mark.parametrize(("atts", "expected"), repr_args)
+@pytest.mark.parametrize(("atts", "expected"), REPR_ARGS)
 def test_node_get_atts(atts, expected):
     """Test Node get_atts method."""
     node = Node(atts)
@@ -80,15 +80,15 @@ def test_node_get_atts(atts, expected):
         atts['owner'] = None
     if 'group' not in atts:
         atts['group'] = None
-    assert node.get_atts(string = True) == expected
-    assert node.get_atts(string = False) == atts
+    assert node.get_atts(string=True) == expected
+    assert node.get_atts(string=False) == atts
 
-concat_args = [
+CONCAT_ARGS = [
     ({'path' : None}, '<files.Node:stub>'),
     ({'path' : '/this/path/'}, '/this/path/'),
     ({'path' : '/etc/path/file'}, '/etc/path/file'),
 ]
-@pytest.mark.parametrize(("atts", "expected"), concat_args)
+@pytest.mark.parametrize(("atts", "expected"), CONCAT_ARGS)
 def test_node_concatenate(atts, expected):
     """Test concatenate Node objects."""
     node = Node(atts)
@@ -107,7 +107,7 @@ def test_node_remove():
     with pytest.raises(NotImplementedError):
         node.remove()
 
-verify_args = [
+VERIFY_ARGS = [
     ({'path' : None}),
     ({'path' : '/this/path/file'}),
     ({'path' : '/this/path/', 'perms' : 0o655}),
@@ -118,7 +118,7 @@ verify_args = [
     ({'path' : '/this/path/', 'owner' : 'root', 'group' : 'root'}),
     ({'path' : '/etc/path/file', 'perms' : 0o655, 'owner' : 'root', 'group' : 'root'}),
 ]
-@pytest.mark.parametrize(("atts"), verify_args)
+@pytest.mark.parametrize(("atts"), VERIFY_ARGS)
 @patch('ext_pylib.files.node.Node.actual_group')
 @patch('ext_pylib.files.node.Node.actual_owner')
 @patch('ext_pylib.files.node.Node.actual_perms')
@@ -150,15 +150,12 @@ def test_node_repair(mock_verify):
     node.repair()
     mock_verify.assert_called_once_with(True)
 
-chmod_args = [
-    ({'path' : None, 'perms' : 0o600 },
-        True),
-    ({'path' : '/this/path/file', 'perms' : 0o700 },
-        True),
-    ({'path' : '/this/path/file' },
-        True),
+CHMOD_ARGS = [
+    ({'path' : None, 'perms' : 0o600}, True),
+    ({'path' : '/this/path/file', 'perms' : 0o700}, True),
+    ({'path' : '/this/path/file'}, True),
 ]
-@pytest.mark.parametrize(("atts", "expected"), chmod_args)
+@pytest.mark.parametrize(("atts", "expected"), CHMOD_ARGS)
 @patch('ext_pylib.files.node.Node.exists')
 @patch('os.chmod')
 def test_node_chmod(mock_chmod, mock_path_exists, atts, expected):
@@ -179,32 +176,23 @@ def test_node_chmod_nonexisting(mock_path_exists):
     with pytest.raises(IOError):
         node.chmod()
 
-chown_args = [
-    ({'path' : None, 'owner' : 'www-data', 'group' : 'root'},
-        True),
-    ({'path' : '/this/path/file', 'owner' : 'www-data', 'group' : 'root'},
-        True),
-    ({'path' : '/this/path/file', 'owner' : None, 'group' : 'root'},
-        True),
-    ({'path' : '/this/path/file', 'owner' : 'www-data', 'group' : None},
-        True),
-    ({'path' : '/this/path/file', 'owner' : None, 'group' : None},
-        True),
-    ({'path' : '/this/path/file' },
-        True),
-    ({'path' : '/this/path/file', 'owner' : 'www-data' },
-        True),
-    ({'path' : '/this/path/file', 'group' : 'www-data' },
-        True),
-    ({'path' : '/this/path/file', 'owner' : None, 'group' : 'www-data' },
-        True),
+CHOWN_ARGS = [
+    ({'path' : None, 'owner' : 'www-data', 'group' : 'root'}, True),
+    ({'path' : '/this/path/file', 'owner' : 'www-data', 'group' : 'root'}, True),
+    ({'path' : '/this/path/file', 'owner' : None, 'group' : 'root'}, True),
+    ({'path' : '/this/path/file', 'owner' : 'www-data', 'group' : None}, True),
+    ({'path' : '/this/path/file', 'owner' : None, 'group' : None}, True),
+    ({'path' : '/this/path/file'}, True),
+    ({'path' : '/this/path/file', 'owner' : 'www-data'}, True),
+    ({'path' : '/this/path/file', 'group' : 'www-data'}, True),
+    ({'path' : '/this/path/file', 'owner' : None, 'group' : 'www-data'}, True),
 ]
-@pytest.mark.parametrize(("atts", "expected"), chown_args)
+@pytest.mark.parametrize(("atts", "expected"), CHOWN_ARGS)
 @patch('ext_pylib.files.node.Node.exists')
 @patch('pwd.getpwnam')
 @patch('grp.getgrnam')
 @patch('os.chown')
-def test_node_chown(mock_chown, mock_getgrnam, mock_getpwnam, mock_path_exists, atts, expected):
+def test_node_chown(mock_chown, mock_getgrnam, mock_getpwnam, mock_path_exists, atts, expected):  # pylint: disable=too-many-arguments
     """Tests Node's chown method."""
     node = Node(atts)
     if 'owner' not in atts:
@@ -215,7 +203,7 @@ def test_node_chown(mock_chown, mock_getgrnam, mock_getpwnam, mock_path_exists, 
     mock_getpwnam(atts['owner']).pw_uid = 123 # Just a number to use for mocking
     mock_getgrnam(atts['group']).gr_gid = 123
     assert expected == node.chown()
-    if not atts['path'] == None:
+    if not atts['path'] is None:
         mock_getpwnam.assert_called_with(CURRENT_USER if not atts['owner'] else atts['owner'])
         mock_getgrnam.assert_called_with(CURRENT_GROUP if not atts['group'] else atts['group'])
         mock_chown.assert_called_once_with(atts['path'], 123, 123)
@@ -228,22 +216,19 @@ def test_node_chown_nonexisting(mock_path_exists):
     with pytest.raises(IOError):
         node.chown()
 
-exists_args = [
-    ({'path' : None},
-        False),
-    ({'path' : '/this/path/file'},
-        False),
-    ({'path' : '/this/path/file'},
-        True),
+EXISTS_ARGS = [
+    ({'path' : None}, False),
+    ({'path' : '/this/path/file'}, False),
+    ({'path' : '/this/path/file'}, True),
 ]
-@pytest.mark.parametrize(("atts", "expected"), exists_args)
+@pytest.mark.parametrize(("atts", "expected"), EXISTS_ARGS)
 @patch('os.path.exists')
 def test_node_exists(mock_path_exists, atts, expected):
     """Tests node's exist method."""
     mock_path_exists.return_value = expected
     node = Node(atts)
     assert expected == node.exists()
-    if not atts['path'] == None:
+    if not atts['path'] is None:
         mock_path_exists.assert_called_once_with(atts['path'])
 
 def test_node_set_path_empty():
@@ -265,13 +250,13 @@ def test_node_set_path_invalid_char(invalid_char):
     with pytest.raises(ValueError):
         node = Node({'path' : '/path/to' + invalid_char})
 
-parent_dirs_args = [
+PARENT_DIRS_ARGS = [
     ({'path' : None}, None),
     ({'path' : '/this/path/'}, '/this/'),
     ({'path' : '/etc/path/file'}, '/etc/path/'),
     ({'path' : '//etc//path//file'}, '/etc/path/'),
 ]
-@pytest.mark.parametrize(("atts", "expected"), parent_dirs_args)
+@pytest.mark.parametrize(("atts", "expected"), PARENT_DIRS_ARGS)
 def test_node_parent_node(atts, expected):
     """Test parent_node method. Should return a Node object."""
     node = Node(atts)
@@ -286,7 +271,7 @@ def test_node_set_perms_invalid():
     with pytest.raises(ValueError):
         node.perms = 'a'
     with pytest.raises(ValueError):
-        node.perms = 9999
+        node.perms = 9999  # pylint: disable=redefined-variable-type
     with pytest.raises(ValueError):
         node.perms = -9999
 

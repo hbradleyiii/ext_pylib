@@ -55,23 +55,23 @@ class MockHandle(object):
         return True
 
 
-DEFAULT_ARGS = { 'path' : '/tmp/nonexistant/path/file' }
+DEFAULT_ARGS = {'path' : '/tmp/nonexistant/path/file'}
 
-init_args = [
+INIT_ARGS = [
     (None, '<file.File:stub>'),
     ('/this/file', '/this/file'),
     ('/this//path//file', '/this/path/file'),
 ]
-@pytest.mark.parametrize(("atts", "expected"), init_args)
+@pytest.mark.parametrize(("atts", "expected"), INIT_ARGS)
 def test_file_initialize(atts, expected):
     """Tests initialize File."""
-    file = File({'path' : atts})
-    assert str(file) == expected
+    the_file = File({'path' : atts})
+    assert str(the_file) == expected
 
 def test_file_initialize_with_trailing_slash():
     """Tests initializing a File with a trailing slash."""
     with pytest.raises(ValueError):
-        file = File({'path' : '/this/path/'})
+        the_file = File({'path' : '/this/path/'})  # pylint: disable=unused-variable
 
 def test_file_create_stub():
     """Tests file creation of a stub."""
@@ -83,8 +83,8 @@ def test_file_create_already_existing_file_not_replacing(mock_exists, mock_promp
     """Tests file creation of an already existing file (NOT replacing the file)."""
     mock_exists.return_value = True
     mock_prompt.return_value = False # Answer no, don't replace
-    file = File(DEFAULT_ARGS)
-    assert not file.create()
+    the_file = File(DEFAULT_ARGS)
+    assert not the_file.create()
 
 @patch('ext_pylib.files.node.Node.chown')
 @patch('ext_pylib.files.node.Node.chmod')
@@ -92,14 +92,13 @@ def test_file_create_already_existing_file_not_replacing(mock_exists, mock_promp
 @patch('ext_pylib.files.node.Node.exists')
 def test_file_create_already_existing_file_replacing(mock_exists, mock_prompt, mock_chmod, mock_chown):
     """Tests file creation of an already existing file (replacing the file)."""
-    mock_parent_dir = MockParentDir(True)
     mock_exists.return_value = True
     mock_chown.return_value = mock_chmod.return_value = True
     mock_prompt.return_value = True # Answer yes, replace
-    file = File(DEFAULT_ARGS)
+    the_file = File(DEFAULT_ARGS)
     m_open = mock_open()
     with patch(BUILTINS + '.open', m_open, create=True):
-        assert file.create()
+        assert the_file.create()
         m_open.assert_called_once_with(DEFAULT_ARGS['path'], 'w')
         m_open().close.assert_called_once_with()
 
@@ -112,10 +111,10 @@ def test_file_create_and_create_parent_dirs(mock_exists, mock_chmod, mock_chown)
     mock_exists.return_value = False
     mock_chown.return_value = mock_chmod.return_value = True
     File.parent_dir = mock_parent_dir
-    file = File(DEFAULT_ARGS)
+    the_file = File(DEFAULT_ARGS)
     m_open = mock_open()
     with patch(BUILTINS + '.open', m_open, create=True):
-        assert file.create()
+        assert the_file.create()
         m_open.assert_called_once_with(DEFAULT_ARGS['path'], 'w')
         m_open().close.assert_called_once_with()
         assert mock_parent_dir.exists_called == 1
@@ -131,11 +130,11 @@ def test_file_create_with_data(mock_write, mock_exists, mock_chmod, mock_chown):
     mock_exists.return_value = False
     mock_chown.return_value = mock_chmod.return_value = True
     File.parent_dir = mock_parent_dir
-    file = File(DEFAULT_ARGS)
+    the_file = File(DEFAULT_ARGS)
     m_open = mock_open()
     with patch(BUILTINS + '.open', m_open, create=True):
         data = 'The data...'
-        assert file.create(data)
+        assert the_file.create(data)
         m_open.assert_called_once_with(DEFAULT_ARGS['path'], 'w')
         mock_write.assert_called_once_with(data, False, m_open())
         m_open().close.assert_called_once_with()
@@ -152,12 +151,12 @@ def test_file_create_with_data_but_not_as_arg(mock_write, mock_exists, mock_chmo
     mock_exists.return_value = False
     mock_chown.return_value = mock_chmod.return_value = True
     File.parent_dir = mock_parent_dir
-    file = File(DEFAULT_ARGS)
+    the_file = File(DEFAULT_ARGS)
     m_open = mock_open()
     with patch(BUILTINS + '.open', m_open, create=True):
         data = 'The data...'
-        file.data = data
-        assert file.create()
+        the_file.data = data
+        assert the_file.create()
         m_open.assert_called_once_with(DEFAULT_ARGS['path'], 'w')
         mock_write.assert_called_once_with(data, False, m_open())
         m_open().close.assert_called_once_with()
@@ -166,25 +165,25 @@ def test_file_create_with_data_but_not_as_arg(mock_write, mock_exists, mock_chmo
 
 def test_file_write_no_data():
     """Tests writing to a File with no data passed in."""
-    file = File(DEFAULT_ARGS)
+    the_file = File(DEFAULT_ARGS)
     with pytest.raises(UnboundLocalError):
-        file.write()
+        the_file.write()
 
 def test_file_write_data_with_handle():
     """Tests writing to a File with a handle passed in."""
-    file = File(DEFAULT_ARGS)
+    the_file = File(DEFAULT_ARGS)
     mock_handle = MockHandle()
     data = 'Some mock data...'
-    file.write(data=data, handle=mock_handle)
+    the_file.write(data=data, handle=mock_handle)
     assert mock_handle.called_once_with(data)
 
 def test_file_write_append_data_without_handle():
     """Tests appending to a file without a handle."""
     m_open = mock_open()
     with patch(BUILTINS + '.open', m_open, create=True):
-        file = File(DEFAULT_ARGS)
+        the_file = File(DEFAULT_ARGS)
         data = 'Some mock data...'
-        assert file.write(data)
+        assert the_file.write(data)
         m_open.assert_called_once_with(DEFAULT_ARGS['path'], 'a')
         m_open().write.assert_called_once_with(data)
         m_open().close.assert_called_once_with()
@@ -193,9 +192,9 @@ def test_file_write_data_without_handle():
     """Tests writing to a file without a handle."""
     m_open = mock_open()
     with patch(BUILTINS + '.open', m_open, create=True):
-        file = File(DEFAULT_ARGS)
+        the_file = File(DEFAULT_ARGS)
         data = 'Some mock data...'
-        assert file.write(data, False)
+        assert the_file.write(data, False)
         m_open.assert_called_once_with(DEFAULT_ARGS['path'], 'w')
         m_open().write.assert_called_once_with(data)
         m_open().close.assert_called_once_with()
@@ -217,35 +216,36 @@ def test_file_overwrite(mock_write):
 def test_file_remove(mock_remove, mock_exists):
     """Tests File remove method."""
     mock_exists.return_value = True
-    file = File(DEFAULT_ARGS)
-    assert file.remove(False)
+    the_file = File(DEFAULT_ARGS)
+    assert the_file.remove(False)
     mock_remove.assert_called_once_with(DEFAULT_ARGS['path'])
 
 @patch('ext_pylib.files.node.Node.exists')
 def test_file_read_nonexisting_file(mock_exists):
     """Tests File read method."""
     mock_exists.return_value = False
-    file = File(DEFAULT_ARGS)
-    assert file.read() == ''
+    the_file = File(DEFAULT_ARGS)
+    assert the_file.read() == ''
 
 @patch('ext_pylib.files.node.Node.exists')
 def test_file_read_nonexisting_file_with_data_in_memory(mock_exists):
     """Tests File read method."""
     mock_exists.return_value = False
-    file = File(DEFAULT_ARGS)
-    file.data = 'Data is in memory...'
-    assert file.read() == 'Data is in memory...'
+    the_file = File(DEFAULT_ARGS)
+    the_file.data = 'Data is in memory...'
+    assert the_file.read() == 'Data is in memory...'
 
 @patch('ext_pylib.files.node.Node.exists')
-def test_file_read_file_force_clear_memory(mock_exists):
+def test_file_read_file_force_flush_memory(mock_exists):
     """Tests file read method forcing read from memory."""
     mock_exists.return_value = True
-    file = File(DEFAULT_ARGS)
+    the_file = File(DEFAULT_ARGS)
     m_open = mock_open()
     with patch(BUILTINS + '.open', m_open, create=True):
+        # pylint: disable=no-member
         m_open.return_value.read.return_value = data_on_disk = 'The data on disk..'
-        file.data = data_in_memory = 'The data...'
-        assert file.read(True) == data_on_disk
+        the_file.data = 'The data...'
+        assert the_file.read(True) == data_on_disk
         m_open.assert_called_once_with(DEFAULT_ARGS['path'], 'r')
         m_open().close.assert_called_once_with()
 
@@ -253,10 +253,10 @@ def test_file_read_file_force_clear_memory(mock_exists):
 def test_file_read_file_with_data(mock_exists):
     """Tests file read() a file that has data altered in memory."""
     mock_exists.return_value = True
-    file = File(DEFAULT_ARGS)
-    file.data = 'Test data'
-    assert file.read() == file.data
-    assert file.read() == 'Test data'
-    file.data = 'New data'
-    assert file.read() == file.data
-    assert file.read() == 'New data'
+    the_file = File(DEFAULT_ARGS)
+    the_file.data = 'Test data'
+    assert the_file.read() == the_file.data
+    assert the_file.read() == 'Test data'
+    the_file.data = 'New data'
+    assert the_file.read() == the_file.data
+    assert the_file.read() == 'New data'

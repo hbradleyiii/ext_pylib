@@ -38,10 +38,10 @@ def read():
 
 def test_templatefile_apply_using():
     """Test Section apply_using() method."""
-    file = Template()
-    file.read = read
-    assert EXPECTED_RESULT == file.apply_using({
+    the_file = Template()
+    the_file.read = read
+    assert EXPECTED_RESULT == the_file.apply_using({
         '#PLACEHOLDER#' : 'The placeholder text.',
-         '#DATA#' : 'www.google.com',
-         '#MISSING#' : 'Nothing here.',
-        })
+        '#DATA#' : 'www.google.com',
+        '#MISSING#' : 'Nothing here.',
+    })

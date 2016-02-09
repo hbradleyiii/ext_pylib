@@ -32,13 +32,13 @@ def test_domain_name():
     domain.name = 'final.example.com.'
     assert domain.name == 'final.example.com'
 
-bad_args = [ 'x' * 256, '#example.com', '.example.com', '', None,
+BAD_ARGS = ['x' * 256, '#example.com', '.example.com', '', None,
             'example..com', 'bad_stuff.com']
-@pytest.mark.parametrize(("args"), bad_args)
+@pytest.mark.parametrize(("args"), BAD_ARGS)
 def test_domain_name_bad_values(args):
     """Tests domain name given bad values."""
     with pytest.raises(ValueError):
-        domain = Domain(args)
+        domain = Domain(args)  # pylint: disable=unused-variable
 
 def test_domain_ip():
     """Tests domain ip property for validity. Assumes ip is correct."""
