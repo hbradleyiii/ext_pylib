@@ -28,7 +28,7 @@ def root(request):
     assert root_dir.exists()
 
     def cleanup():
-        # Cleanup
+        """Removes created test root directory."""
         assert root_dir.remove(False)
         assert not root_dir.exists()
 
@@ -37,11 +37,9 @@ def root(request):
     return root_dir
 
 
-#@root
-def test_copytree(root):
+def test_copytree():
     """TODO:"""
-    root
-    # assert root.exists
+    pass
 
 def test_dir_actual_create_and_remove():
     """[Integration Test] Test actual creation and removal of directory."""
@@ -52,22 +50,22 @@ def test_dir_actual_create_and_remove():
     assert root_dir.exists()
 
     # Perform a (redundant) creation test
-    dir = Dir({'path' : '/tmp/ext_pylib/' + datetime.now().strftime('%Y-%m-%d--%H-%M-%S') + '/path/dir'})
-    assert not dir.exists()
-    assert dir.create()
-    assert dir.exists()
+    the_dir = Dir({'path' : '/tmp/ext_pylib/' + datetime.now().strftime('%Y-%m-%d--%H-%M-%S') + '/path/dir'})
+    assert not the_dir.exists()
+    assert the_dir.create()
+    assert the_dir.exists()
 
     # Perform a removal test
-    assert dir.remove(False)
-    assert not dir.exists()
+    assert the_dir.remove(False)
+    assert not the_dir.exists()
 
     # Cleanup
     assert root_dir.remove(False)
     assert not root_dir.exists()
 
-def test_file_actual_creation_write_and_removal(tmpdir):
+def test_file_actual_creation_write_and_removal():
     """[Integration Test] Test actual creation, writing, and removal of file."""
-    tmpdir
+    pass
 
 
     ## Strings for Section template file integration tests. ##

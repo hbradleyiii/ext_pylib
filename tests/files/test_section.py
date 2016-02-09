@@ -69,28 +69,28 @@ Section.readlines = readlines
 
 def test_section_is_applied():
     """Test Section is_applied method."""
-    file = Section()
-    file.read = read
-    assert file.is_applied(FILE_WITH_SECTION_STR)
-    assert not file.is_applied(FILE_WITHOUT_SECTION_STR)
+    the_file = Section()
+    the_file.read = read
+    assert the_file.is_applied(FILE_WITH_SECTION_STR)
+    assert not the_file.is_applied(FILE_WITHOUT_SECTION_STR)
 
 def test_section_has_section():
     """Test Section has_section method."""
-    file = Section()
-    file.read = read
-    assert file.has_section(FILE_HAS_SECTION_STR)
-    assert file.has_section(FILE_WITH_SECTION_STR)
-    assert not file.has_section(FILE_WITHOUT_SECTION_STR)
+    the_file = Section()
+    the_file.read = read
+    assert the_file.has_section(FILE_HAS_SECTION_STR)
+    assert the_file.has_section(FILE_WITH_SECTION_STR)
+    assert not the_file.has_section(FILE_WITHOUT_SECTION_STR)
 
 def test_section_apply_to():
     """Test Section apply_to method."""
-    file = Section()
-    file.read = read
-    assert file.apply_to(FILE_WITH_SECTION_STR) == FILE_WITH_SECTION_STR
-    assert file.apply_to(FILE_WITHOUT_SECTION_STR) == FILE_WITHOUT_SECTION_STR + '\n' + SECTION_STR + '\n'
+    the_file = Section()
+    the_file.read = read
+    assert the_file.apply_to(FILE_WITH_SECTION_STR) == FILE_WITH_SECTION_STR
+    assert the_file.apply_to(FILE_WITHOUT_SECTION_STR) == FILE_WITHOUT_SECTION_STR + '\n' + SECTION_STR + '\n'
     with pytest.raises(AlteredSectionFile):
-        file.apply_to(FILE_HAS_SECTION_STR, overwrite=False)
-    assert file.apply_to(FILE_HAS_SECTION_STR, overwrite=True) == FILE_WITH_SECTION_STR
+        the_file.apply_to(FILE_HAS_SECTION_STR, overwrite=False)
+    assert the_file.apply_to(FILE_HAS_SECTION_STR, overwrite=True) == FILE_WITH_SECTION_STR
 
 MULTILINE_STR = """This is the first line.
 This is the second line.
@@ -113,16 +113,16 @@ def read_multiline_str_with_return():
 
 def test_section_start_section_property():
     """Test Section start_section property."""
-    file = Section()
-    file.read = read_multiline_str
-    assert file.start_section == "This is the first line."
-    file.read = read_multiline_str_with_return
-    assert file.start_section == "This is the first line."
+    the_file = Section()
+    the_file.read = read_multiline_str
+    assert the_file.start_section == "This is the first line."
+    the_file.read = read_multiline_str_with_return
+    assert the_file.start_section == "This is the first line."
 
 def test_section_end_section_property():
     """Test Section end_section property."""
-    file = Section()
-    file.read = read_multiline_str
-    assert file.end_section == "This is the last line."
-    file.read = read_multiline_str_with_return
-    assert file.end_section == "This is the last line."
+    the_file = Section()
+    the_file.read = read_multiline_str
+    assert the_file.end_section == "This is the last line."
+    the_file.read = read_multiline_str_with_return
+    assert the_file.end_section == "This is the last line."

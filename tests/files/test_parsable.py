@@ -40,34 +40,34 @@ class ParsableFile(Parsable, File):
 def test_parsable_parse_with_existing_attribute():
     """Test Parsable setup_parsing() method on an existing attribute."""
     parsable = ParsableFile()
-    parsable.existing = 'already exists'
+    parsable.existing = 'already exists'  # pylint: disable=attribute-defined-outside-init
     with pytest.raises(AttributeError):
-        parsable.setup_parsing({ 'existing' : '*' })
+        parsable.setup_parsing({'existing' : '*'})
 
 def test_parsable_setup_parsing():
     """Test Parsable setup_parsing() method."""
-    file = Parsable()
+    the_file = Parsable()
     Parsable.read = read
-    file.data = FILE
-    file.setup_parsing({
+    the_file.data = FILE
+    the_file.setup_parsing({
         'htdocs' : ('DocumentRoot (.*)',),
         'debug'  :  'DEBUG = (.*)',
         'secure' : ('SECURE[ ]*=[ ]*([^ \n]*)', 'SECURE = {0}'),
         'speed'  : ('SPEED[ ]*=[ ]*([^ \n]*)', 'SPEED = {0}'),
         'list'   : ('LIST[ ]*=[ ]*([^ \n]*)', 'LIST = {0}'),
     })
-    assert file.htdocs[0] == '/var/www/google.com'
-    assert file.htdocs[1] == '/var/www/example.com'
-    assert file.debug == 'True'
-    assert file.secure == 'False'
-    file.secure = 'True'
-    assert file.secure == 'True'
-    assert file.speed == None
-    file.speed = 'fastest'
-    assert file.speed == 'fastest'
-    file.speed = 'fastest' # setting it more than once with the same value
+    assert the_file.htdocs[0] == '/var/www/google.com'
+    assert the_file.htdocs[1] == '/var/www/example.com'
+    assert the_file.debug == 'True'
+    assert the_file.secure == 'False'
+    the_file.secure = 'True'
+    assert the_file.secure == 'True'
+    assert the_file.speed is None
+    the_file.speed = 'fastest'
+    assert the_file.speed == 'fastest'
+    the_file.speed = 'fastest' # setting it more than once with the same value
                            # shouldn't affect the number of times it is added.
-    assert type(file.speed) == str \
-        or type(file.speed) == unicode  # Shouldn't be a list, checking unicode
-                                        # for Python 2 support.
-    assert len(file.list) == 2 # Should be a list
+    assert isinstance(the_file.speed, str) \
+        or isinstance(the_file.speed, unicode)  # Shouldn't be a list, checking unicode
+                                          # for Python 2 support.
+    assert len(the_file.list) == 2 # Should be a list
