@@ -5,14 +5,15 @@
 # author:           Harold Bradley III
 # email:            harold@bradleystudio.net
 # created on:       11/11/2015
-#
-# description:      A unit test for ext_pylib module's domain class and
-#                   methods.
-#
 
-from ext_pylib.domain import Domain, get_server_ip
-import pytest
+"""
+A unit test for ext_pylib module's domain class and methods.
+"""
+
 import socket
+import pytest
+from ext_pylib.domain import Domain, get_server_ip
+
 
 def test_domain():
     """Tests initializing a domain class, __str__, __repr__ and domain name properties."""

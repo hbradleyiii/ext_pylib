@@ -6,16 +6,19 @@
 # email:            harold@bradleystudio.net
 # created on:       11/12/2015
 #
-# description:      A unit test for ext_pylib file module's File class and
-#                   methods. This is fairly ugly, but it's pretty
-#                   comprehensive.
+# pylint:           disable=invalid-name,line-too-long
+
+"""
+A unit test for ext_pylib file module's File class and methods. This is fairly
+ugly, but it's pretty comprehensive.
+"""
 
 from __future__ import print_function, unicode_literals
 
-from ext_pylib.files import File
+from sys import version_info
 from mock import mock_open, patch
 import pytest
-from sys import version_info
+from ext_pylib.files import File
 
 if version_info[0] == 2 or version_info.major == 2:
     BUILTINS = '__builtin__'

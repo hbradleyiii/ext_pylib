@@ -5,17 +5,15 @@
 # author:           Harold Bradley III
 # email:            harold@bradleystudio.net
 # created on:       11/12/2015
-#
-# description:      A unit test for ext_pylib file module's Dir class and
-#                   methods. Note that copytree() function is tested in
-#                   test_integration.
-#
 
-from datetime import datetime
-from ext_pylib.files import Dir
+"""
+A unit test for ext_pylib file module's Dir class and methods. Note that
+copytree() function is tested in test_integration.
+"""
+
 from mock import patch
-import os
 import pytest
+from ext_pylib.files import Dir
 
 
 INIT_ARGS = [

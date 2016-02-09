@@ -6,12 +6,14 @@
 # email:            harold@bradleystudio.net
 # created on:       01/16/2016
 #
-# description:      A unit test for ext_pylib file module's Parsable mixin
-#                   class.
-#
+# pylint:           disable=invalid-name,no-member
 
-from ext_pylib.files import File, Parsable
+"""
+A unit test for ext_pylib file module's Parsable mixin class.
+"""
+
 import pytest
+from ext_pylib.files import File, Parsable
 
 
 FILE = """This is a sample file.

@@ -6,12 +6,15 @@
 # email:            harold@bradleystudio.net
 # created on:       11/07/2015
 #
-# description:      A unit test for ext_pylib module's password functions.
-#
+# pylint:           disable=invalid-name
 
+"""
+A unit test for ext_pylib module's password functions.
+"""
+
+import pytest
 from ext_pylib.password import generate_pw
 from ext_pylib.password.password import DEFAULT_CHAR_SET
-import pytest
 
 @pytest.mark.parametrize(("length", "charset", "expected"), [
     (1, {'a' : 'a'}, 'a'),
