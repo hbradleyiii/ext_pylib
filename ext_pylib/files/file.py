@@ -101,14 +101,14 @@ class File(Node):
             os.remove(self.path)
             return True
 
-    def read(self, clear_memory=False):
+    def read(self, flush_memory=False):
         """Returns the contents of the file.
            If the file doesn't exist, returns an empty string.
 
            Note that method first attempts to return the contents as in memory
            (which might differ from what is on disk)."""
         try:
-            if clear_memory:  # Empty memory to force reading from disk
+            if flush_memory:  # Empty memory to force reading from disk
                 del self.data
             return self.data
         except AttributeError:
