@@ -14,6 +14,11 @@ A unit test for ext_pylib file module's Parsable mixin class.
 
 import pytest
 from ext_pylib.files import File, Parsable
+from . import utils
+
+
+class ParsableFile(Parsable, File):
+    """Dummy class extending Parsable and File."""
 
 
 FILE = """This is a sample file.
@@ -28,15 +33,6 @@ LIST = first_item
 LIST = second_item
 """
 
-# Monkey Patch function for read() method
-def read(self):
-    """Monkey Patch read function."""
-    return self.data
-
-class ParsableFile(Parsable, File):
-    """Dummy class extending Parsable and File."""
-
-
 def test_parsable_parse_with_existing_attribute():
     """Test Parsable setup_parsing() method on an existing attribute."""
     parsable = ParsableFile()
@@ -47,7 +43,7 @@ def test_parsable_parse_with_existing_attribute():
 def test_parsable_setup_parsing():
     """Test Parsable setup_parsing() method."""
     the_file = Parsable()
-    Parsable.read = read
+    Parsable.read = utils.mock_read_data
     the_file.data = FILE
     the_file.setup_parsing({
         'htdocs' : ('DocumentRoot (.*)',),
