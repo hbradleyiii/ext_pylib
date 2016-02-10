@@ -176,8 +176,6 @@ class File(Node):
         """Returns a Dir instance representing the parent directory."""
         return Dir(self.parent_node.get_atts())
 
-class AlteredSectionFile(Exception):
-    """Exception for when a section file's contents exist but have been altered."""
 
 class Section(object):
     """A mixin class to work with a section template file."""
@@ -196,8 +194,7 @@ class Section(object):
         elif self._start_pos < self._end_pos:
             return True
         else:
-            print('[WARN] Data not formatted properly.')
-            return False
+            raise ValueError('Data passed to is_in() not formatted properly.')
 
     def apply_to(self, data, overwrite=False):
         """Returns a string in which the section is applied to the data."""
@@ -208,19 +205,25 @@ class Section(object):
                 return data[:self._start_pos] + self.read() + '\n' + \
                         data[self._end_pos + len(self.end_section) + 1:]
             else:
-                raise AlteredSectionFile('[WARN] Section already exists, but overwrite flag was not set.')
+                raise ValueError('[WARN] Section already exists, but overwrite flag was not set.')
         else:
             return data + '\n' + self.read() + '\n'
 
     @property
     def start_section(self):
         """Returns the string that denotes the start of the section."""
+        if self.read() == '':
+            raise EOFError('Section file has no data')
         return self.readlines()[0]
 
     @property
     def end_section(self):
         """Returns the string that denotes the end of the section."""
+        if self.read() == '':
+            raise EOFError('Section file has no data')
         lines = self.readlines()
+        if len(lines) < 2:
+            raise ValueError('Not a valid section file.')
         if lines[-1] != '':  # If the last line is blank, use the line before it.
             return lines[-1]
         return lines[-2]
