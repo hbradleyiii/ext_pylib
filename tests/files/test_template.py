@@ -11,6 +11,7 @@ A unit test for ext_pylib file module's Template mixin class.
 """
 
 from ext_pylib.files import Template
+from . import utils
 
 
 TEMPLATE_FILE = """This is a test template file.
@@ -31,15 +32,10 @@ But not #DATA, DATA#, and DATA.
 This is the last line.
 """
 
-# Monkey Patch function for read() method
-def read():
-    """Monkey Patch read function."""
-    return TEMPLATE_FILE
-
 def test_templatefile_apply_using():
     """Test Section apply_using() method."""
     the_file = Template()
-    the_file.read = read
+    the_file.read = utils.mock_read(TEMPLATE_FILE)
     assert EXPECTED_RESULT == the_file.apply_using({
         '#PLACEHOLDER#' : 'The placeholder text.',
         '#DATA#' : 'www.google.com',
