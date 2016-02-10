@@ -148,7 +148,7 @@ def test_section_file_apply_to_file():
     assert file_with_section.overwrite(FILE_CONTENTS_WITH_SECTION)
     assert file_with_section.exists()
 
-    assert section.has_section(file_with_section.read())
+    assert section.is_in(file_with_section.read())
     print('Without:')
     print(file_without_section.read())
     print('Without (Applied):')

@@ -186,7 +186,7 @@ class Section(object):
         """Returns true if data has this section applied exactly."""
         return self.read() in data
 
-    def has_section(self, data):
+    def is_in(self, data):
         """Returns true if data has the section, whether or not it is applied
         exactly."""
         self._start_pos = data.find(self.start_section)
@@ -203,7 +203,7 @@ class Section(object):
         """Returns a string in which the section is applied to the data."""
         if self.is_applied(data):
             return data
-        if self.has_section(data):
+        if self.is_in(data):
             if overwrite:
                 return data[:self._start_pos] + self.read() + '\n' + \
                         data[self._end_pos + len(self.end_section) + 1:]
