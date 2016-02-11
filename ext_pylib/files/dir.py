@@ -69,6 +69,7 @@ class Dir(Node):
         except Exception as error: # pylint: disable=broad-except
             print('[ERROR]')
             print(error)
+            return False
         return all([self.chmod(), self.chown()])
 
     def remove(self, ask=True): # pylint: disable=arguments-differ
@@ -87,6 +88,7 @@ class Dir(Node):
             except Exception as error: # pylint: disable=broad-except
                 print('[ERROR]')
                 print(error)
+                return False
 
     def fill(self, fill_with):
         """Fills the directory with the contents of "fill_with" (another Dir instance)."""
@@ -104,6 +106,7 @@ class Dir(Node):
         except Exception as error:  # pylint: disable=broad-except
             print('Copy failed. [ERROR]')
             print(error)
+            return False
 
     # pylint: disable=no-member
     @Node.path.setter

@@ -122,10 +122,9 @@ class File(Node):
                 self.data = file_handle.read()
                 file_handle.close()
                 return self.data
-            except Exception as error:  # pylint: disable=broad-except
+            except Exception:  # pylint: disable=broad-except
                 print('[ERROR]')
-                print(error)
-                return False
+                raise
 
     def readlines(self):
         """Returns the contents of the file as a list for iteration."""
@@ -154,7 +153,7 @@ class File(Node):
             return True
         except Exception:  # pylint: disable=broad-except
             print('[ERROR]')
-            raise
+            return False
 
     def append(self, data, handle=None):
         """Appends the file with data. Just a wrapper."""

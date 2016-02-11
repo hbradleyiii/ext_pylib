@@ -128,6 +128,7 @@ class Node(object):
         except Exception as error:  # pylint: disable=broad-except
             print('[FAILED]')
             print(error)
+            return False
 
     def chown(self, owner=None, group=None):
         """Sets the owner and group of the directory."""
@@ -153,6 +154,7 @@ class Node(object):
         except Exception as error:  # pylint: disable=broad-except
             print('[FAILED]')
             print(error)
+            return False
 
     def exists(self):
         """Returns true if this directory exists on disk."""
