@@ -6,6 +6,7 @@
 # email:            harold@bradleystudio.net
 # created on:       11/03/2015
 #
+# pylint:           disable=line-too-long
 
 """
 ext_pylib.files.dir
@@ -61,16 +62,16 @@ class Dir(Node):
         if self.exists():
             print(self.path + ' already exists.')
             return True
-        print('Creating directories "' + self.path + '"...'),
+        print('Creating directories "' + self.path + '"...', end=' ')
         try:
             os.makedirs(self.path)
             print('[OK]')
-        except Exception as error:
+        except Exception as error: # pylint: disable=broad-except
             print('[ERROR]')
             print(error)
         return all([self.chmod(), self.chown()])
 
-    def remove(self, ask = True):
+    def remove(self, ask=True): # pylint: disable=arguments-differ
         """Removes the directory structure."""
         if not self.path:
             return True
@@ -78,12 +79,12 @@ class Dir(Node):
             print(self.path + ' doesn\'t exist.')
             return True
         if not ask or prompt('Completely remove ' + self.path + ' and all containing files and folders?'):
-            print('Removing "' + self.path + '"...'),
+            print('Removing "' + self.path + '"...', end=' ')
             try:
                 shutil.rmtree(self.path)
                 print('[OK]')
                 return True
-            except Exception as error:
+            except Exception as error: # pylint: disable=broad-except
                 print('[ERROR]')
                 print(error)
 
@@ -100,10 +101,11 @@ class Dir(Node):
             copytree(fill_with.path, self.path) # copytree(source, destination)
             print('Copy complete. [OK]')
             return True
-        except Exception as error:
+        except Exception as error:  # pylint: disable=broad-except
             print('Copy failed. [ERROR]')
             print(error)
 
+    # pylint: disable=no-member
     @Node.path.setter
     def path(self, path):
         """Sets the path. A Dir path must end in '/'.

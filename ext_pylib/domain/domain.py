@@ -6,6 +6,9 @@
 # email:            harold@bradleystudio.net
 # created on:       11/03/2015
 #
+# pylint:           disable=invalid-name,attribute-defined-outside-init
+#                   (ip is perfectly valid)
+#
 #                   TODO: add DNS API capabilities
 
 """
@@ -34,7 +37,7 @@ def get_server_ip(get_ip_urls=None):
         ip = requests.get(url).text
         if not ip == '127.0.0.1':
             return ip
-    else:  # No IP found
+    else:  # No IP found. pylint: disable=useless-else-on-loop
         raise LookupError('Could not successfully retrieve ip of server.')
 
 

@@ -16,4 +16,6 @@ try:
 except NameError:
     INPUT = raw_input
 
+# pylint: disable=wrong-import-position
+# this import MUST be after INPUT is defined
 from .prompts import prompt, prompt_str, warn_prompt

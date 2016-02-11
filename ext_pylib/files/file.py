@@ -6,6 +6,7 @@
 # email:            harold@bradleystudio.net
 # created on:       11/04/2015
 #
+# pylint:           disable=no-member
 
 """
 ext_pylib.files.file
@@ -56,22 +57,23 @@ class File(Node):
             return '<file.File:stub>'
         return self.path
 
-    def create(self, data=None):
+    def create(self, data=None):  # pylint: disable=arguments-differ
         """Creates the file/directory."""
+        # pylint: disable=attribute-defined-outside-init
         if not self.path: # For stubs, just return True
             return True
         if self.exists():
             print(self.path + ' already exists.')
             if not prompt('Replace it?', False):
                 return False
-        print('Creating ' + self.path + '... '),
+        print('Creating ' + self.path + '... ', end=' ')
 
         # Create parent directories
         if not self.parent_dir.exists():
             try:
                 print('')
                 self.parent_dir.create()
-            except Exception as error:
+            except Exception as error:  # pylint: disable=broad-except
                 print('[ERROR]')
                 print(error)
 
@@ -84,13 +86,13 @@ class File(Node):
                 self.write(self.data, False, file_handle)
             file_handle.close()
             print('[OK]')
-        except Exception as error:
+        except Exception as error:  # pylint: disable=broad-except
             print('[ERROR]')
             print(error)
             return False
         return all([self.chmod(), self.chown()])
 
-    def remove(self, ask = True):
+    def remove(self, ask=True):  # pylint: disable=arguments-differ
         """Removes the file/directory."""
         if not self.path:
             return True
@@ -107,6 +109,7 @@ class File(Node):
 
            Note that method first attempts to return the contents as in memory
            (which might differ from what is on disk)."""
+        # pylint: disable=attribute-defined-outside-init
         try:
             if flush_memory:  # Empty memory to force reading from disk
                 del self.data
@@ -119,7 +122,7 @@ class File(Node):
                 self.data = file_handle.read()
                 file_handle.close()
                 return self.data
-            except Exception as error:
+            except Exception as error:  # pylint: disable=broad-except
                 print('[ERROR]')
                 print(error)
                 return False
@@ -130,6 +133,7 @@ class File(Node):
 
     def write(self, data=None, append=True, handle=None):
         """Writes data to the file."""
+        # pylint: disable=attribute-defined-outside-init
         if not data:
             try:  # Try to get in memory data
                 data = self.data
@@ -147,7 +151,7 @@ class File(Node):
                 file_handle.write(data)
                 file_handle.close()
                 return True
-            except Exception as error:
+            except Exception as error:  # pylint: disable=broad-except
                 print('[ERROR]')
                 print(error)
                 return False
@@ -187,6 +191,7 @@ class Section(object):
     def is_in(self, data):
         """Returns true if data has the section, whether or not it is applied
         exactly."""
+        # pylint: disable=attribute-defined-outside-init
         self._start_pos = data.find(self.start_section)
         self._end_pos = data.find(self.end_section)
         if self._start_pos < 0 and self._end_pos < 0:
@@ -234,7 +239,7 @@ class Section(object):
 #   methods:
 #       apply_using(placeholders)  - returns a string with the placeholders
 #                                    replaced
-class Template(object):
+class Template(object):  # pylint: disable=too-few-public-methods
     """A mixin to work with a template file with placeholders."""
 
     def apply_using(self, placeholders):
