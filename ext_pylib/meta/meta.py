@@ -31,7 +31,7 @@ class DynamicProperty(object):
     def __get__(self, instance, owner):
         """Returns the result of running the getter function.
         This is a wrapper for the property's actual getter function."""
-        self.owner = owner  # Not used
+        self.owner = owner  # Not used pylint: disable=attribute-defined-outside-init
         if instance is None:
             return self
         return self.getter(instance)
@@ -48,21 +48,21 @@ class DynamicProperty(object):
         return self
 
     @staticmethod
-    def setter(*args, **kwargs):
+    def setter(*args, **kwargs):  # pylint: disable=method-hidden,unused-argument
         """A stub. If it isn't overwritten, the property is read-only."""
         raise TypeError("Cannot modify property.  It doesn't have a setter function.")
 
 def setdynattr(obj, attribute, getter_func=None, setter_func=None):
     """Creates a dynamic property on an object using DynamicProperty class."""
     if not getter_func:
-        def getter_func(self):
+        def getter_func(self):  # pylint: disable=function-redefined
             """Default getter function.
             Uses '_' + attribute name as a private variable to hold the
             property's value."""
             return getattr(self, '_' + attribute, None)
 
     if not setter_func:
-        def setter_func(self, value):
+        def setter_func(self, value): # pylint: disable=function-redefined
             """Default setter function.
             Uses '_' + attribute name as a private variable to hold the
             property's value."""

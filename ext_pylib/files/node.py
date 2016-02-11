@@ -6,6 +6,7 @@
 # email:            harold@bradleystudio.net
 # created on:       11/03/2015
 #
+# pylint:           disable=line-too-long
 
 """
 ext_pylib.files.node
@@ -41,7 +42,7 @@ class Node(object):
     :param atts['group']: The group (string) of the node.
     """
 
-    def __init__(self, atts=None ):
+    def __init__(self, atts=None):
         """Initializes a new Node instance."""
         atts = atts or {}
         if 'path' not in atts:
@@ -57,7 +58,7 @@ class Node(object):
 
     def __repr__(self):
         """Returns a python string that evaluates to the object instance."""
-        return "{0}({1})".format(self.__class__.__name__, self.get_atts(string = True))
+        return "{0}({1})".format(self.__class__.__name__, self.get_atts(string=True))
 
     def __add__(self, other):
         """Allows string concatenation with the path."""
@@ -67,10 +68,10 @@ class Node(object):
         """Allows string concatenation with the path."""
         return other + str(self)
 
-    def get_atts(self, string = False):
+    def get_atts(self, string=False):
         """Returns a python string of attributes (as a dict) used to create this object."""
         if not string:
-            return { 'path' : self.path, 'perms' : getattr(self, '_perms', None), 'owner' : self.owner, 'group' : self.group }
+            return {'path' : self.path, 'perms' : getattr(self, '_perms', None), 'owner' : self.owner, 'group' : self.group}
         # Note that any atts added later must be added here for this to work.
         atts = "{'path' : "
         if self.path:
@@ -99,12 +100,12 @@ class Node(object):
         return atts
 
     @staticmethod
-    def create():
+    def create(*args, **kwargs):
         """A stub to be implemented by child class."""
         raise NotImplementedError('[ERROR] Cannot call method on file.Node. It is an abstract class.')
 
     @staticmethod
-    def remove():
+    def remove(*args, **kwargs):
         """A stub to be implemented by child class."""
         raise NotImplementedError('[ERROR] Cannot call method on file.Node. It is an abstract class.')
 
@@ -119,12 +120,12 @@ class Node(object):
         if not perms:
             return True
         print('Setting permissions on ' + self.path + ' to "' + \
-              self.perms_as_string(perms)  + '"...'),
+              self.perms_as_string(perms)  + '"...', end=' ')
         try:
             os.chmod(self.path, perms) # Be sure to use leading '0' as chmod takes an octal
             print('[OK]')
             return True
-        except Exception as error:
+        except Exception as error:  # pylint: disable=broad-except
             print('[FAILED]')
             print(error)
 
@@ -142,14 +143,14 @@ class Node(object):
             group = self.group
             if not group:
                 group = 'nogroup' if owner == 'nobody' else get_current_groupname()
-        print('Setting owner on ' + self.path + ' to "' + owner  + ':' + group + '"...'),
+        print('Setting owner on ' + self.path + ' to "' + owner  + ':' + group + '"...', end=' ')
         try:
             uid = pwd.getpwnam(owner).pw_uid
             gid = grp.getgrnam(group).gr_gid
             os.chown(self.path, uid, gid)
             print('[OK]')
             return True
-        except Exception as error:
+        except Exception as error:  # pylint: disable=broad-except
             print('[FAILED]')
             print(error)
 
@@ -161,12 +162,12 @@ class Node(object):
             return True
         return False
 
-    def verify(self, repair = False):
+    def verify(self, repair=False):
         """Verifies the existence, permissions, ownership, and group of the file/directory."""
         if not self.path:
             return True
         print('')
-        print('Checking ' + self.path + '...',)
+        print('Checking ' + self.path + '...', end=' ')
         if not self.exists():
             print('[WARN]')
             print('[!] ' + self.path + ' doesn\'t exist')
@@ -183,7 +184,7 @@ class Node(object):
             print('--> Checking permissions for ' + self.path,)
             perms_check = self.perms == self.actual_perms
             print(' (should be: ' + self.perms_as_string() + ', actual: ' + \
-                self.perms_as_string(self.actual_perms) + ')'),
+                self.perms_as_string(self.actual_perms) + ')', end=' ')
             print('[OK]' if perms_check else '[WARN]')
             if not perms_check and repair:
                 perms_check = self.chmod()
@@ -193,13 +194,13 @@ class Node(object):
             print('--> Checking owner for ' + self.path,)
             owner_check = self.owner == self.actual_owner
             print(' (should be: ' + self.owner + ', actual: ' +
-                  self.actual_owner + ')',)
+                  self.actual_owner + ')', end=' ')
             print('[OK]' if owner_check else '[WARN]')
 
         if self.group:
             print('--> Checking group for ' + self.path,)
             group_check = self.group == self.actual_group
-            print(' (should be: ' + self.group + ', actual: ' + self.actual_group + ')'),
+            print(' (should be: ' + self.group + ', actual: ' + self.actual_group + ')', end=' ')
             print('[OK]' if group_check else '[WARN]')
             if not (group_check or owner_check) and repair:
                 group_check = owner_check = self.chown()
@@ -219,6 +220,7 @@ class Node(object):
     @path.setter
     def path(self, path):
         """Validates, then sets the path."""
+        # pylint: disable=attribute-defined-outside-init
         # Check for None
         if path is None:
             print('[Notice] file.Node was initialized with an empty path.  Continuing as a stub.')
@@ -261,13 +263,14 @@ class Node(object):
     @perms.setter
     def perms(self, perms):
         """Sets the perms (oct/int)."""
+        # pylint: disable=attribute-defined-outside-init
         if not perms:
             self._perms = None
             return
         try:
             perms = int(perms)
-        except ValueError as e:
-            print(e)
+        except ValueError as error:
+            print(error)
             print('[ERROR] ' + perms + ' must be set to an int.')
             raise
         if not 0 <= perms <= 511:
@@ -297,12 +300,13 @@ class Node(object):
     @owner.setter
     def owner(self, owner):
         """Sets the owner (string)."""
+        # pylint: disable=attribute-defined-outside-init
         if owner is None:
             owner = get_current_username()
         else:
             try:
-                # Is this a valid user?
-                uid = pwd.getpwnam(owner)
+                # Make sure this is a valid user
+                uid = pwd.getpwnam(owner)  # pylint: disable=unused-variable
             except KeyError:
                 print('[ERROR] ' + owner + ' is not a valid user.')
                 raise
@@ -323,13 +327,14 @@ class Node(object):
     @group.setter
     def group(self, group):
         """Sets the group (string)."""
+        # pylint: disable=attribute-defined-outside-init
         # Check for empty string
         if group is None:
             group = get_current_groupname()
         else:
             try:
-                # Is this a valid group?
-                gid = grp.getgrnam(group)
+                # Make sure this is a valid group
+                gid = grp.getgrnam(group) # pylint: disable=unused-variable
             except KeyError:
                 print('[ERROR] ' + group + ' is not a valid group.')
                 raise
