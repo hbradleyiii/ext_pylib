@@ -139,22 +139,22 @@ class File(Node):
                 data = self.data
             except AttributeError:
                 raise UnboundLocalError('Must pass data to write method of File class.')
-        self.data = data  # Keep the data we're saving in memory.
-        if handle: # When passed a handle, rely on the caller to close the file and
-            # TODO: handle exceptions.
-            file_handle = handle
-            file_handle.write(data)
         else:
-            try:
+            self.data = data  # Keep the data we're saving in memory.
+
+        try:
+            if handle: # When passed a handle, rely on the caller to open.close the file
+                file_handle = handle
+                file_handle.write(data)
+            else:
                 flags = 'a' if append else 'w'
                 file_handle = open(self.path, flags)
                 file_handle.write(data)
                 file_handle.close()
-                return True
-            except Exception as error:  # pylint: disable=broad-except
-                print('[ERROR]')
-                print(error)
-                return False
+            return True
+        except Exception:  # pylint: disable=broad-except
+            print('[ERROR]')
+            raise
 
     def append(self, data, handle=None):
         """Appends the file with data. Just a wrapper."""
