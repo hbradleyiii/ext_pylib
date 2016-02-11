@@ -104,9 +104,6 @@ class Dir(Node):
             print('Copy failed. [ERROR]')
             print(error)
 
-    ################
-    # Properties
-
     @Node.path.setter
     def path(self, path):
         """Sets the path. A Dir path must end in '/'.

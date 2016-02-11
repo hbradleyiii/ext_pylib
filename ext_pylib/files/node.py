@@ -211,9 +211,6 @@ class Node(object):
         """Runs verify() with the repair flag set."""
         return self.verify(True)
 
-    ################
-    # Properties
-
     @property
     def path(self):
         """Returns the path, if it exists."""
