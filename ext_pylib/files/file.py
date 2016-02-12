@@ -261,12 +261,10 @@ class Parsable(object):
            placeholder of the new value."""
         if not regexes:
             regexes = self.regexes
-        for attribute, regex in list(regexes.items()):
+        for attribute, regex in regexes.items():
             att = getattr(self.__class__, attribute, None)
             if att or hasattr(self, attribute):
-                if att.__class__.__name__ == 'DynamicProperty':
-                    continue
-                else:
+                if not att.__class__.__name__ == 'DynamicProperty':
                     raise AttributeError('Attribute "' + attribute + \
                             '" already in use.')
             self.create_parseable_attr(attribute, regex)
@@ -277,7 +275,14 @@ class Parsable(object):
         is a closure. Each time the attribute is accessed, the regex is run
         against the data in memory. When the attribute is set to a new value,
         this value is changed in memory. file.write() must be called to write
-        the changes to memory."""
+        the changes to memory.
+
+        NOTE: Because these are dynamic properties they are on the Class NOT
+        the instance. This can cause difficult to find bugs when using the
+        class with mulitple regexes and the same named attributes. Be sure to
+        call setup_parsing() every time you change these regexes (expecially
+        when changing to a regex/mask tuple or just a regex string).
+        """
         if isinstance(regex_tuple, tuple):
             if len(regex_tuple) == 2:
                 regex, mask = regex_tuple
