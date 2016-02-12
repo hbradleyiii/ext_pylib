@@ -14,6 +14,7 @@ A unit test for ext_pylib file module's Node class and methods.
 
 import pytest
 from mock import patch
+
 from ext_pylib.files.node import Node
 from ext_pylib.user import get_current_username, get_current_groupname
 

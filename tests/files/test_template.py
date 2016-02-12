@@ -10,8 +10,9 @@
 A unit test for ext_pylib file module's Template mixin class.
 """
 
-from ext_pylib.files import Template
 from . import utils
+
+from ext_pylib.files import Template
 
 
 TEMPLATE_FILE = """This is a test template file.

@@ -38,9 +38,9 @@ def prompt(prompt_text, default=True):
 
 def prompt_str(prompt_text, default_str=''):
     """Prompts for a string, returns the result."""
-    add_text = " "
+    add_text = ' '
     if default_str != '':
-        add_text = " [" + default_str + "] "
+        add_text = ' [' + default_str + '] '
 
     response = INPUT('[?] ' + prompt_text + add_text)
     if response == '':

@@ -18,6 +18,7 @@ from __future__ import print_function, unicode_literals
 from sys import version_info
 from mock import mock_open, patch
 import pytest
+
 from ext_pylib.files import File
 
 if version_info[0] == 2 or version_info.major == 2:

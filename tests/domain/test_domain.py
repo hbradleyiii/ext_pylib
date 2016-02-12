@@ -12,6 +12,7 @@ A unit test for ext_pylib module's domain class and methods.
 
 import socket
 import pytest
+
 from ext_pylib.domain import Domain, get_server_ip
 
 
