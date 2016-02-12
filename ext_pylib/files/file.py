@@ -263,10 +263,10 @@ class Parsable(object):
             regexes = self.regexes
         for attribute, regex in regexes.items():
             att = getattr(self.__class__, attribute, None)
-            if att or hasattr(self, attribute):
-                if not att.__class__.__name__ == 'DynamicProperty':
-                    raise AttributeError('Attribute "' + attribute + \
-                            '" already in use.')
+            if hasattr(self, attribute) and \
+                not att.__class__.__name__ == 'DynamicProperty':
+                raise AttributeError('Attribute "' + attribute + \
+                                     '" already in use.')
             self.create_parseable_attr(attribute, regex)
 
     def create_parseable_attr(self, attribute, regex_tuple):
