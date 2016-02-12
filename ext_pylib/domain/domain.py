@@ -78,6 +78,9 @@ class Domain(object):
         """Allows concatenation."""
         return other + str(self)
 
+    def __eq__(self, other):
+        return self.name == other.name
+
     def set_ip(self, ip=''):
         """Points the domain's A record to this server -- not yet implemented."""
         # TODO: Implement DNS API

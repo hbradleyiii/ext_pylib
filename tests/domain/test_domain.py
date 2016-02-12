@@ -25,6 +25,15 @@ def test_domain():
     assert domain + '/example.html' == 'example.com/example.html'
     assert 'http://' + domain == 'http://example.com'
 
+def test_domain_eq():
+    """Tests domain comparison."""
+    domain_1 = Domain('example.com')
+    domain_2 = Domain('example.com')
+    domain_3 = Domain('anotherexample.com')
+    assert domain_1 == domain_2
+    assert domain_1 != domain_3
+    assert domain_1 == Domain('example.com')
+
 def test_domain_name():
     """Tests domain name property."""
     domain = Domain('example.com')
