@@ -10,11 +10,11 @@ Functions for displaying and handling input on the terminal.
 
 from __future__ import absolute_import
 
-# Use Python 3 input if possible
+# Use Python 2 input unless raw_input doesn't exist
 try:
-    INPUT = input
-except NameError:
     INPUT = raw_input
+except NameError:
+    INPUT = input
 
 # pylint: disable=wrong-import-position
 # this import MUST be after INPUT is defined
