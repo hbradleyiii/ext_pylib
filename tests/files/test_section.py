@@ -13,8 +13,9 @@ A unit test for ext_pylib file module's Section mixin class.
 """
 
 import pytest
-from ext_pylib.files import Section
 from . import utils
+
+from ext_pylib.files import Section
 
 
 SECTION_STR = """## START SECTION Test

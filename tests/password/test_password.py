@@ -13,6 +13,7 @@ A unit test for ext_pylib module's password functions.
 """
 
 import pytest
+
 from ext_pylib.password import generate_pw
 from ext_pylib.password.password import DEFAULT_CHAR_SET
 

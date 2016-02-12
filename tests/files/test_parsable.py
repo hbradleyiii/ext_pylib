@@ -13,8 +13,9 @@ A unit test for ext_pylib file module's Parsable mixin class.
 """
 
 import pytest
-from ext_pylib.files import File, Parsable
 from . import utils
+
+from ext_pylib.files import File, Parsable
 
 
 class ParsableFile(Parsable, File):
