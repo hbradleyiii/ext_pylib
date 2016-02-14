@@ -98,3 +98,6 @@ TODO
 User Module
 -----------
 TODO
+
+----
+Soli Deo gloria.
