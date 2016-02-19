@@ -31,8 +31,7 @@ except ImportError:
 
 def get_server_ip(get_ip_urls=None):
     """Return the IP of this server."""
-    get_ip_urls = get_ip_urls or ['http://mediamarketers.com/myip/',
-                                  'http://dev.mediamarketers.com/myip/']
+    get_ip_urls = get_ip_urls or ['http://techterminal.net/myip/',]
     for url in get_ip_urls:
         ip = requests.get(url).text
         if not ip == '127.0.0.1':
