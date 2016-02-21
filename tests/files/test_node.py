@@ -259,7 +259,7 @@ PARENT_DIRS_ARGS = [
 ]
 @pytest.mark.parametrize(("atts", "expected"), PARENT_DIRS_ARGS)
 def test_node_parent_node(atts, expected):
-    """Test parent_node method. Should return a Node object."""
+    """Test parent_node attribute. Should return a Node object."""
     node = Node(atts)
     if node.path:
         assert node.parent_node.path == expected
