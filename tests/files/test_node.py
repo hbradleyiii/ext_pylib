@@ -266,6 +266,16 @@ def test_node_parent_node(atts, expected):
     else:
         assert node.parent_node == expected
 
+PARENT_DIRS_ARGS_2 = [
+    ({'path' : '/this/path/'}, '/'),
+    ({'path' : '/etc/path/file'}, '/etc/'),
+]
+@pytest.mark.parametrize(("atts", "expected"), PARENT_DIRS_ARGS_2)
+def test_node_parent_node_recursive(atts, expected):
+    """Tests parent_node attribute recursively."""
+    node = Node(atts)
+    assert node.parent_node.parent_node.path == expected
+
 def test_node_set_perms_invalid():
     """Tests setting node's perms as invalid values."""
     node = Node(DEFUALT_ATTS)
