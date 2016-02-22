@@ -30,7 +30,7 @@ except ImportError:
 
 
 def get_server_ip(get_ip_urls=None):
-    """Return the IP of this server."""
+    """Returns the IP of this server."""
     get_ip_urls = get_ip_urls or ['http://techterminal.net/myip/',]
     for url in get_ip_urls:
         ip = requests.get(url).text
@@ -99,12 +99,12 @@ class Domain(object):
 
     @property
     def name(self):
-        """Return the domain name as a string."""
+        """Returns the domain name as a string."""
         return self._name
 
     @name.setter
     def name(self, name):
-        """Validate and set the domain name."""
+        """Validates and set the domain name."""
         if name in ['', None]:
             raise ValueError('Domain name cannot be an empty string.')
         if name[-1] == ".":

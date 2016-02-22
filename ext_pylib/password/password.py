@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 #
 # name:             password.py
-# adapted from:     http://code.activestate.com/recipes/578169-extremely-strong-password-generator/
 # maintainer:       Harold Bradley III
 # email:            harold@bradleystudio.net
 #
@@ -11,7 +10,7 @@
 ext_pylib.password.password
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This module helps with creating passwords.
+A module to create passwords.
 """
 
 from random import choice
@@ -26,7 +25,8 @@ DEFAULT_CHAR_SET = {
 }
 
 def generate_pw(length=18, char_set=None):
-    """Generates a pseudo-randomly generated password and returns it as a string."""
+    """Generates a pseudo-randomly generated password and returns it as a string.
+    Adapted from: http://code.activestate.com/recipes/578169-extremely-strong-password-generator/"""
     char_set = char_set or DEFAULT_CHAR_SET
     password = []
 

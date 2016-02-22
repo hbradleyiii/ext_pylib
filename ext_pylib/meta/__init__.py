@@ -5,7 +5,7 @@
 ext_pylib.meta
 ~~~~~~~~~~~~~~
 
-Classes and function for metaprogramming
+Classes and functions for metaprogramming
 """
 
 from __future__ import absolute_import
