@@ -245,10 +245,22 @@ class Node(object):
         """Returns the parent node as a Node object (usually the parent directory)."""
         if not self.path:
             return None
+        if self.path == '/':  # '/' has no parent
+            return None
+
         path = self.path
-        if not path.endswith('/'): # makes the spliting easier to have '/' at the end
+        if not path.endswith('/'):  # makes the spliting easier to have '/' at the end
             path = path + '/'
-        return Node({'path' : path.rsplit('/', 2)[0] + '/'})
+
+        if path.endswith('/../'):  # just keep adding /../.. etc... to get parent of relative path.
+            parent_path = path + '..'
+        elif path.count('/') == 1 and path.endswith('/'):
+            # parent of relative path (has only one '/' and ends with it) is <path>/..
+            parent_path = path + '..'
+        else:
+            parent_path = path.rsplit('/', 2)[0] + '/'
+
+        return Node({'path' : parent_path})
 
     @property
     def actual_perms(self):

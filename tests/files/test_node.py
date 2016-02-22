@@ -43,8 +43,8 @@ INIT_ARGS = [
      {'path' : '/etc/path/file', 'perms' : None, 'owner' : None, 'group' : None}),
     ({'path' : '/etc/path/file', 'perms' : 0o655},
      {'path' : '/etc/path/file', 'perms' : 0o655, 'owner' : None, 'group' : None}),
-    ({'path' : '/etc/path/file', 'perms' : 0o655, 'owner' : 'root', 'group' : 'root'},
-     {'path' : '/etc/path/file', 'perms' : 0o655, 'owner' : 'root', 'group' : 'root'}),
+    ({'path' : 'relative/path/file', 'perms' : 0o655, 'owner' : 'root', 'group' : 'root'},
+     {'path' : 'relative/path/file', 'perms' : 0o655, 'owner' : 'root', 'group' : 'root'}),
 ]
 @pytest.mark.parametrize(("atts", "expected"), INIT_ARGS)
 def test_node_initialize(atts, expected):
@@ -64,6 +64,8 @@ REPR_ARGS = [
      "{'path' : '/etc/path/file', 'perms' : 0o655, 'owner' : None, 'group' : None}"),
     ({'path' : '/etc/path/file', 'perms' : 0o655, 'owner' : 'root', 'group' : 'root'},
      "{'path' : '/etc/path/file', 'perms' : 0o655, 'owner' : 'root', 'group' : 'root'}"),
+    ({'path' : 'relative/path/file', 'perms' : 0o655, 'owner' : 'root', 'group' : 'root'},
+     "{'path' : 'relative/path/file', 'perms' : 0o655, 'owner' : 'root', 'group' : 'root'}"),
 ]
 @pytest.mark.parametrize(("atts", "expected"), REPR_ARGS)
 def test_node_repr(atts, expected):
@@ -88,6 +90,7 @@ CONCAT_ARGS = [
     ({'path' : None}, '<files.Node:stub>'),
     ({'path' : '/this/path/'}, '/this/path/'),
     ({'path' : '/etc/path/file'}, '/etc/path/file'),
+    ({'path' : 'relative/path/file'}, 'relative/path/file'),
 ]
 @pytest.mark.parametrize(("atts", "expected"), CONCAT_ARGS)
 def test_node_concatenate(atts, expected):
@@ -118,6 +121,7 @@ VERIFY_ARGS = [
     ({'path' : '/this/path/', 'perms' : 0o655, 'group' : 'root'}),
     ({'path' : '/this/path/', 'owner' : 'root', 'group' : 'root'}),
     ({'path' : '/etc/path/file', 'perms' : 0o655, 'owner' : 'root', 'group' : 'root'}),
+    ({'path' : 'relative/path/file', 'perms' : 0o655, 'owner' : 'root', 'group' : 'root'}),
 ]
 @pytest.mark.parametrize(("atts"), VERIFY_ARGS)
 @patch('ext_pylib.files.node.Node.actual_group')
@@ -155,6 +159,7 @@ CHMOD_ARGS = [
     ({'path' : None, 'perms' : 0o600}, True),
     ({'path' : '/this/path/file', 'perms' : 0o700}, True),
     ({'path' : '/this/path/file'}, True),
+    ({'path' : 'relative/path/file'}, True),
 ]
 @pytest.mark.parametrize(("atts", "expected"), CHMOD_ARGS)
 @patch('ext_pylib.files.node.Node.exists')
@@ -187,6 +192,7 @@ CHOWN_ARGS = [
     ({'path' : '/this/path/file', 'owner' : 'www-data'}, True),
     ({'path' : '/this/path/file', 'group' : 'www-data'}, True),
     ({'path' : '/this/path/file', 'owner' : None, 'group' : 'www-data'}, True),
+    ({'path' : 'relative/path/file', 'owner' : None, 'group' : 'www-data'}, True),
 ]
 @pytest.mark.parametrize(("atts", "expected"), CHOWN_ARGS)
 @patch('ext_pylib.files.node.Node.exists')
@@ -221,6 +227,7 @@ EXISTS_ARGS = [
     ({'path' : None}, False),
     ({'path' : '/this/path/file'}, False),
     ({'path' : '/this/path/file'}, True),
+    ({'path' : 'relative/path/file'}, True),
 ]
 @pytest.mark.parametrize(("atts", "expected"), EXISTS_ARGS)
 @patch('os.path.exists')
@@ -256,6 +263,10 @@ PARENT_DIRS_ARGS = [
     ({'path' : '/this/path/'}, '/this/'),
     ({'path' : '/etc/path/file'}, '/etc/path/'),
     ({'path' : '//etc//path//file'}, '/etc/path/'),
+    ({'path' : 'relative/path/file'}, 'relative/path/'),
+    ({'path' : 'relative/'}, 'relative/..'),
+    ({'path' : 'relative'}, 'relative/..'),
+    ({'path' : 'relative/..'}, 'relative/../..'),
 ]
 @pytest.mark.parametrize(("atts", "expected"), PARENT_DIRS_ARGS)
 def test_node_parent_node(atts, expected):
@@ -269,12 +280,24 @@ def test_node_parent_node(atts, expected):
 PARENT_DIRS_ARGS_2 = [
     ({'path' : '/this/path/'}, '/'),
     ({'path' : '/etc/path/file'}, '/etc/'),
+    ({'path' : 'relative/path/file'}, 'relative/'),
+    ({'path' : 'relative/path/file/..'}, 'relative/path/file/../../..'),
 ]
 @pytest.mark.parametrize(("atts", "expected"), PARENT_DIRS_ARGS_2)
 def test_node_parent_node_recursive(atts, expected):
     """Tests parent_node attribute recursively."""
     node = Node(atts)
     assert node.parent_node.parent_node.path == expected
+
+PARENT_DIRS_ARGS_3 = [
+    ({}),
+    ({'path' : '/'}),
+]
+@pytest.mark.parametrize(("atts"), PARENT_DIRS_ARGS_3)
+def test_node_parent_node_with_no_parents(atts):
+    """Tests parent_node attribute when there are no more parents."""
+    node = Node(atts)
+    assert node.parent_node is None
 
 def test_node_set_perms_invalid():
     """Tests setting node's perms as invalid values."""
