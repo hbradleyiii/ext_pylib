@@ -22,7 +22,30 @@ Credit for much of this goes to:
 
 class DynamicProperty(object):
     """A re-implementation of python's native property().
-    Most of this code derived from: http://eev.ee/blog/2012/05/23/python-faq-descriptors/."""
+    Most of this code derived from: http://eev.ee/blog/2012/05/23/python-faq-descriptors/.
+
+    :param getter: The getter function of the property.
+
+    Usage::
+
+        >>> from ext_pylib.meta import DynamicProperty
+
+        >>> def getter_func(self):
+        >>>     return self._property
+
+        >>> def setter_func(self, value):
+        >>>     self._property = value
+
+        >>> class Cls(object): pass
+        >>> instance = Cls()
+        >>> instance.__class__.new_property = DynamicProperty(getter_func)
+        >>> instance.__class__.new_property = \
+                instance.__class__.new_propety.create_setter(setter_func)
+
+        >>> instance.new_property = 'value'
+        >>> instance.new_property
+        'value'
+    """
 
     def __init__(self, getter=None):
         """Initializes the DynamicProperty's getter function."""
