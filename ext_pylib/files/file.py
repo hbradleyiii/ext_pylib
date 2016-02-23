@@ -233,6 +233,10 @@ class Section(object):
         return lines[-2]
 
 
+class SectionFile(Section, File):
+    """A File class implementing the Section Mixin."""
+
+
 # Template()
 #
 #   methods:
@@ -248,6 +252,10 @@ class Template(object):  # pylint: disable=too-few-public-methods
         for placeholder, value in list(placeholders.items()):
             data = data.replace(placeholder, value)
         return data
+
+
+class TemplateFile(Template, File):
+    """A File class implementing the Template Mixin."""
 
 
 class Parsable(object):
@@ -310,3 +318,7 @@ class Parsable(object):
                 self.data = re.sub(regex, mask.format(value), self.read())
 
         setdynattr(self, attribute, getter_func, setter_func)
+
+
+class ParsableFile(Parsable, File):
+    """A File class implementing the Parsable Mixin."""

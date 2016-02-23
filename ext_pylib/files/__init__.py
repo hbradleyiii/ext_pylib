@@ -11,4 +11,4 @@ Class objects for files and directories.
 from __future__ import absolute_import
 
 from .dir import Dir
-from .file import File, Section, Template, Parsable
+from .file import File, Section, SectionFile, Template, TemplateFile, Parsable, ParsableFile
