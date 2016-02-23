@@ -6,7 +6,7 @@
 # email:            harold@bradleystudio.net
 # created on:       11/04/2015
 #
-# pylint:           disable=no-member
+# pylint:           disable=no-member,line-too-long
 
 """
 ext_pylib.files.file
@@ -29,6 +29,7 @@ from ..meta import setdynattr
 
 class File(Node):
     """An class to manage a file's permissions, ownership, and path. Extends Node.
+    See Node class for atts to pass in at init.
 
     The Section mixin adds methods useful for processing template section
     files. A section file is a template of a configuration file that only
@@ -49,6 +50,19 @@ class File(Node):
     configuration files. It takes a dict of attribute names and regexes to be
     used. When setup_parsing() is called, a dynamic property is created for
     getting and setting a value in self.data based on the regex.
+
+    :param atts: See notes in node.py
+
+    Usage::
+
+        >>> from ext_pylib.files import File
+
+        >>> a_file = File({'path' : '/the/path/file', 'perms' : 0o600, 'owner' : 'root', 'group' : 'root'})
+        >>> a_file.path
+        '/the/path/file'
+
+        >>> a_file.read()
+        'The data...
     """
 
     def __str__(self):
@@ -181,7 +195,21 @@ class File(Node):
 
 
 class Section(object):
-    """A mixin class to work with a section template file."""
+    """A mixin class to work with a section template file.
+    See Node class for atts to pass in at init.
+
+    :param atts: See notes in node.py
+
+    Usage::
+
+        >>> from ext_pylib.files import File, Section
+
+        >>> class SectionFile(Section, File): pass
+
+        >>> a_file = SectionFile({'path' : '/the/path/file', 'perms' : 0o600, 'owner' : 'root', 'group' : 'root'})
+        >>> a_file.is_applied(File({'path' : '/another/path/file'}).read())
+        True
+    """
 
     def is_applied(self, data):
         """Returns true if data has this section applied exactly."""
@@ -237,13 +265,22 @@ class SectionFile(Section, File):
     """A File class implementing the Section Mixin."""
 
 
-# Template()
-#
-#   methods:
-#       apply_using(placeholders)  - returns a string with the placeholders
-#                                    replaced
 class Template(object):  # pylint: disable=too-few-public-methods
-    """A mixin to work with a template file with placeholders."""
+    """A mixin to work with a template file with placeholders.
+    See Node class for atts to pass in at init.
+
+    :param atts: See notes in node.py
+
+    Usage::
+
+        >>> from ext_pylib.files import File, Template
+
+        >>> class TemplateFile(Template, File): pass
+
+        >>> a_file = File({'path' : '/the/path/file', 'perms' : 0o600, 'owner' : 'root', 'group' : 'root'})
+        >>> a_file.apply_using({'placeholder' : 'value'})
+        The data...
+    """
 
     def apply_using(self, placeholders):
         """Returns a string with placeholders replaced.
@@ -259,7 +296,23 @@ class TemplateFile(Template, File):
 
 
 class Parsable(object):
-    """A mixin to be used with a File class to allow parsing."""
+    """A mixin to be used with a File class to allow parsing.
+    See Node class for atts to pass in at init.
+
+    :param atts: See notes in node.py
+
+    Usage::
+
+        >>> from ext_pylib.files import File, Parsable
+
+        >>> class ParsableFile(Parsable, File): pass
+
+        >>> a_file = File({'path' : '/the/path/file', 'perms' : 0o600, 'owner' : 'root', 'group' : 'root'})
+        >>> a_file.setup_parsing('htdocs' : 'DocumentRoot (.*)')
+
+        >>> a_file.htdocs
+        'example.com'
+    """
 
     def setup_parsing(self, regexes=None):
         """Takes a dict of name:regex to parse self.data with.
