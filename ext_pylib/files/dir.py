@@ -49,7 +49,21 @@ def copytree(source, destination, symlinks=False, ignore=None):
 
 class Dir(Node):
     """A class that describes a directory node. Extends Node class.
-    See Node class for atts to pass in at init."""
+    See Node class for atts to pass in at init.
+
+    :param atts: See notes in node.py
+
+    Usage::
+
+        >>> from ext_pylib.files import Dir
+
+        >>> a_dir = Dir({'path' : '/the/path/', 'perms' : 0o600, 'owner' : 'root', 'group' : 'root'})
+        >>> a_dir.path
+        '/the/path/'
+
+        >>> a_dir.create()
+        Creating directory "/the/path/"... [OK]
+    """
 
     def __str__(self):
         """Returns a string with the path."""
@@ -62,7 +76,7 @@ class Dir(Node):
         if self.exists():
             print(self.path + ' already exists.')
             return True
-        print('Creating directories "' + self.path + '"...', end=' ')
+        print('Creating directory "' + self.path + '"...', end=' ')
         try:
             os.makedirs(self.path)
             print('[OK]')

@@ -40,6 +40,16 @@ class Node(object):
     :param atts['perms']: The permissions (int or octal) of the node.
     :param atts['owner']: The owner (string) of the node.
     :param atts['group']: The group (string) of the node.
+
+    * Note: This class is intended to be subclassed.
+
+    Usage::
+
+        >>> from ext_pylib.files.node import Node
+
+        >>> node = Node({'path' : '/the/path/', 'perms' : 0o600, 'owner' : 'root', 'group' : 'root'})
+        >>> node.path
+        '/the/path/'
     """
 
     def __init__(self, atts=None):
