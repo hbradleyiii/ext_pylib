@@ -19,8 +19,8 @@ from __future__ import absolute_import
 
 from . import domain
 from . import files
-from . import password
 from . import input
+from . import password
 from . import user
 
 
