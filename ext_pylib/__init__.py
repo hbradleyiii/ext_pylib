@@ -21,6 +21,7 @@ from . import domain
 from . import files
 from . import input
 from . import password
+from . import terminal
 from . import user
 
 
