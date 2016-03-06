@@ -156,12 +156,16 @@ def reset(get_string=False):
     ## Terminal Settings ##
 
 def reset_terminal(get_string=False):
+    """Resets the terminal."""
     return escape(ESC + 'c', get_string)
 
 def enable_line_wrap(get_string=False):
+    """Enables line wrapping."""
     return escape(CSI + '7h', get_string)
 
 def disable_line_wrap(get_string=False):
+    """Disables line wrapping."""
+    return escape(CSI + '7h', get_string)
     return escape(CSI + '7h', get_string)
 
 def set_scroll_all(get_string=False):
@@ -173,9 +177,11 @@ def set_scroll(start_row, end_row, get_string=False):
     return escape(CSI + attributes(start_row, end_row) + 'r', get_string)
 
 def scroll_up(get_string=False):
+    """Scrolls up."""
     return escape(ESC + 'D', get_string)
 
 def scroll_down(get_string=False):
+    """Scrolls down."""
     return escape(ESC + 'M', get_string)
 
 
