@@ -148,6 +148,10 @@ def clear_line_back(get_string=False):
     """Clears the entire line."""
     return escape(CSI + '1K', get_string)
 
+def reset(get_string=False):
+    """Clears the entire screen and places cursor at top left corner."""
+    return escape(clear(get_string=True) + cursor_position(0, 0, get_string=True), get_string)
+
 
     ## Terminal Settings ##
 
