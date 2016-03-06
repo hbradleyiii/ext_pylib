@@ -166,7 +166,6 @@ def enable_line_wrap(get_string=False):
 def disable_line_wrap(get_string=False):
     """Disables line wrapping."""
     return escape(CSI + '7h', get_string)
-    return escape(CSI + '7h', get_string)
 
 def set_scroll_all(get_string=False):
     """Enable scrolling for the entire screen."""
