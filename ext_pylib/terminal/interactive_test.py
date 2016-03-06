@@ -16,10 +16,16 @@ This module is just an interactive test for the ansi and colors modules.
 
 from __future__ import absolute_import
 
+from timeit import timeit
+
 from ext_pylib.terminal import ansi, colors
 
 def main():
     """The main test suite."""
+    ansi.reset()
+
+    print('ext_pylib interactive terminal test')
+    ansi.cursor_down(2)
 
     print('Testing colors...')
     print('Row 1:  | Row 2:   | ')
@@ -51,5 +57,10 @@ def main():
     ansi.cursor_right(10)
     print(colors.white_on_cyan('white'))
 
+    print('\n')
+    print(colors.underline(colors.red('This is red text that is underlined')))
+    print(colors.bold(colors.green('This is green text that is bold')))
+    print(colors.reverse(colors.green_on_blue('This is green on blue text that is reversed')))
+
 if __name__ == '__main__':
-    main()
+    print(timeit(main, number=1))
