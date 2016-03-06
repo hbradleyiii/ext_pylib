@@ -94,7 +94,7 @@ def cursor_position(x=0, y=0, get_string=False):
     """Moves youescape = cursor to position (x, y).
     NOTE: This assumes starting at (0, 0) which is different than the ANSI
     standard; it also assumes (x, y) and not (y, x) per ANSI standard."""
-    return escape(CSI + attributes(y+1, x+1), get_string)
+    return escape(CSI + attributes(y+1, x+1) + 'f', get_string)
 
 def cursor_save(get_string=False):
     """Save the current cursor position."""
