@@ -130,7 +130,8 @@ class File(Node):
             return self.data
         except AttributeError:
             if not self.exists():  # If no data in memory and doesn't exist,
-                return ''          # return an empty string.
+                self.data = ''     # return an empty string.
+                return self.data
             try:  # Otherwise, try to read the file
                 file_handle = open(self.path, 'r')
                 self.data = file_handle.read()

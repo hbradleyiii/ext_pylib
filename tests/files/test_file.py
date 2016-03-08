@@ -261,3 +261,11 @@ def test_file_read_file_with_data(mock_exists):
     the_file.data = 'New data'
     assert the_file.read() == the_file.data
     assert the_file.read() == 'New data'
+
+@patch('ext_pylib.files.node.Node.exists')
+def test_nonexisting_file_read_data(mock_exists):
+    """Tests file read() a file that has data altered in memory."""
+    mock_exists.return_value = False
+    the_file = File(DEFAULT_ARGS)
+    the_file.read()
+    assert the_file.data == ''
