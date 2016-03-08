@@ -340,7 +340,7 @@ class Parsable(object):
         the changes to memory.
 
         NOTE: Because these are dynamic properties they are on the Class NOT
-        the instance. This can cause difficult to find bugs when using the
+        the instance. This can cause difficult-to-find bugs when using the
         class with mulitple regexes and the same named attributes. Be sure to
         call setup_parsing() every time you change these regexes (expecially
         when changing to a regex/mask tuple or just a regex string).
