@@ -88,13 +88,17 @@ class Domain(object):
         print('[*] Cannot set to IP: ' + ip)
         print('[*] DNS API not yet implemented.')
 
+    def get_ip(self):
+        """Gets the A Record IP of the domain."""
+        return socket.gethostbyname(self.name)
+
     @property
     def ip(self):
-        """Returns the A Record IP of the domain."""
+        """Returns the *cached* IP of the domain (or retrieves it if necessary)."""
         try:
             return self._ip
         except AttributeError:
-            self._ip = socket.gethostbyname(self.name)
+            self._ip = self.get_ip()
             return self._ip
 
     @property
