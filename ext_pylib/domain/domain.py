@@ -115,3 +115,8 @@ class Domain(object):
         if not all(allowed_chars.match(x) for x in name.split(".")):
             raise ValueError('Domain Name ' + name + ' is not valid.')
         self._name = name
+
+    @property
+    def domain(self):
+        """Returns the domain name as a string. This is just an alias."""
+        return self.name
