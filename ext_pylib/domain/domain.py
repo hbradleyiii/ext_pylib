@@ -78,7 +78,10 @@ class Domain(object):
         return other + str(self)
 
     def __eq__(self, other):
-        return self.name == other.name
+        try:
+            return self.name == other.name
+        except AttributeError:
+            return self.name == other
 
     def set_ip(self, ip=''):
         """Points the domain's A record to this server -- not yet implemented."""
