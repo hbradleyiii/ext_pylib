@@ -78,6 +78,7 @@ class Domain(object):
         return other + str(self)
 
     def __eq__(self, other):
+        """Tests comparison (with a string or another Domain object.)"""
         try:
             return self.name == other.name
         except AttributeError:
