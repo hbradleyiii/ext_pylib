@@ -258,8 +258,7 @@ class Node(object):
             return None
         if path.endswith('/'):  # removes any trailing '/'
             path = path[:-1]
-        split = path.rsplit('/')  # split based on '/'
-        return split[len(split)-1]  # name is last element
+        return path.rsplit('/')[-1]  # last element after splitting based on '/'
 
     @property
     def parent_node(self):
