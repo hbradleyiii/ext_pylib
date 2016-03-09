@@ -71,7 +71,7 @@ class Dir(Node):
             return '<files.Dir:stub>'
         return self.path
 
-    def create(self):
+    def create(self, fill_with=None):  # pylint: disable=arguments-differ
         """Creates the directory structure."""
         if self.exists():
             print(self.path + ' already exists.')
@@ -84,6 +84,8 @@ class Dir(Node):
             print('[ERROR]')
             print(error)
             return False
+        if fill_with:
+            self.fill(fill_with)
         return all([self.chmod(), self.chown()])
 
     def remove(self, ask=True): # pylint: disable=arguments-differ
