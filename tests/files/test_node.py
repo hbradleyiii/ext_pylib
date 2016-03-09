@@ -332,3 +332,14 @@ def test_node_set_group_root():
     node = Node(DEFUALT_ATTS)
     node.group = 'root'
     assert node.group == 'root'
+
+NAME_ARGS = [
+    ({'path' : '/this/path/'}, 'path'),
+    ({'path' : '/etc/path/file'}, 'file'),
+    ({'path' : 'relative/path/a_file'}, 'a_file'),
+]
+@pytest.mark.parametrize(("atts", "expected"), NAME_ARGS)
+def test_node_name(atts, expected):
+    """Tests name of node."""
+    node = Node(atts)
+    assert node.name == expected

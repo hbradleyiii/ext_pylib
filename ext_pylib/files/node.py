@@ -251,6 +251,17 @@ class Node(object):
         self._path = path
 
     @property
+    def name(self):
+        """Returns just the name (portion of the path) as a string."""
+        path = self.path
+        if not path:
+            return None
+        if path.endswith('/'):  # removes any trailing '/'
+            path = path[:-1]
+        split = path.rsplit('/')  # split based on '/'
+        return split[len(split)-1]  # name is last element
+
+    @property
     def parent_node(self):
         """Returns the parent node as a Node object (usually the parent directory)."""
         if not self.path:
