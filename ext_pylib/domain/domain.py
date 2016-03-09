@@ -89,8 +89,9 @@ class Domain(object):
         print('[*] DNS API not yet implemented.')
 
     def get_ip(self):
-        """Gets the A Record IP of the domain."""
-        return socket.gethostbyname(self.name)
+        """Gets the A Record IP of the domain and updates the cached copy."""
+        self._ip = socket.gethostbyname(self.name)
+        return self._ip
 
     @property
     def ip(self):
