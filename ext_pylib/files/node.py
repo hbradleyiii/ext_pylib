@@ -179,7 +179,7 @@ class Node(object):
         if not self.path:
             return True
         print('')
-        print('Checking ' + self.path + '...', end=' ')
+        print('Checking "' + self.path + '"...', end=' ')
         if not self.exists():
             print('[WARN]')
             print('[!] ' + self.path + ' doesn\'t exist')
@@ -218,7 +218,12 @@ class Node(object):
                 group_check = owner_check = self.chown()
                 return self.verify(repair)
 
-        return perms_check and owner_check and group_check
+        result = perms_check and owner_check and group_check
+
+        if not result:
+            print('[ERROR] Verification for "' + self.path + '" failed.')
+
+        return result
 
     def repair(self):
         """Runs verify() with the repair flag set."""
