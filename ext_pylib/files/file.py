@@ -65,6 +65,11 @@ class File(Node):
         'The data...
     """
 
+    def __init__(self, atts=None):
+        """Initializes a new File instance."""
+        super(File, self).__init__(atts)
+        self.data = '' # Initialize data as an empty string.
+
     def __str__(self):
         """Returns a string with the path."""
         if not self.path:
@@ -123,23 +128,21 @@ class File(Node):
 
            Note that method first attempts to return the contents as in memory
            (which might differ from what is on disk)."""
-        # pylint: disable=attribute-defined-outside-init
-        try:
-            if flush_memory:  # Empty memory to force reading from disk
-                del self.data
+        if flush_memory:  # Empty memory to force reading from disk
+            self.data = ''
+        if self.data != '':
             return self.data
-        except AttributeError:
-            if not self.exists():  # If no data in memory and doesn't exist,
-                self.data = ''     # return an empty string.
-                return self.data
-            try:  # Otherwise, try to read the file
-                file_handle = open(self.path, 'r')
-                self.data = file_handle.read()
-                file_handle.close()
-                return self.data
-            except Exception:  # pylint: disable=broad-except
-                print('[ERROR]')
-                raise
+        if not self.exists():  # If no data in memory and doesn't exist,
+            self.data = ''     # return an empty string.
+            return self.data
+        try:  # Otherwise, try to read the file
+            file_handle = open(self.path, 'r')
+            self.data = file_handle.read()
+            file_handle.close()
+            return self.data
+        except Exception:  # pylint: disable=broad-except
+            print('[ERROR]')
+            raise
 
     def readlines(self):
         """Returns the contents of the file as a list for iteration."""
@@ -148,13 +151,13 @@ class File(Node):
     def write(self, data=None, append=True, handle=None):
         """Writes data to the file."""
         # pylint: disable=attribute-defined-outside-init
-        if not data:
-            try:  # Try to get in memory data
-                data = self.data
-            except AttributeError:
-                raise UnboundLocalError('Must pass data to write method of File class.')
-        else:
+        if data:
             self.data = data  # Keep the data we're saving in memory.
+        else:
+            if self.data == '':
+                raise UnboundLocalError('Must pass data to write method of File class.')
+            else:
+                data = self.data
 
         try:
             if handle: # When passed a handle, rely on the caller to open.close the file
