@@ -66,9 +66,10 @@ setup(
         'ext_pylib',
         'ext_pylib.domain',
         'ext_pylib.files',
+        'ext_pylib.input',
         'ext_pylib.meta',
         'ext_pylib.password',
-        'ext_pylib.input',
+        'ext_pylib.terminal',
         'ext_pylib.user',
     ],
 
