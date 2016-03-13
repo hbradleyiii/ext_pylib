@@ -1,16 +1,22 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+# pylint: disable=bad-whitespace,redefined-builtin
 
+"""
+ext_pylib setup
+"""
+
+
+from os import path
 from codecs import open
 from setuptools import setup
-from os import path
 
 
 with open('README.rst', 'r', 'utf-8') as f:
-    readme = f.read()
+    README = f.read()
 
-here = path.abspath(path.dirname(__file__))
+HERE = path.abspath(path.dirname(__file__))
 
 setup(
     name = 'ext_pylib',
@@ -18,10 +24,11 @@ setup(
     version = '0.1',
 
     description = 'Extra python libraries for scaffolding server scripts.',
-    long_description = readme,
+    long_description = README,
 
     # The project's main homepage.
     url = 'https://github.com/hbradleyiii/ext_pylib',
+    download_url = 'https://github.com/hbradleyiii/ext_pylib/archive/0.1.tar.gz',
 
     # Author details
     author = 'Harold Bradley III',
@@ -58,7 +65,7 @@ setup(
     ],
 
     # What does your project relate to?
-    keywords = 'server development',
+    keywords = ['server development', 'files', 'domain names'],
 
     # You can just specify the packages manually here if your project is
     # simple. Or you can use find_packages().
