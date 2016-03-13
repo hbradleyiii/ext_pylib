@@ -26,7 +26,7 @@ from . import user
 
 
 __title__ = 'ext_pylib'
-__version__ = '0.1'
+__version__ = '0.2'
 __author__ = 'Harold Bradley III'
 __license__ = 'MIT'
 __copyright__ = 'Copyright 2015-2016 Harold Bradley III'

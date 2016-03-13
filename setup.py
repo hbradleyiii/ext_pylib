@@ -21,7 +21,7 @@ HERE = path.abspath(path.dirname(__file__))
 setup(
     name = 'ext_pylib',
 
-    version = '0.1',
+    version = '0.2',
 
     description = 'Extra python libraries for scaffolding server scripts.',
     long_description = README,
