@@ -25,16 +25,14 @@ Installing ext_pylib
 
 .. code:: bash
 
-    $ git clone git@github.com:hbradleyiii/ext_pylib.git
-    $ cd <project directory>
-    $ pip install -e .
+    $ pip install ext_pylib
 
 Running Tests
 -------------
 
 .. code:: bash
 
-    $ cd <project directory>
+    $ cd <ext_pylib directory>
     $ py.test
 
 Modules
