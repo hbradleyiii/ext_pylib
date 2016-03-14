@@ -87,7 +87,26 @@ regex.
 
 Password Module
 ---------------
-TODO
+The password module has the function ``generate_pw()`` for generating a
+relatively strong pseudo-random password. This function takes two optional
+parameters. The ``length`` parameter determines how long the password will be.
+It defaults to 18 characters. The ``char_set`` is a dict of a string of
+characters to use as a set. These are the set (as a python string) of
+characters that will not appear twice in a row. The default character set has a
+set of numbers, lowercase letters, uppercase letters, and special characters.
+This prevents having a password with two numbers in a row, or two lowercase
+characters in a row and makes the password stronger. Leaving this as default is
+good for most circumstances.
+
+The default character set is:
+
+.. code:: python
+    DEFAULT_CHAR_SET = {
+        'small': 'abcdefghijklmnopqrstuvwxyz',
+        'nums': '0123456789',
+        'big': 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+        'special': '^!$%&=?{[]}+~#-_.:,;<>|'
+    }
 
 Prompt Module
 ---------------
