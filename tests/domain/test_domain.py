@@ -51,8 +51,18 @@ def test_domain_name_bad_values(args):
         domain = Domain(args)  # pylint: disable=unused-variable
 
 def test_domain_ip():
-    """Tests domain ip property for validity. Assumes ip is correct."""
+    """Tests get_server_ip(). Assumes ip is correct."""
     assert socket.inet_aton(get_server_ip())
+
+def test_domain_ip_bad_urls():
+    """Tests get_server_ip() passing bad urls. Assumes ip is correct."""
+    with pytest.raises(LookupError):
+        get_server_ip(['http://example.com', 'http://techterminal.net'])
+
+    # Try 2 bad urls with one good url:
+    assert socket.inet_aton(get_server_ip(['http://example.com',
+                                           'http://techterminal.net',
+                                           'http://techterminal.net/myip']))
 
 def test_domain_set_ip():
     """Tests domain's set_ip method. Not yet implemented."""

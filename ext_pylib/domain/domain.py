@@ -35,7 +35,11 @@ def get_server_ip(get_ip_urls=None):
     for url in get_ip_urls:
         ip = requests.get(url).text
         if not ip == '127.0.0.1':
-            return ip
+            try:
+                assert socket.inet_aton(ip)
+                return ip
+            except Exception:  # pylint: disable=broad-except
+                continue  # result not a valid ip, try another url
     else:  # No IP found. pylint: disable=useless-else-on-loop
         raise LookupError('Could not successfully retrieve ip of server.')
 
