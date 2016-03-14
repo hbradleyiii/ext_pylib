@@ -9,6 +9,7 @@ Release History
 In progress.
 
 * Updates README and inline comments
+* Adds error-checking logic to ``get_server_ip()``
 
 0.1 (March 13, 2016)
 ++++++++++++++++++++
