@@ -40,7 +40,17 @@ Modules
 
 Domain Module
 -------------
-TODO
+The domain module consists of the class ``Domain()``. It is used for binding an
+IP and a domain name in one object. It requires one paramater at
+initialization: the domain name as a string.
+
+*Future*: There are tentative plans for including a wrapper for DNS API's such
+as Rackspace's API.
+
+Also included in this module is the function ``get_server_ip()``. This function
+is designed to get the public IP of the server. It works by making an http
+request to a url that returns only the IP address as a string. It takes one
+parameter: ``get_ip_urls`` a list of one or more urls to use.
 
 Files Module
 ------------
