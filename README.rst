@@ -116,7 +116,9 @@ TODO
 
 User Module
 -----------
-TODO
+The usermodule consists of two wrapper functions. ``get_current_username()``
+returns the current user as a string. ``get_current_groupname()`` likewise
+returns the current user's group as a string.
 
 ----
 
