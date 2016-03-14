@@ -101,6 +101,7 @@ good for most circumstances.
 The default character set is:
 
 .. code:: python
+
     DEFAULT_CHAR_SET = {
         'small': 'abcdefghijklmnopqrstuvwxyz',
         'nums': '0123456789',
