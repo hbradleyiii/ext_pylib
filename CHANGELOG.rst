@@ -8,6 +8,8 @@ Release History
 
 In progress.
 
+* Updates README and inline comments
+
 0.1 (March 13, 2016)
 ++++++++++++++++++++
 
