@@ -96,7 +96,8 @@ characters that will not appear twice in a row. The default character set has a
 set of numbers, lowercase letters, uppercase letters, and special characters.
 This prevents having a password with two numbers in a row, or two lowercase
 characters in a row and makes the password stronger. Leaving this as default is
-good for most circumstances.
+good for most circumstances, although it may be necessary to change it for
+various password restrictions.
 
 The default character set is:
 
