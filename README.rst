@@ -17,6 +17,10 @@ ext_pylib is a group of submodules that are useful scaffolding for other larger
 projects. I began developing it after noticing how often I was repeating
 several patterns for server scripts. It works well for building server scripts.
 
+It contains basic classes for files, directories, and domain names as well as
+helpful functions for prompting and displaying terminal data. It also contains
+some functions in the meta module for meta programming.
+
 Installing and Including in projects
 ====================================
 
@@ -54,15 +58,14 @@ parameter: ``get_ip_urls`` a list of one or more urls to use.
 
 Files Module
 ------------
-A class to manage and create files. Also includes three
-mixin classes Parsable, Section, and Template.
+A class to manage and create files. Also includes three mixin classes Parsable,
+Section, and Template.
 
 Section Mixin
 ~~~~~~~~~~~~~
-The Section mixin adds methods useful for processing
-template section files. A section file is a template of a
-configuration file that only represents a particular
-section of that file. It begins and ends with a delineator
+The Section mixin adds methods useful for processing template section files. A
+section file is a template of a configuration file that only represents a
+particular section of that file. It begins and ends with a delineator
 
 For example:
 
@@ -72,28 +75,26 @@ For example:
     content here...
     ## END:SECTION_NAME ##
 
-A use case would be how WordPress
-delineates a particular section of the htaccess file in its
-root directory with a start line and an end line. This is a
-section of the full htaccess file and could be managed by a
-Section mixin.
+A use case would be how WordPress delineates a particular section of the
+htaccess file in its root directory with a start line and an end line. This is
+a section of the full htaccess file and could be managed by a Section mixin.
 
 Template Mixin
 ~~~~~~~~~~~~~~
-The Template mixin adds a method useful for processing a
-regular template file: ``apply_using()``. It assumes that the
-file contains placeholder text to be replaced by actual
-data. The placeholders and actual data are passsed into the
-method as a dict. The resulting data is returned
-(presumably to be saved in another file.)
-#### Parsable Mixin
+The Template mixin adds a method useful for processing a regular template file:
+``apply_using()``. It assumes that the file contains placeholder text to be
+replaced by actual data. The placeholders and actual data are passsed into the
+method as a dict. The resulting data is returned (presumably to be saved in
+another file.)
 
-The Parsable mixin adds a method useful for parsing
-(presumably) configuration files. It takes a dict of
-attribute names and regexes to be used. When
-``setup_parsing()`` is called, a dynamic property is created
-for getting and setting a value in self.data based on the
-regex.
+Parsable Mixin
+~~~~~~~~~~~~~~
+
+The Parsable mixin adds a method useful for parsing (presumably) configuration
+files. It takes a dict of attribute names and regexes to be used. When
+``setup_parsing()`` is called, a dynamic property is created for getting and
+setting a value in self.data based on the regex.
+
 
 Password Module
 ---------------
@@ -102,12 +103,12 @@ relatively strong pseudo-random password. This function takes two optional
 parameters. The ``length`` parameter determines how long the password will be.
 It defaults to 18 characters. The ``char_set`` is a dict of a string of
 characters to use as a set. These are the set (as a python string) of
-characters that will not appear twice in a row. The default character set has a
-set of numbers, lowercase letters, uppercase letters, and special characters.
-This prevents having a password with two numbers in a row, or two lowercase
-characters in a row and makes the password stronger. Leaving this as default is
-good for most circumstances, although it may be necessary to change it for
-various password restrictions.
+characters that will not appear twice in a row in the generated password. The
+default character set has a set of numbers, lowercase letters, uppercase
+letters, and special characters.  This prevents having a password with two
+numbers in a row or two lowercase characters in a row and makes the password
+stronger. Leaving the char_set as default is good for most circumstances,
+although it may be necessary to change it for various password restrictions.
 
 The default character set is:
 
