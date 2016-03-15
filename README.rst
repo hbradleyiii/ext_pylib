@@ -95,6 +95,25 @@ files. It takes a dict of attribute names and regexes to be used. When
 ``setup_parsing()`` is called, a dynamic property is created for getting and
 setting a value in self.data based on the regex.
 
+Input Module
+------------
+The prompts module contains a number of helpful functions for prompting for
+user input.
+
+The ``prompt()`` function prints a prompt question and expects the user to type
+a 'yes' or 'no' answer. It requires a string passed as the text to be
+displayed.  The default response (just pressing enter) is 'yes' (true). This
+default can be changed by passing the attribute ``default=False``. The function
+returns a bool cooresponding to the appropriate value.
+
+The ``prompt_str()`` function prints a prompt and expects the user to type a
+string. It requires a string passed as the text to be displayed. It also takes
+an optional ``default`` value that can be set to a default string. If the user
+just presses enter the default string is used. The function returns the string
+that the user typed (or the default string).
+
+The ``warn_prompt()`` function is similar to the ``prompt_str()`` function.
+
 
 Password Module
 ---------------
@@ -121,9 +140,6 @@ The default character set is:
         'special': '^!$%&=?{[]}+~#-_.:,;<>|'
     }
 
-Prompt Module
----------------
-TODO
 
 User Module
 -----------
