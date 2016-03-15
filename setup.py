@@ -28,7 +28,7 @@ setup(
 
     # The project's main homepage.
     url = 'https://github.com/hbradleyiii/ext_pylib',
-    download_url = 'https://github.com/hbradleyiii/ext_pylib/archive/0.1.tar.gz',
+    download_url = 'https://github.com/hbradleyiii/ext_pylib/archive/0.2.tar.gz',
 
     # Author details
     author = 'Harold Bradley III',
