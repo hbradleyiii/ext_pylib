@@ -114,6 +114,43 @@ that the user typed (or the default string).
 
 The ``warn_prompt()`` function is similar to the ``prompt_str()`` function.
 
+Meta Module
+-----------
+The meta module is useful for meta programming. This module is experimental. It
+has the object ``DynamicPropery`` which is a close reimplementation of Python's
+native ``property()``. It allows creating a class property on the fly. It is
+initialized with a getter function to return the property value and a setter
+function can be initialized by calling ``create_setter()`` on the property
+itself. Note that this must be done on the class *not* an instance of the class.
+
+Credit for much of this object goes to:
+http://eev.ee/blog/2012/05/23/python-faq-descriptors/
+
+The best way to understand this object is to look at an example:
+
+.. code:: python
+
+    from ext_pylib.meta import DynamicProperty
+
+    def getter_func(self):
+        return self._property
+
+    def setter_func(self, value):
+        self._property = value
+
+    class Cls(object): pass
+    instance = Cls()
+    instance.__class__.new_property = DynamicProperty(getter_func)
+    instance.__class__.new_property = instance.__class__.new_propety.create_setter(setter_func)
+
+    instance.new_property = 'value'
+    print instance.new_property  # prints: 'value'
+
+This module also has the function ``setdynattr()`` which is a convenient
+wrapper around the ``DynamicProperty`` class. It takes an object, an attribute
+(as a string), and optional getter and setter functions. If the getter and
+setter functions are not supplied, default getter and setter functions are used
+that merely get and set an attribute with the name '_' + attribute.
 
 Password Module
 ---------------
