@@ -6,6 +6,8 @@
 # email:            harold@bradleystudio.net
 # created on:       02/23/2016
 #
+# pylint:           disable=invalid-name
+#                   x and y are valid names.
 
 """
 ext_pylib.terminal.ansi
@@ -44,11 +46,11 @@ def attributes(*args):
     """Returns multiple attributes concatenated and separated by DELIMITER."""
     return reduce(lambda a, b: str(a) + DELIMITER + str(b), args)
 
-def escape(escape, get_string):
+def escape(esc, get_string):
     """Prints an escape sequence or returns it as a string."""
     if get_string:
-        return escape
-    stdout.write(escape)
+        return esc
+    stdout.write(esc)
     stdout.flush()
 
 
@@ -56,11 +58,11 @@ def escape(escape, get_string):
 
 def cursor_hide(get_string=False):
     """Hides the cursor."""
-    return escape(ansi.CSI + '?25l', get_string)
+    return escape(CSI + '?25l', get_string)
 
 def cursor_show(get_string=False):
     """Shows the cursor."""
-    return escape(ansi.CSI + '?25h', get_string)
+    return escape(CSI + '?25h', get_string)
 
 def cursor_up(n=1, get_string=False):
     """Moves your cursor up 'n' cells."""
@@ -114,7 +116,7 @@ def attributes_restore(get_string=False):
 
 def get_cursor_pos():
     """Returns a tuple of (x, y) of current cursor position.
-    Note this follows conventional (x, y) order and starts with (0, 0) and not
+    NOTE: this follows conventional (x, y) order and starts with (0, 0) and not
     the order according to the ANSI standard."""
     QCU = CSI + '6n'  # Query cursor position (to stdin)
     RCU = CSI + '{0};{1}R' # Reports Cursor positon (result from above query
