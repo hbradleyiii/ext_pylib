@@ -89,7 +89,6 @@ another file.)
 
 Parsable Mixin
 ~~~~~~~~~~~~~~
-
 The Parsable mixin adds a method useful for parsing (presumably) configuration
 files. It takes a dict of attribute names and regexes to be used. When
 ``setup_parsing()`` is called, a dynamic property is created for getting and
@@ -177,6 +176,192 @@ The default character set is:
         'special': '^!$%&=?{[]}+~#-_.:,;<>|'
     }
 
+Terminal Module
+---------------
+The terminal module is a collection of functions that aid in modifying the
+terminal output and as well as adding color and text effects. It is made up of
+two seperate modules, the ansi module and the colors module.
+
+Because of the interactive nature of this module, the tests must be called
+directly:
+
+.. code:: bash
+
+    $ cd <ext_pylib directory>/terminal
+    $ python ./interactive_test.py
+
+Ansi Module
+~~~~~~~~~~~
+The ansi module contains a number of constants representing ANSI excape codes
+and functions for printing them to the screen. Most of the functions take an
+optional parameter ``get_string`` which defaults to ``False`` and indicates
+that the escape will be printed to the screen. When this is set to ``True``,
+the function will return a string. Some of the functions, such as the cursor
+functions, take optional integer parameters. These functions are relatively
+straightforward.
+
+Cursor Functions
+................
+ * ``cursor_hide(get_string=False)`` - hides the cursor
+ * ``cursor_show(get_string=False)`` - shows the cursor
+ * ``cursor_up(n=1, get_string=False)`` - moves your cursor up 'n' cells
+ * ``cursor_down(n=1, get_string=False)`` - moves your cursor down 'n' cells
+ * ``cursor_right(n=1, get_string=False)`` - moves your cursor right (forward)
+   'n' cells
+ * ``cursor_left(n=1, get_string=False)`` - moves your cursor left (backward)
+   'n' cells
+ * ``cursor_next_line(n=1, get_string=False)`` - moves your cursor to the next
+   'n' lines
+ * ``cursor_previous_line(n=1, get_string=False)`` - moves your cursor to the
+   previous 'n' lines
+ * ``cursor_horizontal_absolute(n=1, get_string=False)`` - moves your cursor to
+   the 'n' column
+ * ``cursor_position(x=0, y=0, get_string=False)`` - Moves youescape = cursor
+   to position (x, y)  NOTE: This assumes starting at (0, 0) which is
+   different than the ANSI standard; it also assumes (x, y) and not (y, x) per
+   ANSI standard.
+ * ``cursor_save(get_string=False)`` - save the current cursor position
+ * ``cursor_restore(get_string=False)`` - restore the last saved cursor position
+ * ``attributes_save(get_string=False)`` - save the current cursor position and
+   attributes
+ * ``attributes_restore(get_string=False)`` - restore the last saved cursor
+   position and attributes
+ * ``get_cursor_pos()`` - returns a tuple of (x, y) of current cursor position
+   NOTE: this follows conventional (x, y) order and starts with (0, 0) and not
+   the order according to the ANSI standard.
+
+Clearing the Screen
+...................
+ * ``clear(get_string=False)`` - clears the entire screen
+ * ``clear_down(get_string=False)`` - clears the screen from the cursor down
+ * ``clear_up(get_string=False)`` - clears the screen from the cursor down
+ * ``clear_line(get_string=False)`` - clears the entire line
+ * ``clear_line_forward(get_string=False)`` - clears the entire line
+ * ``clear_line_back(get_string=False)`` - clears the entire line
+ * ``reset(get_string=False)`` - clears the entire screen and places cursor at
+   top left corner
+
+Terminal Settings
+.................
+ * ``reset_terminal(get_string=False)`` - resets the terminal
+ * ``enable_line_wrap(get_string=False)`` - enables line wrapping
+ * ``disable_line_wrap(get_string=False)`` - disables line wrapping
+ * ``set_scroll_all(get_string=False)`` - enable scrolling for the entire screen
+ * ``set_scroll(start_row, end_row, get_string=False)`` - enable scrolling from
+   start_row to end_row
+ * ``scroll_up(get_string=False)`` - scrolls up
+ * ``scroll_down(get_string=False)`` - scrolls down
+
+Colors Module
+~~~~~~~~~~~~~
+The colors module contains a number of functions for printing color to the
+screen. These functions require a string to be colored and will return a string
+with the appropriate color. The functions can be infinitely nested or passed as
+optional additional arguments from any of the other functions. Note that it is
+possible to mix combinations that don't make sense. A string cannot be both
+green and red. The last (or innermost) escape sequence is the one that will
+affect the display.
+
+For example:
+
+.. code:: python
+
+    print bold('WARN:', red) + red_on_white('This is an example warning.')
+    print underline(green(on_blue('This is an example of nesting color functions.')))
+    print blue('This is an example of passing color functions to another function.', on_black, bold)
+
+Text Effects
+............
+ * ``normal(string, *funcs, **additional)``
+ * ``underline(string, *funcs, **additional)``
+ * ``bold(string, *funcs, **additional)``
+ * ``blink(string, *funcs, **additional)``
+ * ``rblink(string, *funcs, **additional)``
+ * ``reverse(string, *funcs, **additional)``
+ * ``conceal(string, *funcs, **additional)``
+
+Basic Colors
+............
+ * ``black(string, *funcs, **additional)``
+ * ``red(string, *funcs, **additional)``
+ * ``green(string, *funcs, **additional)``
+ * ``yellow(string, *funcs, **additional)``
+ * ``blue(string, *funcs, **additional)``
+ * ``magenta(string, *funcs, **additional)``
+ * ``cyan(string, *funcs, **additional)``
+ * ``white(string, *funcs, **additional)``
+
+Basic Backgrounds
+.................
+
+ * ``on_black(string, *funcs, **additional)``
+ * ``on_red(string, *funcs, **additional)``
+ * ``on_green(string, *funcs, **additional)``
+ * ``on_yellow(string, *funcs, **additional)``
+ * ``on_blue(string, *funcs, **additional)``
+ * ``on_magenta(string, *funcs, **additional)``
+ * ``on_cyan(string, *funcs, **additional)``
+ * ``on_white(string, *funcs, **additional)``
+
+Combined Foreground Color on Background Color
+.............................................
+
+ * ``red_on_black(string, *funcs, **additional)``
+ * ``green_on_black(string, *funcs, **additional)``
+ * ``yellow_on_black(string, *funcs, **additional)``
+ * ``blue_on_black(string, *funcs, **additional)``
+ * ``magenta_on_black(string, *funcs, **additional)``
+ * ``cyan_on_black(string, *funcs, **additional)``
+ * ``white_on_black(string, *funcs, **additional)``
+ * ``black_on_red(string, *funcs, **additional)``
+ * ``green_on_red(string, *funcs, **additional)``
+ * ``yellow_on_red(string, *funcs, **additional)``
+ * ``blue_on_red(string, *funcs, **additional)``
+ * ``magenta_on_red(string, *funcs, **additional)``
+ * ``cyan_on_red(string, *funcs, **additional)``
+ * ``white_on_red(string, *funcs, **additional)``
+ * ``black_on_green(string, *funcs, **additional)``
+ * ``red_on_green(string, *funcs, **additional)``
+ * ``yellow_on_green(string, *funcs, **additional)``
+ * ``blue_on_green(string, *funcs, **additional)``
+ * ``magenta_on_green(string, *funcs, **additional)``
+ * ``cyan_on_green(string, *funcs, **additional)``
+ * ``white_on_green(string, *funcs, **additional)``
+ * ``black_on_yellow(string, *funcs, **additional)``
+ * ``red_on_yellow(string, *funcs, **additional)``
+ * ``green_on_yellow(string, *funcs, **additional)``
+ * ``blue_on_yellow(string, *funcs, **additional)``
+ * ``magenta_on_yellow(string, *funcs, **additional)``
+ * ``cyan_on_yellow(string, *funcs, **additional)``
+ * ``white_on_yellow(string, *funcs, **additional)``
+ * ``black_on_blue(string, *funcs, **additional)``
+ * ``red_on_blue(string, *funcs, **additional)``
+ * ``green_on_blue(string, *funcs, **additional)``
+ * ``yellow_on_blue(string, *funcs, **additional)``
+ * ``magenta_on_blue(string, *funcs, **additional)``
+ * ``cyan_on_blue(string, *funcs, **additional)``
+ * ``white_on_blue(string, *funcs, **additional)``
+ * ``black_on_magenta(string, *funcs, **additional)``
+ * ``red_on_magenta(string, *funcs, **additional)``
+ * ``green_on_magenta(string, *funcs, **additional)``
+ * ``yellow_on_magenta(string, *funcs, **additional)``
+ * ``blue_on_magenta(string, *funcs, **additional)``
+ * ``cyan_on_magenta(string, *funcs, **additional)``
+ * ``white_on_magenta(string, *funcs, **additional)``
+ * ``black_on_cyan(string, *funcs, **additional)``
+ * ``red_on_cyan(string, *funcs, **additional)``
+ * ``green_on_cyan(string, *funcs, **additional)``
+ * ``yellow_on_cyan(string, *funcs, **additional)``
+ * ``blue_on_cyan(string, *funcs, **additional)``
+ * ``magenta_on_cyan(string, *funcs, **additional)``
+ * ``white_on_cyan(string, *funcs, **additional)``
+ * ``black_on_white(string, *funcs, **additional)``
+ * ``red_on_white(string, *funcs, **additional)``
+ * ``green_on_white(string, *funcs, **additional)``
+ * ``yellow_on_white(string, *funcs, **additional)``
+ * ``blue_on_white(string, *funcs, **additional)``
+ * ``magenta_on_white(string, *funcs, **additional)``
+ * ``cyan_on_white(string, *funcs, **additional)``
 
 User Module
 -----------
