@@ -108,17 +108,8 @@ def print_all_colors():  # pylint: disable=too-many-statements
     print('\tmagenta_on_white: \t' + colors.magenta_on_white('magenta_on_white'))
     print('\tcyan_on_white: \t\t' + colors.cyan_on_white('cyan_on_white'))
 
-def main():
-    """The main test suite."""
-    ansi.reset()
-
-    print(timeit(print_all_colors, number=1))
-
-    if not prompt("Continue?"):
-        return False
-
-    ansi.reset()
-
+def print_assorted_combinations():
+    """Prints an assorted combination of selected color functions."""
     print('ext_pylib interactive terminal test')
     ansi.cursor_down(2)
 
@@ -156,6 +147,23 @@ def main():
     print(colors.underline(colors.red('This is red text that is underlined')))
     print(colors.bold(colors.green('This is green text that is bold')))
     print(colors.reverse(colors.green_on_blue('This is green on blue text that is reversed')))
+
+def main():
+    """The main test suite."""
+    ansi.reset()
+
+    print(timeit(print_all_colors, number=1))
+
+    if not prompt("Continue?"):
+        return False
+
+    ansi.reset()
+
+    print(timeit(print_assorted_combinations, number=1))
+
+    if not prompt("Continue?"):
+        return False
+
 
 if __name__ == '__main__':
     main()
