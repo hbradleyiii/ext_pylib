@@ -10,6 +10,7 @@ In progress.
 
 * Updates README and inline comments
 * Adds error-checking logic to ``get_server_ip()``
+* Fixes uncompleted color functions
 * Other minor bugfixes and code linting.
 
 0.1 (March 13, 2016)

@@ -5,6 +5,8 @@
 # author:           Harold Bradley III
 # email:            harold@bradleystudio.net
 # created on:       02/23/2016
+#
+# pylint:           disable=unused-argument
 
 """
 ext_pylib.terminal.colors
@@ -57,6 +59,8 @@ def sgr_combiner(string, attribute, *funcs, **additional):
     :param *funcs: optional attribute functions to be applied.
     :param **additional: additional attributes to be combined with attribute.
         This parameter is intended for internal use for recursion.
+        In **additional is additional['attributes'] which is a tuple of
+        attributes to be ultimately combined with sgr_wrapper.
 
     Usage::
 
@@ -71,9 +75,10 @@ def sgr_combiner(string, attribute, *funcs, **additional):
     being underlined. The last escape code is the one that applies. It is up to
     the user to make sure the attributes can be combined.
     """
-    _attributes = additional['attributes'] + (attribute,) if 'attributes' in additional else (attribute,)
+    _attributes = additional['attributes'] + (attribute,) \
+            if 'attributes' in additional else (attribute,)
     if funcs:
-        _additional = { 'attributes' : _attributes }
+        _additional = {'attributes' : _attributes}
         _next_func, _funcs = funcs[0], funcs[1:]
         return _next_func(string, *_funcs, **_additional)
     else:
@@ -84,7 +89,7 @@ def sgr_combiner(string, attribute, *funcs, **additional):
 
 def normal(string, *funcs, **additional):
     """Text effect - normal. (see sgr_combiner())."""
-    return sgr_combiner(string, ansi.NORMAL, *funcs, **additional)
+    return sgr_combiner(string, ansi.RESET, *funcs, **additional)
 
 def underline(string, *funcs, **additional):
     """Text effect - underline. (see sgr_combiner())."""
@@ -182,248 +187,247 @@ def on_white(string, *funcs, **additional):
 
 
 # Colors on a black background
-
-def red_on_black(string):
+def red_on_black(string, *funcs, **additional):
     """Text color - red on background color - black. (see sgr_combiner())."""
-    return sgr_wrapper(string, ansi.RED, ansi.BG_BLACK)
+    return sgr_combiner(string, ansi.RED, *funcs, attributes=(ansi.BG_BLACK,))
 
-def green_on_black(string):
+def green_on_black(string, *funcs, **additional):
     """Text color - green on background color - black. (see sgr_combiner())."""
-    return sgr_wrapper(string, ansi.GREEN, ansi.BG_BLACK)
+    return sgr_combiner(string, ansi.GREEN, *funcs, attributes=(ansi.BG_BLACK,))
 
-def yellow_on_black(string):
+def yellow_on_black(string, *funcs, **additional):
     """Text color - yellow on background color - black. (see sgr_combiner())."""
-    return sgr_wrapper(string, ansi.YELLOW, ansi.BG_BLACK)
+    return sgr_combiner(string, ansi.YELLOW, *funcs, attributes=(ansi.BG_BLACK,))
 
-def blue_on_black(string):
+def blue_on_black(string, *funcs, **additional):
     """Text color - blue on background color - black. (see sgr_combiner())."""
-    return sgr_wrapper(string, ansi.BLUE, ansi.BG_BLACK)
+    return sgr_combiner(string, ansi.BLUE, *funcs, attributes=(ansi.BG_BLACK,))
 
-def magenta_on_black(string):
+def magenta_on_black(string, *funcs, **additional):
     """Text color - magenta on background color - black. (see sgr_combiner())."""
-    return sgr_wrapper(string, ansi.MAGENTA, ansi.BG_BLACK)
+    return sgr_combiner(string, ansi.MAGENTA, *funcs, attributes=(ansi.BG_BLACK,))
 
-def cyan_on_black(string):
+def cyan_on_black(string, *funcs, **additional):
     """Text color - cyan on background color - black. (see sgr_combiner())."""
-    return sgr_wrapper(string, ansi.CYAN, ansi.BG_BLACK)
+    return sgr_combiner(string, ansi.CYAN, *funcs, attributes=(ansi.BG_BLACK,))
 
-def white_on_black(string):
+def white_on_black(string, *funcs, **additional):
     """Text color - white on background color - black. (see sgr_combiner())."""
-    return sgr_wrapper(string, ansi.WHITE, ansi.BG_BLACK)
+    return sgr_combiner(string, ansi.WHITE, *funcs, attributes=(ansi.BG_BLACK,))
 
 
 # Colors on a red background
 
-def black_on_red(string):
+def black_on_red(string, *funcs, **additional):
     """Text color - black on background color - red. (see sgr_combiner())."""
-    return sgr_wrapper(string, ansi.BLACK, ansi.BG_RED)
+    return sgr_combiner(string, ansi.BLACK, *funcs, attributes=(ansi.BG_RED,))
 
-def green_on_red(string):
+def green_on_red(string, *funcs, **additional):
     """Text color - green on background color - red. (see sgr_combiner())."""
-    return sgr_wrapper(string, ansi.GREEN, ansi.BG_RED)
+    return sgr_combiner(string, ansi.GREEN, *funcs, attributes=(ansi.BG_RED,))
 
-def yellow_on_red(string):
+def yellow_on_red(string, *funcs, **additional):
     """Text color - yellow on background color - red. (see sgr_combiner())."""
-    return sgr_wrapper(string, ansi.YELLOW, ansi.BG_RED)
+    return sgr_combiner(string, ansi.YELLOW, *funcs, attributes=(ansi.BG_RED,))
 
-def blue_on_red(string):
+def blue_on_red(string, *funcs, **additional):
     """Text color - blue on background color - red. (see sgr_combiner())."""
-    return sgr_wrapper(string, ansi.BLUE, ansi.BG_RED)
+    return sgr_combiner(string, ansi.BLUE, *funcs, attributes=(ansi.BG_RED,))
 
-def magenta_on_red(string):
+def magenta_on_red(string, *funcs, **additional):
     """Text color - magenta on background color - red. (see sgr_combiner())."""
-    return sgr_wrapper(string, ansi.MAGENTA, ansi.BG_RED)
+    return sgr_combiner(string, ansi.MAGENTA, *funcs, attributes=(ansi.BG_RED,))
 
-def cyan_on_red(string):
+def cyan_on_red(string, *funcs, **additional):
     """Text color - cyan on background color - red. (see sgr_combiner())."""
-    return sgr_wrapper(string, ansi.CYAN, ansi.BG_RED)
+    return sgr_combiner(string, ansi.CYAN, *funcs, attributes=(ansi.BG_RED,))
 
-def white_on_red(string):
+def white_on_red(string, *funcs, **additional):
     """Text color - white on background color - red. (see sgr_combiner())."""
-    return sgr_wrapper(string, ansi.WHITE, ansi.BG_RED)
+    return sgr_combiner(string, ansi.WHITE, *funcs, attributes=(ansi.BG_RED,))
 
 
 # Colors on a green background
 
-def black_on_green(string):
+def black_on_green(string, *funcs, **additional):
     """Text color - black on background color - green. (see sgr_combiner())."""
-    return sgr_wrapper(string, ansi.BLACK, ansi.BG_GREEN)
+    return sgr_combiner(string, ansi.BLACK, *funcs, attributes=(ansi.BG_GREEN,))
 
-def red_on_green(string):
+def red_on_green(string, *funcs, **additional):
     """Text color - red on background color - green. (see sgr_combiner())."""
-    return sgr_wrapper(string, ansi.RED, ansi.BG_GREEN)
+    return sgr_combiner(string, ansi.RED, *funcs, attributes=(ansi.BG_GREEN,))
 
-def yellow_on_green(string):
+def yellow_on_green(string, *funcs, **additional):
     """Text color - yellow on background color - green. (see sgr_combiner())."""
-    return sgr_wrapper(string, ansi.YELLOW, ansi.BG_GREEN)
+    return sgr_combiner(string, ansi.YELLOW, *funcs, attributes=(ansi.BG_GREEN,))
 
-def blue_on_green(string):
+def blue_on_green(string, *funcs, **additional):
     """Text color - blue on background color - green. (see sgr_combiner())."""
-    return sgr_wrapper(string, ansi.BLUE, ansi.BG_GREEN)
+    return sgr_combiner(string, ansi.BLUE, *funcs, attributes=(ansi.BG_GREEN,))
 
-def magenta_on_green(string):
+def magenta_on_green(string, *funcs, **additional):
     """Text color - magenta on background color - green. (see sgr_combiner())."""
-    return sgr_wrapper(string, ansi.MAGENTA, ansi.BG_GREEN)
+    return sgr_combiner(string, ansi.MAGENTA, *funcs, attributes=(ansi.BG_GREEN,))
 
-def cyan_on_green(string):
+def cyan_on_green(string, *funcs, **additional):
     """Text color - cyan on background color - green. (see sgr_combiner())."""
-    return sgr_wrapper(string, ansi.CYAN, ansi.BG_GREEN)
+    return sgr_combiner(string, ansi.CYAN, *funcs, attributes=(ansi.BG_GREEN,))
 
-def white_on_green(string):
+def white_on_green(string, *funcs, **additional):
     """Text color - white on background color - green. (see sgr_combiner())."""
-    return sgr_wrapper(string, ansi.WHITE, ansi.BG_GREEN)
+    return sgr_combiner(string, ansi.WHITE, *funcs, attributes=(ansi.BG_GREEN,))
 
 
 # Colors on a yellow background
 
-def black_on_yellow(string):
+def black_on_yellow(string, *func, **additional):
     """Text color - black on background color - yellow. (see sgr_combiner())."""
-    return sgr_wrapper(string, ansi.BLACK, ansi.BG_YELLOW)
+    return sgr_combiner(string, ansi.BLACK, *func, attributes=(ansi.BG_YELLOW,))
 
-def red_on_yellow(string):
+def red_on_yellow(string, *funcs, **additional):
     """Text color - red on background color - yellow. (see sgr_combiner())."""
-    return sgr_wrapper(string, ansi.RED, ansi.BG_YELLOW)
+    return sgr_combiner(string, ansi.RED, *funcs, attributes=(ansi.BG_YELLOW,))
 
-def green_on_yellow(string):
+def green_on_yellow(string, *funcs, **additional):
     """Text color - green on background color - yellow. (see sgr_combiner())."""
-    return sgr_wrapper(string, ansi.GREEN, ansi.BG_YELLOW)
+    return sgr_combiner(string, ansi.GREEN, *funcs, attributes=(ansi.BG_YELLOW,))
 
-def blue_on_yellow(string):
+def blue_on_yellow(string, *funcs, **additional):
     """Text color - blue on background color - yellow. (see sgr_combiner())."""
-    return sgr_wrapper(string, ansi.BLUE, ansi.BG_YELLOW)
+    return sgr_combiner(string, ansi.BLUE, *funcs, attributes=(ansi.BG_YELLOW,))
 
-def magenta_on_yellow(string):
+def magenta_on_yellow(string, *funcs, **additional):
     """Text color - magenta on background color - yellow. (see sgr_combiner())."""
-    return sgr_wrapper(string, ansi.MAGENTA, ansi.BG_YELLOW)
+    return sgr_combiner(string, ansi.MAGENTA, *funcs, attributes=(ansi.BG_YELLOW,))
 
-def cyan_on_yellow(string):
+def cyan_on_yellow(string, *funcs, **additional):
     """Text color - cyan on background color - yellow. (see sgr_combiner())."""
-    return sgr_wrapper(string, ansi.CYAN, ansi.BG_YELLOW)
+    return sgr_combiner(string, ansi.CYAN, *funcs, attributes=(ansi.BG_YELLOW,))
 
-def white_on_yellow(string):
+def white_on_yellow(string, *funcs, **additional):
     """Text color - white on background color - yellow. (see sgr_combiner())."""
-    return sgr_wrapper(string, ansi.WHITE, ansi.BG_YELLOW)
+    return sgr_combiner(string, ansi.WHITE, *funcs, attributes=(ansi.BG_YELLOW,))
 
 
 # Colors on a blue background
 
-def black_on_blue(string):
+def black_on_blue(string, *funcs, **additional):
     """Text color - black on background color - blue. (see sgr_combiner())."""
-    return sgr_wrapper(string, ansi.BLACK, ansi.BG_BLUE)
+    return sgr_combiner(string, ansi.BLACK, *funcs, attributes=(ansi.BG_BLUE,))
 
-def red_on_blue(string):
+def red_on_blue(string, *funcs, **additional):
     """Text color - red on background color - blue. (see sgr_combiner())."""
-    return sgr_wrapper(string, ansi.RED, ansi.BG_BLUE)
+    return sgr_combiner(string, ansi.RED, *funcs, attributes=(ansi.BG_BLUE,))
 
-def green_on_blue(string):
+def green_on_blue(string, *funcs, **additional):
     """Text color - green on background color - blue. (see sgr_combiner())."""
-    return sgr_wrapper(string, ansi.GREEN, ansi.BG_BLUE)
+    return sgr_combiner(string, ansi.GREEN, *funcs, attributes=(ansi.BG_BLUE,))
 
-def yellow_on_blue(string):
+def yellow_on_blue(string, *funcs, **additional):
     """Text color - yellow on background color - blue. (see sgr_combiner())."""
-    return sgr_wrapper(string, ansi.YELLOW, ansi.BG_BLUE)
+    return sgr_combiner(string, ansi.YELLOW, *funcs, attributes=(ansi.BG_BLUE,))
 
-def magenta_on_blue(string):
+def magenta_on_blue(string, *funcs, **additional):
     """Text color - magenta on background color - blue. (see sgr_combiner())."""
-    return sgr_wrapper(string, ansi.MAGENTA, ansi.BG_BLUE)
+    return sgr_combiner(string, ansi.MAGENTA, *funcs, attributes=(ansi.BG_BLUE,))
 
-def cyan_on_blue(string):
+def cyan_on_blue(string, *funcs, **additional):
     """Text color - cyan on background color - blue. (see sgr_combiner())."""
-    return sgr_wrapper(string, ansi.CYAN, ansi.BG_BLUE)
+    return sgr_combiner(string, ansi.CYAN, *funcs, attributes=(ansi.BG_BLUE,))
 
-def white_on_blue(string):
+def white_on_blue(string, *funcs, **additional):
     """Text color - white on background color - blue. (see sgr_combiner())."""
-    return sgr_wrapper(string, ansi.WHITE, ansi.BG_BLUE)
+    return sgr_combiner(string, ansi.WHITE, *funcs, attributes=(ansi.BG_BLUE,))
 
 
 # Colors on a magenta background
 
-def black_on_magenta(string):
+def black_on_magenta(string, *funcs, **additional):
     """Text color - black on background color - magenta. (see sgr_combiner())."""
-    return sgr_wrapper(string, ansi.BLACK, ansi.BG_MAGENTA)
+    return sgr_combiner(string, ansi.BLACK, *funcs, attributes=(ansi.BG_MAGENTA,))
 
-def red_on_magenta(string):
+def red_on_magenta(string, *funcs, **additional):
     """Text color - red on background color - magenta. (see sgr_combiner())."""
-    return sgr_wrapper(string, ansi.RED, ansi.BG_MAGENTA)
+    return sgr_combiner(string, ansi.RED, *funcs, attributes=(ansi.BG_MAGENTA,))
 
-def green_on_magenta(string):
+def green_on_magenta(string, *funcs, **additional):
     """Text color - green on background color - magenta. (see sgr_combiner())."""
-    return sgr_wrapper(string, ansi.GREEN, ansi.BG_MAGENTA)
+    return sgr_combiner(string, ansi.GREEN, *funcs, attributes=(ansi.BG_MAGENTA,))
 
-def yellow_on_magenta(string):
+def yellow_on_magenta(string, *funcs, **additional):
     """Text color - yellow on background color - magenta. (see sgr_combiner())."""
-    return sgr_wrapper(string, ansi.YELLOW, ansi.BG_MAGENTA)
+    return sgr_combiner(string, ansi.YELLOW, *funcs, attributes=(ansi.BG_MAGENTA,))
 
-def blue_on_magenta(string):
+def blue_on_magenta(string, *funcs, **additional):
     """Text color - blue on background color - magenta. (see sgr_combiner())."""
-    return sgr_wrapper(string, ansi.BLUE, ansi.BG_MAGENTA)
+    return sgr_combiner(string, ansi.BLUE, *funcs, attributes=(ansi.BG_MAGENTA,))
 
-def cyan_on_magenta(string):
+def cyan_on_magenta(string, *funcs, **additional):
     """Text color - cyan on background color - magenta. (see sgr_combiner())."""
-    return sgr_wrapper(string, ansi.CYAN, ansi.BG_MAGENTA)
+    return sgr_combiner(string, ansi.CYAN, *funcs, attributes=(ansi.BG_MAGENTA,))
 
-def white_on_magenta(string):
+def white_on_magenta(string, *funcs, **additional):
     """Text color - white on background color - magenta. (see sgr_combiner())."""
-    return sgr_wrapper(string, ansi.WHITE, ansi.BG_MAGENTA)
+    return sgr_combiner(string, ansi.WHITE, *funcs, attributes=(ansi.BG_MAGENTA,))
 
 
 # Colors on a cyan background
 
-def black_on_cyan(string):
+def black_on_cyan(string, *funcs, **additional):
     """Text color - black on background color - cyan. (see sgr_combiner())."""
-    return sgr_wrapper(string, ansi.BLACK, ansi.BG_CYAN)
+    return sgr_combiner(string, ansi.BLACK, *funcs, attributes=(ansi.BG_CYAN,))
 
-def red_on_cyan(string):
+def red_on_cyan(string, *funcs, **additional):
     """Text color - red on background color - cyan. (see sgr_combiner())."""
-    return sgr_wrapper(string, ansi.RED, ansi.BG_CYAN)
+    return sgr_combiner(string, ansi.RED, *funcs, attributes=(ansi.BG_CYAN,))
 
-def green_on_cyan(string):
+def green_on_cyan(string, *funcs, **additional):
     """Text color - green on background color - cyan. (see sgr_combiner())."""
-    return sgr_wrapper(string, ansi.GREEN, ansi.BG_CYAN)
+    return sgr_combiner(string, ansi.GREEN, *funcs, attributes=(ansi.BG_CYAN,))
 
-def yellow_on_cyan(string):
+def yellow_on_cyan(string, *funcs, **additional):
     """Text color - yellow on background color - cyan. (see sgr_combiner())."""
-    return sgr_wrapper(string, ansi.YELLOW, ansi.BG_CYAN)
+    return sgr_combiner(string, ansi.YELLOW, *funcs, attributes=(ansi.BG_CYAN,))
 
-def blue_on_cyan(string):
+def blue_on_cyan(string, *funcs, **additional):
     """Text color - blue on background color - cyan. (see sgr_combiner())."""
-    return sgr_wrapper(string, ansi.BLUE, ansi.BG_CYAN)
+    return sgr_combiner(string, ansi.BLUE, *funcs, attributes=(ansi.BG_CYAN,))
 
-def magenta_on_cyan(string):
+def magenta_on_cyan(string, *funcs, **additional):
     """Text color - magenta on background color - cyan. (see sgr_combiner())."""
-    return sgr_wrapper(string, ansi.MAGENTA, ansi.BG_CYAN)
+    return sgr_combiner(string, ansi.MAGENTA, *funcs, attributes=(ansi.BG_CYAN,))
 
-def white_on_cyan(string):
+def white_on_cyan(string, *funcs, **additional):
     """Text color - white on background color - cyan. (see sgr_combiner())."""
-    return sgr_wrapper(string, ansi.WHITE, ansi.BG_CYAN)
+    return sgr_combiner(string, ansi.WHITE, *funcs, attributes=(ansi.BG_CYAN,))
 
 
 # Colors on a white background
 
-def black_on_white(string):
+def black_on_white(string, *funcs, **additional):
     """Text color - black on background color - white. (see sgr_combiner())."""
-    return sgr_wrapper(string, ansi.BLACK, ansi.BG_WHITE)
+    return sgr_combiner(string, ansi.BLACK, *funcs, attributes=(ansi.BG_WHITE,))
 
-def red_on_white(string):
+def red_on_white(string, *funcs, **additional):
     """Text color - red on background color - white. (see sgr_combiner())."""
-    return sgr_wrapper(string, ansi.RED, ansi.BG_WHITE)
+    return sgr_combiner(string, ansi.RED, *funcs, attributes=(ansi.BG_WHITE,))
 
-def green_on_white(string):
+def green_on_white(string, *funcs, **additional):
     """Text color - green on background color - white. (see sgr_combiner())."""
-    return sgr_wrapper(string, ansi.GREEN, ansi.BG_WHITE)
+    return sgr_combiner(string, ansi.GREEN, *funcs, attributes=(ansi.BG_WHITE,))
 
-def yellow_on_white(string):
+def yellow_on_white(string, *funcs, **additional):
     """Text color - yellow on background color - white. (see sgr_combiner())."""
-    return sgr_wrapper(string, ansi.YELLOW, ansi.BG_WHITE)
+    return sgr_combiner(string, ansi.YELLOW, *funcs, attributes=(ansi.BG_WHITE,))
 
-def blue_on_white(string):
+def blue_on_white(string, *funcs, **additional):
     """Text color - blue on background color - white. (see sgr_combiner())."""
-    return sgr_wrapper(string, ansi.BLUE, ansi.BG_WHITE)
+    return sgr_combiner(string, ansi.BLUE, *funcs, attributes=(ansi.BG_WHITE,))
 
-def magenta_on_white(string):
+def magenta_on_white(string, *funcs, **additional):
     """Text color - magenta on background color - white. (see sgr_combiner())."""
-    return sgr_wrapper(string, ansi.MAGENTA, ansi.BG_WHITE)
+    return sgr_combiner(string, ansi.MAGENTA, *funcs, attributes=(ansi.BG_WHITE,))
 
-def cyan_on_white(string):
+def cyan_on_white(string, *funcs, **additional):
     """Text color - cyan on background color - white. (see sgr_combiner())."""
-    return sgr_wrapper(string, ansi.CYAN, ansi.BG_WHITE)
+    return sgr_combiner(string, ansi.CYAN, *funcs, attributes=(ansi.BG_WHITE,))
