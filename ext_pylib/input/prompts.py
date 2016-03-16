@@ -22,7 +22,6 @@ def prompt(prompt_text, default=True):
     """Displays a yes/no prompt and returns the response as bool."""
     default_text = " [y] " if default else " [n] "
     while True:
-        print(type(INPUT))
         response = INPUT('[?] ' + prompt_text + default_text).lower()
         responses = {
             ''    : default,
