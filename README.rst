@@ -266,6 +266,9 @@ For example:
 
 .. code:: python
 
+    print green('This text will be green')
+
+    # More complicated examples:
     print bold('WARN:', red) + red_on_white('This is an example warning.')
     print underline(green(on_blue('This is an example of nesting color functions.')))
     print blue('This is an example of passing color functions to another function.', on_black, bold)
