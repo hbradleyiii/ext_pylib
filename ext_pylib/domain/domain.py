@@ -21,7 +21,6 @@ A class to describe and manage a domain name and it's corresponding ip address.
 from __future__ import print_function
 
 import re
-import socket
 
 try:
     import requests
@@ -31,6 +30,7 @@ except ImportError:
 
 def get_server_ip(get_ip_urls=None):
     """Returns the IP of this server."""
+    import socket
     get_ip_urls = get_ip_urls or ['http://techterminal.net/myip/',]
     for url in get_ip_urls:
         ip = requests.get(url).text
@@ -98,6 +98,7 @@ class Domain(object):
 
     def get_ip(self):
         """Gets the A Record IP of the domain and updates the cached copy."""
+        import socket
         self._ip = socket.gethostbyname(self.name)
         return self._ip
 

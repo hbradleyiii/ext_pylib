@@ -18,7 +18,7 @@ Section, and Template.
 
 from __future__ import absolute_import, print_function, unicode_literals
 
-import os
+from os import remove
 import re
 
 from .dir import Dir
@@ -119,7 +119,7 @@ class File(Node):
             print(self.path + ' doesn\'t exist.')
             return True
         if not ask or prompt('Remove ' + self.path + '?'):
-            os.remove(self.path)
+            remove(self.path)
             return True
 
     def read(self, flush_memory=False):
