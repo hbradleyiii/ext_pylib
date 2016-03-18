@@ -212,11 +212,10 @@ def test_file_overwrite(mock_write):
     File().overwrite(None)
     mock_write.assert_called_once_with(None, False, None)
 
-@patch('ext_pylib.files.node.Node.exists')
-@patch('os.remove')
-def test_file_remove(mock_remove, mock_exists):
+@patch('ext_pylib.files.node.Node.exists', return_value=True)
+@patch('ext_pylib.files.file.remove')
+def test_file_remove(mock_remove, *args):  # pylint: disable=unused-argument
     """Tests File remove method."""
-    mock_exists.return_value = True
     the_file = File(DEFAULT_ARGS)
     assert the_file.remove(False)
     mock_remove.assert_called_once_with(DEFAULT_ARGS['path'])
