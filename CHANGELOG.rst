@@ -9,15 +9,15 @@ Release History
 In progress.
 
 * Updates README and inline comments
-* Adds error-checking logic to ``get_server_ip()``
-* Fixes uncompleted color functions
-* Other minor bugfixes and code linting.
+* Adds error-checking logic to ``get_server_ip()`` in ``terminal`` module.
+* Fixes previously unfinished color functions
+* Other minor bugfixes and code linting
 
 0.1 (March 13, 2016)
 ++++++++++++++++++++
 
-Note: This initial release is an 'alpha' release. Documentation is not
-complete and API is not considered stable.
+**Note:** *This initial release is an 'alpha' release. Documentation is not
+complete and API is not considered stable.*
 
 * Initial Release
-* Uploaded to PyPy for easy installation
+* Uploaded to PyPi for easy installation
