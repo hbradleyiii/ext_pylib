@@ -12,3 +12,4 @@ from __future__ import absolute_import
 
 from . import ansi
 from . import colors
+from . import output

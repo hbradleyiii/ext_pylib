@@ -10,6 +10,8 @@ In progress.
 
 * Updates README and inline comments
 * Adds error-checking logic to ``get_server_ip()`` in ``terminal`` module.
+* Adds ``ouput`` submodule to ``terminal`` module for pretty-printing output
+  functions. (see the module for more details)
 * Fixes previously unfinished color functions
 * Other minor bugfixes and code linting
 
