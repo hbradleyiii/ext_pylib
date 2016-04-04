@@ -82,11 +82,11 @@ def cursor_left(n=1, get_string=False):
 
 def cursor_next_line(n=1, get_string=False):
     """Moves your cursor to the next 'n' lines."""
-    return escape(CSI + str(n) + 'F', get_string)
+    return escape(CSI + str(n) + 'E', get_string)
 
 def cursor_previous_line(n=1, get_string=False):
     """Moves your cursor to the previous 'n' lines."""
-    return escape(CSI + str(n) + 'G', get_string)
+    return escape(CSI + str(n) + 'F', get_string)
 
 def cursor_horizontal_absolute(n=1, get_string=False):
     """Moves your cursor to the 'n' column."""
@@ -167,7 +167,7 @@ def enable_line_wrap(get_string=False):
 
 def disable_line_wrap(get_string=False):
     """Disables line wrapping."""
-    return escape(CSI + '7h', get_string)
+    return escape(CSI + '7l', get_string)
 
 def set_scroll_all(get_string=False):
     """Enable scrolling for the entire screen."""
