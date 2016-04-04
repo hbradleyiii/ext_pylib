@@ -123,6 +123,27 @@ def get_cursor_pos():
                            # Reports as <ESC>[{row};{column}R
                            # Note that this is backwards order
 
+def get_window_size():
+    """Returns the size of the window as a tuple of columns, rows. (x, y)
+    Note that this is the actual size; in order to get the bottom right corner,
+    you must subtract 1 from both the rows and the columns."""
+    try:
+        from struct import unpack
+        from fcntl import ioctl
+        from termios import TIOCGWINSZ
+        from os import ctermid
+
+        with open(ctermid()) as fd:
+            size = unpack('hh', ioctl(fd, TIOCGWINSZ, '----'))
+            return (size[1], size[0])  # swap the size so we have (x, y)
+
+    except ImportError:
+        from os import environ
+        try:
+            return (environ['COLUMNS'], environ['LINES'])
+        except KeyError:
+            return (25, 80)  # just send back a best guess
+
 
     ## Clearing the screen ##
 
